@@ -1,0 +1,18 @@
+{
+	"name": "DmgMeter",
+	"namespace": "lrueckert",
+	"version_number": "0.1.0",
+	"description": "Display Damage of each weapon during the wave as HUD element",
+	"website_url": "https://github.com/LRueckert/brotato-mod-dps-meter",
+	"dependencies": [],
+	"extra": {
+		"godot": {
+			"incompatibilities": [],
+			"authors": ["lrueckert"],
+			"tags": ["damage meter", "hud"],
+			"compatible_mod_loader_version": ["6.2.0"],
+			"compatible_game_version": ["1.2.3"],
+			"config_schema": {}
+		}
+	}
+}
