@@ -15,7 +15,7 @@ func clear_elements()->void :
 		remove_child(n)
 		n.queue_free()
 
-func add_element(element: Resource)->void :
+func add_element(element: WeaponData)->void :
 	var instance = element_scene.instance()
 	add_child(instance)
 	instance.set_element(element)

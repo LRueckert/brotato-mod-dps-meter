@@ -42,5 +42,3 @@ func _update_stats_ui():
 		else:
 			dmg_meter_container.visible = false
 			return
-
-
