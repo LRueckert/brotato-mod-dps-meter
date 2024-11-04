@@ -16,7 +16,7 @@ func _ready()->void:
 	
 	_dmg_meter_timer = Timer.new()
 	add_child(_dmg_meter_timer)
-	_dmg_meter_timer.connect("timeout", self, "_update_stats_ui")
+	_dmg_meter_timer.connect("timeout", self, "_update_dmg_meter")
 	_dmg_meter_timer.set_one_shot(false) # Make sure it loops
 	_dmg_meter_timer.set_wait_time(0.5)
 	_dmg_meter_timer.start()
@@ -31,9 +31,9 @@ func _ready()->void:
 
 	var player_weapons = RunData.get_player_weapons(0)
 	dmg_meter_container.set_elements(player_weapons, true)
-	_update_stats_ui()
+	_update_dmg_meter()
 
-func _update_stats_ui():
+func _update_dmg_meter():
 	if wave_timer != null and is_instance_valid(wave_timer) and not is_run_lost:
 		var time = ceil(wave_timer.time_left)
 		if time > 0:

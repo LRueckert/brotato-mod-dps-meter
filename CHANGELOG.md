@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [v1.0.1] - 2024-11-04
+
+### Fixed
+
+- Method name collision with MoreUI mod
+
 ## [v1.0.0] - 2024-11-03
 
 ### Added
@@ -27,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Icons and raw damage numbers
 
-[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v1.0.0...HEAD
+[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v1.0.1...HEAD
+[v1.0.1]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v1.0.1
 [v1.0.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v1.0.0
 [v0.1.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v0.1.0
