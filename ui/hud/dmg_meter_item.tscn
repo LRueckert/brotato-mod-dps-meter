@@ -4,18 +4,13 @@
 [ext_resource path="res://ui/menus/shop/icon_panel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://resources/fonts/actual/base/font_26_outline_thick.tres" type="DynamicFont" id=3]
 
-[node name="DmgMeterItem" type="Container"]
-unique_name_in_owner = true
-margin_top = 660.0
-margin_right = 40.0
-margin_bottom = 700.0
+[node name="DmgMeterItem" type="HBoxContainer"]
 rect_min_size = Vector2( 40, 40 )
 script = ExtResource( 1 )
+alignment = 1
 
 [node name="IconPanel" parent="." instance=ExtResource( 2 )]
 rect_min_size = Vector2( 40, 40 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = 45.0
-margin_top = 5.0
 custom_fonts/font = ExtResource( 3 )

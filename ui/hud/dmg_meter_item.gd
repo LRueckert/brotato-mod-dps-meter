@@ -1,15 +1,24 @@
 class_name DmgMeterItem
-extends Container
+extends HBoxContainer
 
 var item: WeaponData
-onready var _dmg_label: Label = $Label
+onready var dmg_label: Label = $Label
 onready var icon_panel: Panel = $ IconPanel
-onready var _icon = $ IconPanel / Icon as TextureRect
+onready var icon: TextureRect = $ IconPanel / Icon
 
-func set_element(item_data: WeaponData)->void :
+
+func set_element(item_data: WeaponData, index: int)->void :
 	item = item_data
-	_icon.texture = item_data.icon
+	icon.texture = item_data.icon
+	set_hud_position(index)
 	update_background_color()
+
+
+func set_hud_position(position_index: int)->void :
+	var left = position_index == 0 or position_index == 2
+	self.alignment = BoxContainer.ALIGN_BEGIN if left else BoxContainer.ALIGN_END
+	self.move_child(dmg_label, icon_panel.get_index() + 1 if left else 0)
+
 
 func update_background_color()->void :
 	remove_stylebox_override("panel")
@@ -20,6 +29,7 @@ func update_background_color()->void :
 	icon_panel.add_stylebox_override("panel", stylebox)
 	icon_panel._update_stylebox(item.is_cursed)
 
+
 func trigger_update()->void :
-	_dmg_label.text = str(item.dmg_dealt_last_wave)
+	dmg_label.text =  Text.get_formatted_number(item.dmg_dealt_last_wave)
 

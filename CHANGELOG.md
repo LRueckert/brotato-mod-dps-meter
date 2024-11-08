@@ -15,6 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [v2.0.0] - 2024-11-08
+
+### Added
+
+- Support for local co-op
+
+### Changed
+
+- Damage labels with thousand separators
+
 ## [v1.0.1] - 2024-11-04
 
 ### Fixed
@@ -33,7 +43,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Icons and raw damage numbers
 
-[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v1.0.1...HEAD
+[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v2.0.0...HEAD
+[v2.0.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.0.0
 [v1.0.1]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v1.0.1
 [v1.0.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v1.0.0
 [v0.1.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v0.1.0

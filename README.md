@@ -1,4 +1,5 @@
 # brotato-mod-dps-meter (3358859974)
-Simple DPS meter for brotato to see weapon damage during the round
+DPS meter for brotato to see weapon damage during the round.
+Works for local co-op.
 
 <img src="modicon.png" alt="Mod icon"/>
