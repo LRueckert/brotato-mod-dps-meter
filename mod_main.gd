@@ -1,8 +1,8 @@
 extends Node
 
 
-const AUTHORNAME_MODNAME_DIR := "lrueckert-DmgMeter"
-const AUTHORNAME_MODNAME_LOG_NAME := "lrueckert-DmgMeter:Main"
+const LRUECKERT_DMGMETER_DIR := "lrueckert-DmgMeter"
+const LRUECKERT_DMGMETER_LOG_NAME := "lrueckert-DmgMeter:Main"
 
 var mod_dir_path := ""
 var extensions_dir_path := ""
@@ -11,7 +11,7 @@ var translations_dir_path := ""
 # Before v6.1.0
 # func _init(modLoader = ModLoader) -> void:
 func _init() -> void:
-	mod_dir_path = ModLoaderMod.get_unpacked_dir().plus_file(AUTHORNAME_MODNAME_DIR)
+	mod_dir_path = ModLoaderMod.get_unpacked_dir().plus_file(LRUECKERT_DMGMETER_DIR)
 	# Add extensions
 	install_script_extensions()
 	# Add translations
@@ -30,10 +30,10 @@ func add_translations() -> void:
 
 
 func _ready() -> void:
-	ModLoaderLog.info("Ready!", AUTHORNAME_MODNAME_LOG_NAME)
+	ModLoaderLog.info("Ready!", LRUECKERT_DMGMETER_LOG_NAME)
 	var mainSzene = load("res://main.tscn").instance()
 	for index in 4:
-		var player_index = str(index+1)
+		var player_index = str(index + 1)
 		var node_name = "DmgMeterContainerP%s" % player_index
 		var parent_node = "UI/HUD/LifeContainerP%s" % player_index
 		ModLoaderMod.append_node_in_scene(mainSzene, node_name, parent_node, "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/dmg_meter_container.tscn")
