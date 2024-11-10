@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [v2.1.1] - 2024-11-10
+
+### Fixed
+
+- Actually show as many items as will fit for up to two players
+
 ## [v2.1.0] - 2024-11-09
 
 ### Added
@@ -51,7 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Icons and raw damage numbers
 
-[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v2.1.0...HEAD
+[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v2.1.1...HEAD
+[v2.1.1]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.1.1
 [v2.1.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.1.0
 [v2.0.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.0.0
 [v1.0.1]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v1.0.1

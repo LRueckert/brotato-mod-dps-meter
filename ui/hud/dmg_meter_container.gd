@@ -6,7 +6,7 @@ var items = []
 var max_items = 0
 
 func set_elements(elements: Array, player_index: int, player_count: int, replace: bool = true) -> void:
-	max_items = 0 if player_count < 2 else 6
+	max_items = 0 if player_count < 3 else 6
 	if replace:
 		clear_elements()
 
