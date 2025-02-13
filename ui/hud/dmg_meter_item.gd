@@ -15,7 +15,7 @@ func set_element(item_data: ItemParentData, index: int) -> void:
 	icon.texture = item_data.icon
 	set_hud_position(player_index)
 	update_background_color()
-	if item.get_category() == Category.ITEM && not item.name == "ITEM_BUILDER_TURRET":
+	if [Category.ITEM, Category.CHARACTER].has(item.get_category()) && not item.name == "ITEM_BUILDER_TURRET":
 		wave_start_value = RunData.tracked_item_effects[player_index][item.my_id]
 
 
