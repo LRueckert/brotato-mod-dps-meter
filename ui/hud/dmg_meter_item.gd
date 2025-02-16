@@ -6,8 +6,9 @@ var player_index: int
 onready var dmg_label: Label = $Label
 onready var icon_panel: Panel = $IconPanel
 onready var icon: TextureRect = $IconPanel/Icon
-var wave_start_value: int = 0
 
+var wave_start_value: int = 0
+var is_total_damage_item = false
 
 func set_element(item_data: ItemParentData, index: int) -> void:
 	item = item_data
@@ -35,6 +36,8 @@ func update_background_color() -> void:
 	icon_panel._update_stylebox(item.is_cursed)
 
 func get_dmg_dealt() -> int:
+	if item == null:
+		return 0
 	if item.get_category() == Category.WEAPON:
 		return item.dmg_dealt_last_wave
 	else:
@@ -42,3 +45,12 @@ func get_dmg_dealt() -> int:
 
 func trigger_update() -> void:
 	dmg_label.text = Text.get_formatted_number(get_dmg_dealt())
+	
+func set_total_damage_mode() -> void:
+	is_total_damage_item = true
+	$IconPanel.visible = false
+	self.alignment = BoxContainer.ALIGN_BEGIN
+
+func set_total_damage(amount: int) -> void:
+	dmg_label.text = "Total Damage: " + str(amount)
+

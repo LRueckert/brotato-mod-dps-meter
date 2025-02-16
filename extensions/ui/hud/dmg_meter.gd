@@ -6,6 +6,7 @@ var dmg_meter_timer: Timer = null
 var hide_dmg_meter_timer: Timer = null
 onready var dmg_meter_containers: Array = []
 
+
 func _ready() -> void:
 	dmgmeter_register_timers()
 	dmg_meter_containers = []
