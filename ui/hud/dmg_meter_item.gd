@@ -52,5 +52,5 @@ func set_total_damage_mode() -> void:
 	self.alignment = BoxContainer.ALIGN_BEGIN
 
 func set_total_damage(amount: int) -> void:
-	dmg_label.text = "Total Damage: " + str(amount)
+	dmg_label.text = str(amount)
 

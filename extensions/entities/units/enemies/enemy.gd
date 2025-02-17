@@ -18,7 +18,7 @@ func take_damage(value: int, args: TakeDamageArgs)->Array:
 	if args.hitbox:
 		var charm_enemy_effect_behavior = _dmgmeter_get_charm_enemy_effect_behavior_from_hitbox(args.hitbox)
 		# Use get() because above function could return Nil
-		if charm_enemy_effect_behavior.get("charmed"):
+		if charm_enemy_effect_behavior and charm_enemy_effect_behavior.get("charmed"):
 			# Damage is structured as a 3 element array. 
 			# First element is full damage, second element is damage after overkill, third element is boolean for dodge
 			RunData.add_tracked_value(charm_enemy_effect_behavior.charmed_by_player_index, "character_romantic", dmg[1])

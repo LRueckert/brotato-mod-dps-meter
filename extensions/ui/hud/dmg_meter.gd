@@ -15,7 +15,8 @@ func _ready() -> void:
 		var player_index = str(i + 1)
 		var dmg_meter_container = _hud.get_node("LifeContainerP%s/DmgMeterContainerP%s" % [player_index, player_index])
 		dmg_meter_containers.append(dmg_meter_container)
-		dmg_meter_containers[i].set_elements(RunData.get_player_weapons(i), i, player_count, true)
+		var player_weapons = RunData.get_player_weapons(i)
+		dmg_meter_containers[i].set_elements(player_weapons, i, player_count, true)
 		for weapon in player_weapons:
 			for effect in weapon.effects:
 				# If weapons like the flute are found, then we add the romantic character to the list
