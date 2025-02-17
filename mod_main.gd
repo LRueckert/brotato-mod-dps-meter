@@ -22,7 +22,10 @@ func install_script_extensions() -> void:
 	extensions_dir_path = mod_dir_path.plus_file("extensions")
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/dmg_meter.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/dmg_meter_positioning.gd"))
-
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("entities/units/enemies/enemy.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("singletons/run_data.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("dlcs/dlc_1/effect_behaviors/enemy/charm_enemy_effect_behavior.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("global/dlc_data.gd"))
 
 func add_translations() -> void:
 	translations_dir_path = mod_dir_path.plus_file("translations")
