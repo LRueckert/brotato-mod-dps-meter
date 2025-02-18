@@ -28,6 +28,7 @@ func _ready() -> void:
 		for el in RunData.get_player_items(i):
 			if not dmg_meter_containers[i].items.has(el.my_id) && el.tracking_text == "DAMAGE_DEALT" || el.name == "ITEM_BUILDER_TURRET":
 				dmg_meter_containers[i].add_element(el, i)
+		dmg_meter_containers[i].add_total_damage_item(i)
 	dmgmeter_update()
 
 func dmgmeter_register_timers():

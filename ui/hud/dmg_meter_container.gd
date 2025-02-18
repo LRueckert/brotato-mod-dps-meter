@@ -14,10 +14,6 @@ func set_elements(elements: Array, player_index: int, player_count: int, replace
 
 	for element in elements:
 		add_element(element, player_index)
-	
-	# Add the total damage item if it doesn’t exist
-	if not total_dmg_item:
-		add_total_damage_item()
 
 func clear_elements() -> void:
 	items = []
@@ -27,12 +23,11 @@ func clear_elements() -> void:
 	total_dmg_item = null  # Reset total damage item reference
 
 func update_total_damage() -> void:
-	if total_dmg_item:
-		var total_damage = 0
-		for child in get_children():
-			if child != total_dmg_item:
-				total_damage += child.get_dmg_dealt()
-		total_dmg_item.set_total_damage(total_damage)
+	var total_damage = 0
+	for child in get_children():
+		if child != total_dmg_item:
+			total_damage += child.get_dmg_dealt()
+	total_dmg_item.set_total_damage(total_damage)
 
 func add_element(element: ItemParentData, player_index: int) -> void:
 	if ["WEAPON_WRENCH", "WEAPON_SCREWDRIVER"].has(element.name):
@@ -42,10 +37,10 @@ func add_element(element: ItemParentData, player_index: int) -> void:
 	add_child(instance)
 	instance.set_element(element, player_index)
 
-func add_total_damage_item() -> void:
+func add_total_damage_item(player_index: int) -> void:
 	total_dmg_item = element_scene.instance()
 	add_child(total_dmg_item)
-	total_dmg_item.set_total_damage_mode()  # Call a function to set it as a total item
+	total_dmg_item.set_total_damage_element(player_index)
 
 func handle_spawner(element: ItemParentData, player_index: int) -> void:
 	match element.name:

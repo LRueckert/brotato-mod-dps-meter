@@ -28,12 +28,15 @@ func set_hud_position(position_index: int) -> void:
 
 func update_background_color() -> void:
 	remove_stylebox_override("panel")
-	if item == null:
-		return
 	var stylebox = icon_panel.get_stylebox("panel").duplicate()
-	ItemService.change_inventory_element_stylebox_from_tier(stylebox, item.tier, 0.3)
+	if item:
+		ItemService.change_inventory_element_stylebox_from_tier(stylebox, item.tier, 0.3)
+		icon_panel._update_stylebox(item.is_cursed)
+	else:
+		ItemService.change_inventory_element_stylebox_from_tier(stylebox, 0, 0.3)
+		icon_panel._update_stylebox(false)
 	icon_panel.add_stylebox_override("panel", stylebox)
-	icon_panel._update_stylebox(item.is_cursed)
+	
 
 func get_dmg_dealt() -> int:
 	if item == null:
@@ -46,10 +49,10 @@ func get_dmg_dealt() -> int:
 func trigger_update() -> void:
 	dmg_label.text = Text.get_formatted_number(get_dmg_dealt())
 	
-func set_total_damage_mode() -> void:
-	is_total_damage_item = true
-	$IconPanel.visible = false
-	self.alignment = BoxContainer.ALIGN_BEGIN
+func set_total_damage_element(player_index: int) -> void:
+	icon.texture = load("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/total_damage_ui.png")
+	set_hud_position(player_index)
+	update_background_color()
 
 func set_total_damage(amount: int) -> void:
 	dmg_label.text = str(amount)
