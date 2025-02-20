@@ -1,0 +1,4 @@
+[gd_scene format=2]
+
+[node name="total_damage_label" type="Label"]
+text = "Total Damage: 0"

@@ -26,6 +26,7 @@ func install_script_extensions() -> void:
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("singletons/run_data.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("dlcs/dlc_1/effect_behaviors/enemy/charm_enemy_effect_behavior.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("global/dlc_data.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/menus/shop/shop.gd"))
 
 func add_translations() -> void:
 	translations_dir_path = mod_dir_path.plus_file("translations")
@@ -41,3 +42,7 @@ func _ready() -> void:
 		var parent_node = "UI/HUD/LifeContainerP%s" % player_index
 		ModLoaderMod.append_node_in_scene(mainSzene, node_name, parent_node, "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/dmg_meter_container.tscn")
 	ModLoaderMod.save_scene(mainSzene, "res://main.tscn")
+
+	var shopScene = load("res://ui/menus/shop/shop.tscn").instance()
+	ModLoaderMod.append_node_in_scene(shopScene, "TotalDamagePanel", "Content/MarginContainer/HBoxContainer/VBoxContainer2", "res://mods-unpacked/lrueckert-DmgMeter/ui/menus/shop/total_damage_panel.tscn")
+	ModLoaderMod.save_scene(shopScene, "res://ui/menus/shop/shop.tscn")
