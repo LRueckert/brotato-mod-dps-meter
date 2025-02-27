@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://mods-unpacked/lrueckert-DmgMeter/ui/hud/total_damage_ui.png" type="Texture" id=5]
+
+[node name="total_damage_ui" type="TextureRect"]
+texture = ExtResource( 5 )

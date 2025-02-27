@@ -1,0 +1,16 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+
+[deps]
+
+files=[ "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.en.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.es.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.de.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.fr.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.it.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.ja.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.ko.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.pl.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.pt.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.ru.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.tr.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.zh_Hans_CN.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.zh_Hant_TW.translation" ]
+
+source_file="res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.csv"
+dest_files=[ "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.en.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.es.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.de.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.fr.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.it.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.ja.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.ko.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.pl.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.pt.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.ru.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.tr.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.zh_Hans_CN.translation", "res://mods-unpacked/lrueckert-DmgMeter/translations/lrueckert-DmgMeter.zh_Hant_TW.translation" ]
+
+[params]
+
+compress=true
+delimiter=0
