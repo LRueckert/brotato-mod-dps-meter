@@ -47,14 +47,15 @@ func get_dmg_dealt() -> int:
 		return RunData.tracked_item_effects[player_index][item.my_id] - wave_start_value
 
 func trigger_update() -> void:
-	dmg_label.text = Text.get_formatted_number(get_dmg_dealt())
+	dmg_label.text = Utils.format_number(get_dmg_dealt())
 	
-func set_total_damage_element(player_index: int) -> void:
+func set_total_damage_element(index: int) -> void:
+	player_index = index
 	icon.texture = load("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/total_damage_ui.png")
 	set_hud_position(player_index)
 	update_background_color()
 
-func set_total_damage(amount: int) -> void:
-	
-	dmg_label.text = str(amount)
+func set_total_damage(amount: int) -> void:	
+	dmg_label.text = Utils.format_number(amount)
+	RunData.last_wave_total_damage[player_index] = amount
 

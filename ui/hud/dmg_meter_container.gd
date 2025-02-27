@@ -5,7 +5,6 @@ export(PackedScene) var element_scene = null
 var items = []
 var max_items = 0
 var total_dmg_item = null
-var _player_index = 0
 
 
 func set_elements(elements: Array, player_index: int, player_count: int, replace: bool = true) -> void:
@@ -29,8 +28,6 @@ func update_total_damage() -> void:
 		if child != total_dmg_item:
 			total_damage += child.get_dmg_dealt()
 	total_dmg_item.set_total_damage(total_damage)
-	# Maybe we can save this to RunData to persist the total damage
-	# for the shop view. The data exists per player index though
 
 func add_element(element: ItemParentData, player_index: int) -> void:
 	player_index = player_index
@@ -42,10 +39,9 @@ func add_element(element: ItemParentData, player_index: int) -> void:
 	instance.set_element(element, player_index)
 
 func add_total_damage_item(player_index: int) -> void:
-	_player_index = player_index
 	total_dmg_item = element_scene.instance()
 	add_child(total_dmg_item)
-	total_dmg_item.set_total_damage_element(_player_index)
+	total_dmg_item.set_total_damage_element(player_index)
 
 func handle_spawner(element: ItemParentData, player_index: int) -> void:
 	match element.name:
