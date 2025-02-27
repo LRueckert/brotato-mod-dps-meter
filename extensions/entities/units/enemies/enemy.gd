@@ -4,7 +4,11 @@ func _dmgmeter_get_charm_enemy_effect_behavior_from_hitbox(hitbox: Object) -> Ch
 	# Hitboxes are children of Units and we can reference the parent with 'from'
 	var unit = hitbox.from
 	# We only care to check for effect behavior if it is an enemy
-	if unit is Enemy:
+	# Unit may be null if a charmed projectile hits an enemy
+	# but the original charmed enemy no longer exists/expires
+	# We lose the damage tracking in this case, but its a less-common scenario
+	# that would require a larger solution
+	if is_instance_valid(unit) and unit is Enemy:
 		var effect_behaviors = unit.effect_behaviors.get_children()
 		for behavior in effect_behaviors:
 			if behavior is CharmEnemyEffectBehavior:
