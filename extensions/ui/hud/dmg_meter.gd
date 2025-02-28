@@ -6,6 +6,7 @@ var dmg_meter_timer: Timer = null
 var hide_dmg_meter_timer: Timer = null
 onready var dmg_meter_containers: Array = []
 
+
 func _ready() -> void:
 	dmgmeter_register_timers()
 	dmg_meter_containers = []
@@ -14,10 +15,20 @@ func _ready() -> void:
 		var player_index = str(i + 1)
 		var dmg_meter_container = _hud.get_node("LifeContainerP%s/DmgMeterContainerP%s" % [player_index, player_index])
 		dmg_meter_containers.append(dmg_meter_container)
-		dmg_meter_containers[i].set_elements(RunData.get_player_weapons(i), i, player_count, true)
+		var player_weapons = RunData.get_player_weapons(i)
+		dmg_meter_containers[i].set_elements(player_weapons, i, player_count, true)
+		for weapon in player_weapons:
+			for effect in weapon.effects:
+				# If weapons like the flute are found, then we add the romantic character to the list
+				# This character tracks all charmed enemy damage so lets reuse it here for convenience
+				# Also we don't really have a better icon/metric for charm damage
+				if effect.get("key") == 'charm_on_hit' or effect.get("custom_key") == 'charm_on_hit':
+					var romantic_character_el = ItemService.get_element(ItemService.characters, "character_romantic")
+					dmg_meter_containers[i].add_element(romantic_character_el, i)
 		for el in RunData.get_player_items(i):
 			if not dmg_meter_containers[i].items.has(el.my_id) && el.tracking_text == "DAMAGE_DEALT" || el.name == "ITEM_BUILDER_TURRET":
 				dmg_meter_containers[i].add_element(el, i)
+		dmg_meter_containers[i].add_total_damage_item(i)
 	dmgmeter_update()
 
 func dmgmeter_register_timers():
