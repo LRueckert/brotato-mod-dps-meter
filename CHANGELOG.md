@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [v2.1.3] - 2025-06-19
+
+### Fixed
+
+- Update 1.1.11.0 breaking the mod
+
 ## [v2.1.2] - 2025-02-13
 
 ### Fixed
@@ -64,7 +70,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Icons and raw damage numbers
 
-[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v2.1.2...HEAD
+[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v2.1.3...HEAD
+[v2.1.3]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.1.3
 [v2.1.2]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.1.2
 [v2.1.1]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.1.1
 [v2.1.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.1.0

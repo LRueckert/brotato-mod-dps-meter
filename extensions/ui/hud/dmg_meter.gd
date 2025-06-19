@@ -37,7 +37,7 @@ func dmgmeter_register_timers():
 	add_child(hide_dmg_meter_timer)
 
 func dmgmeter_update():
-	if wave_timer != null and is_instance_valid(wave_timer) and not is_run_lost:
+	if wave_timer != null and is_instance_valid(wave_timer):
 		var time = ceil(wave_timer.time_left)
 		if time > 0:
 			for i in RunData.get_player_count():
