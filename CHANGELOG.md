@@ -15,7 +15,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Crashing on start
+## [v2.2.0] - 2026-02-16
+
+### Added
+
+- Pet support
+
+### Changed
+
+### Removed
+
+### Fixed
+
+- Update 1.1.14.0 breaking the mod
 - Item colors
 
 ## [v2.1.3] - 2025-06-19

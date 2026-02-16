@@ -22,7 +22,7 @@ func clear_elements() -> void:
 
 
 func add_element(element: ItemParentData, player_index: int) -> void:
-	if ["WEAPON_WRENCH", "WEAPON_SCREWDRIVER"].has(element.name):
+	if ["WEAPON_WRENCH", "WEAPON_SCREWDRIVER", "ITEM_BOT_O_MINE"].has(element.name):
 		handle_spawner(element, player_index)
 	items.append(element.my_id)
 	var instance = element_scene.instance()
@@ -33,6 +33,9 @@ func add_element(element: ItemParentData, player_index: int) -> void:
 func handle_spawner(element: ItemParentData, player_index: int) -> void:
 	match element.name:
 		"WEAPON_SCREWDRIVER":
+			if not items.has("item_landmines"):
+				add_element(ItemService.get_item_from_id(Keys.generate_hash("item_landmines")), player_index)
+		"ITEM_BOT_O_MINE":
 			if not items.has("item_landmines"):
 				add_element(ItemService.get_item_from_id(Keys.generate_hash("item_landmines")), player_index)
 		"WEAPON_WRENCH":

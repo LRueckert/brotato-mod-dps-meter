@@ -16,7 +16,7 @@ func set_element(item_data: ItemParentData, index: int) -> void:
 	set_hud_position(player_index)
 	update_background_color()
 	if [Category.ITEM, Category.CHARACTER].has(item.get_category()) && not item.name == "ITEM_BUILDER_TURRET":
-		wave_start_value = RunData.tracked_item_effects[player_index][item.my_id]
+		wave_start_value = get_tracked_value()
 
 
 func set_hud_position(position_index: int) -> void:
@@ -38,7 +38,17 @@ func get_dmg_dealt() -> int:
 	if item.get_category() == Category.WEAPON:
 		return item.dmg_dealt_last_wave
 	else:
-		return RunData.tracked_item_effects[player_index][item.my_id] - wave_start_value
+		return get_tracked_value() - wave_start_value
+
+func get_tracked_value() -> int:
+	var value = 0
+	var tracked = RunData.tracked_item_effects[player_index][item.my_id_hash]
+	if(tracked is Array):
+		for el in tracked:
+			value += el
+	else:
+		value = RunData.tracked_item_effects[player_index][item.my_id_hash]
+	return value
 
 func trigger_update() -> void:
 	dmg_label.text = Text.get_formatted_number(get_dmg_dealt())

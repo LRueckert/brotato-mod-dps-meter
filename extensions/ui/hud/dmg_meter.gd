@@ -16,7 +16,7 @@ func _ready() -> void:
 		dmg_meter_containers.append(dmg_meter_container)
 		dmg_meter_containers[i].set_elements(RunData.get_player_weapons(i), i, player_count, true)
 		for el in RunData.get_player_items(i):
-			if not dmg_meter_containers[i].items.has(el.my_id) && el.tracking_text == "DAMAGE_DEALT" || el.name == "ITEM_BUILDER_TURRET":
+			if not dmg_meter_containers[i].items.has(el.my_id) && el.tracking_text == "DAMAGE_DEALT" || el.tracking_text == "EXPLOSION_DAMAGE_DEALT" || el.name == "ITEM_BUILDER_TURRET":
 				dmg_meter_containers[i].add_element(el, i)
 	dmgmeter_update()
 
