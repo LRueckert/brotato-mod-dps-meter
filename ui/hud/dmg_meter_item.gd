@@ -32,7 +32,7 @@ func update_background_color() -> void:
 	var stylebox = icon_panel.get_stylebox("panel").duplicate()
 	ItemService.change_inventory_element_stylebox_from_tier(stylebox, item.tier, 0.3)
 	icon_panel.add_stylebox_override("panel", stylebox)
-	icon_panel._update_stylebox(item.is_cursed)
+	icon_panel._curse.visible = item.is_cursed
 
 func get_dmg_dealt() -> int:
 	if item.get_category() == Category.WEAPON:

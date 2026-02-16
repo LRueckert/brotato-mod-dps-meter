@@ -34,21 +34,21 @@ func handle_spawner(element: ItemParentData, player_index: int) -> void:
 	match element.name:
 		"WEAPON_SCREWDRIVER":
 			if not items.has("item_landmines"):
-				add_element(ItemService.get_item_from_id("item_landmines"), player_index)
+				add_element(ItemService.get_item_from_id(Keys.generate_hash("item_landmines")), player_index)
 		"WEAPON_WRENCH":
 			match element.tier:
 				Tier.COMMON:
 					if not items.has("item_turret"):
-						add_element(ItemService.get_item_from_id("item_turret"), player_index)
+						add_element(ItemService.get_item_from_id(Keys.generate_hash("item_turret")), player_index)
 				Tier.UNCOMMON:
 					if not items.has("item_turret_flame"):
-						add_element(ItemService.get_item_from_id("item_turret_flame"), player_index)
+						add_element(ItemService.get_item_from_id(Keys.generate_hash("item_turret_flame")), player_index)
 				Tier.RARE:
 					if not items.has("item_turret_laser"):
-						add_element(ItemService.get_item_from_id("item_turret_laser"), player_index)
+						add_element(ItemService.get_item_from_id(Keys.generate_hash("item_turret_laser")), player_index)
 				Tier.LEGENDARY:
 					if not items.has("item_turret_rocket"):
-						add_element(ItemService.get_item_from_id("item_turret_rocket"), player_index)
+						add_element(ItemService.get_item_from_id(Keys.generate_hash("item_turret_rocket")), player_index)
 
 
 func trigger_element_updates() -> void:
