@@ -11,9 +11,8 @@ script = ExtResource( 1 )
 element_scene = ExtResource( 2 )
 
 [node name="Heading" type="TextureRect" parent="."]
-rect_min_size = Vector2( 40, 40 )
-hint_tooltip = "Damage"
-mouse_filter = 1
+rect_min_size = Vector2( 30, 30 )
+mouse_filter = 2
 size_flags_horizontal = 0
 texture = ExtResource( 3 )
 expand = true

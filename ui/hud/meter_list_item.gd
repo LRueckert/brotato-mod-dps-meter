@@ -7,9 +7,8 @@ onready var icon_panel: Panel = $IconPanel
 onready var icon: TextureRect = $IconPanel/Icon
 
 
-func set_element(texture: Texture, index: int, tooltip: String = "") -> void:
+func set_element(texture: Texture, index: int) -> void:
 	icon.texture = texture
-	hint_tooltip = tooltip
 	set_hud_position(index)
 	icon_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE

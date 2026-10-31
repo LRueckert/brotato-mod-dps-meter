@@ -9,15 +9,15 @@ extends "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_list_container.gd"
 
 func discover_sources() -> void:
 	for element in RunData.get_player_weapons(player_index):
-		add_element(element)
+		add_damage_source(element)
 	for element in RunData.get_player_items(player_index):
 		if is_damage_source(element):
-			add_element(element)
+			add_damage_source(element)
 
 
 func update_totals() -> void:
-	for child in rows_container.get_children():
-		child.set_total(max(child.get_total(), get_damage_total(child)))
+	for source_key in rows:
+		set_source_total(source_key, get_damage_total(source_key))
 
 #endregion
 
@@ -26,53 +26,42 @@ func is_damage_source(element: ItemParentData) -> bool:
 	return element.tracking_text in ["DAMAGE_DEALT", "EXPLOSION_DAMAGE_DEALT"] or element.name == "ITEM_BUILDER_TURRET"
 
 
-func has_item(item_id: String) -> bool:
-	for data in rows.values():
-		if data.item.my_id == item_id:
-			return true
-	return false
-
-
-func add_element(element: ItemParentData) -> void:
-	if element.get_category() != Category.WEAPON and has_item(element.my_id):
+func add_damage_source(element: ItemParentData) -> void:
+	var source_key = "item:%s" % element.my_id
+	if element.get_category() == Category.WEAPON:
+		source_key = "weapon:%s" % element.get_instance_id()
+	if rows.has(source_key):
 		return
 	if ["WEAPON_WRENCH", "WEAPON_SCREWDRIVER", "ITEM_BOT_O_MINE"].has(element.name):
 		handle_spawner(element)
-	var instance = create_row()
-	instance.set_element(element.icon, player_index, Text.text(element.name))
-	instance.update_background_color(element)
 	var wave_start_value = 0
 	if [Category.ITEM, Category.CHARACTER].has(element.get_category()) && not element.name == "ITEM_BUILDER_TURRET":
 		wave_start_value = get_tracked_value(element)
-	rows[instance] = {"item": element, "wave_start_value": wave_start_value}
+	var source_data = {"item": element, "wave_start_value": wave_start_value}
+	add_source(source_key, element.icon, source_data, element)
 
 
 func handle_spawner(element: ItemParentData) -> void:
+	var item_id = ""
 	match element.name:
-		"WEAPON_SCREWDRIVER":
-			if not has_item("item_landmines"):
-				add_element(ItemService.get_item_from_id(Keys.generate_hash("item_landmines")))
-		"ITEM_BOT_O_MINE":
-			if not has_item("item_landmines"):
-				add_element(ItemService.get_item_from_id(Keys.generate_hash("item_landmines")))
+		"WEAPON_SCREWDRIVER", "ITEM_BOT_O_MINE":
+			item_id = "item_landmines"
 		"WEAPON_WRENCH":
 			match element.tier:
 				Tier.COMMON:
-					if not has_item("item_turret"):
-						add_element(ItemService.get_item_from_id(Keys.generate_hash("item_turret")))
+					item_id = "item_turret"
 				Tier.UNCOMMON:
-					if not has_item("item_turret_flame"):
-						add_element(ItemService.get_item_from_id(Keys.generate_hash("item_turret_flame")))
+					item_id = "item_turret_flame"
 				Tier.RARE:
-					if not has_item("item_turret_laser"):
-						add_element(ItemService.get_item_from_id(Keys.generate_hash("item_turret_laser")))
+					item_id = "item_turret_laser"
 				Tier.LEGENDARY:
-					if not has_item("item_turret_rocket"):
-						add_element(ItemService.get_item_from_id(Keys.generate_hash("item_turret_rocket")))
+					item_id = "item_turret_rocket"
+	if not item_id.empty():
+		add_damage_source(ItemService.get_item_from_id(Keys.generate_hash(item_id)))
 
 
-func get_damage_total(row) -> int:
-	var data = rows[row]
+func get_damage_total(source_key: String) -> int:
+	var data = rows[source_key].data
 	var element: ItemParentData = data.item
 	if element.get_category() == Category.WEAPON:
 		return element.dmg_dealt_last_wave

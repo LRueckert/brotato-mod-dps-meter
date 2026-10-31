@@ -47,6 +47,23 @@ func update_totals() -> void:
 
 #endregion
 
+func add_source(source_key: String, texture: Texture, source_data: Dictionary, item_data = null):
+	if rows.has(source_key):
+		return rows[source_key].row
+	var row = create_row()
+	row.set_element(texture, player_index)
+	row.update_background_color(item_data)
+	rows[source_key] = {"row": row, "data": source_data}
+	return row
+
+
+func set_source_total(source_key: String, total: int) -> void:
+	if not rows.has(source_key):
+		return
+	var row = rows[source_key].row
+	row.set_total(max(row.get_total(), total))
+
+
 func create_row():
 	var row = element_scene.instance()
 	rows_container.add_child(row)
@@ -58,8 +75,6 @@ func clear_elements() -> void:
 	for row in rows_container.get_children():
 		rows_container.remove_child(row)
 		row.queue_free()
-
-
 
 
 func sort_elements() -> void:
