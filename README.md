@@ -1,25 +1,17 @@
 # brotato-mod-dps-meter (3358859974)
-DPS meter for brotato to see damage dealt during the round.
-Shows damage of weapons, characters and items sorted in descending order.
-When more than 2 players are in the game, only the top 6 items of the list are shown.
+Per-wave damage, healing, and material meters for Brotato.
 
-A second list shows actual HP restored during the current wave, sorted in descending order.
-It includes regeneration, lifesteal, consumable pickups (including healing over time),
-and item healing such as medical turrets, Tentacle, and Adrenaline. Torture is listed
-separately from regeneration.
-Overhealing and blocked healing are not counted. Totals reset each wave and are
-separate for each player. With more than 2 players, only the top 6 healing sources
-are shown. Both lists hide shortly after the wave ends.
+- **Damage:** weapons, items, characters, and spawned sources. Overkill Damage does not count.
+- **Healing:** regeneration, lifesteal, consumables, and direct healing effects. Only actual HP restored counts.
+- **Materials:** ground pickups, pickup bonuses, and weapon/item-generated income. Other income is grouped separately; spending and discounts are excluded.
 
-Both lists clear their rows when initialized, prepare known sources upfront,
-and discover additional sources during the wave. Sources with zero totals are
-hidden. Recorded contributions remain until the wave ends, even if the source
-item or weapon is removed.
+Totals are tracked per player, reset each wave, and sorted highest first. Zero totals
+are hidden; with three or four players, each list shows only its top six sources.
+Material pickups follow the game's co-op sharing. Lists hide shortly after the wave ends.
 
-Only one list is visible per player, with damage selected at the start of each wave.
-Use Q or E on the keyboard, or LB/RB (L1/R1) on a controller, to switch between
-damage and healing. In co-op, each player's assigned device switches only their
-own list. Switching is disabled while paused or when the meter is hidden.
+Use **Q/E** or a controller's **shoulder buttons/triggers** to cycle lists independently
+per player. Only one list is visible at a time, starting with damage each wave.
+Switching is disabled while paused or when the meter is hidden.
 
 <img src="modicon.png" alt="Mod icon"/>
 

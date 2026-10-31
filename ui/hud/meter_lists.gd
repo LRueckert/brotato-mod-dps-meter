@@ -3,13 +3,12 @@ extends VBoxContainer
 
 var player_index: int = -1
 var selected_list: int = 0
-onready var damage_container = $DmgMeterContainer
-onready var healing_container = $HealingMeterContainer
+onready var containers: Array = [$DmgMeterContainer, $HealingMeterContainer, $MaterialsMeterContainer]
 onready var headings: HBoxContainer = $Headings
 
 
 func _ready() -> void:
-	for container in [damage_container, healing_container]:
+	for container in containers:
 		var heading = container.heading
 		container.remove_child(heading)
 		headings.add_child(heading)
@@ -49,12 +48,11 @@ func _input(event: InputEvent) -> void:
 		return
 	if RunData.is_coop_run and device != CoopService.get_remapped_player_device(player_index):
 		return
-	selected_list = posmod(selected_list + direction, 2)
+	selected_list = posmod(selected_list + direction, containers.size())
 	update_list_visibility()
 
 
 func update_list_visibility() -> void:
-	damage_container.visible = selected_list == 0
-	healing_container.visible = selected_list == 1
-	damage_container.heading.self_modulate = Color.white if selected_list == 0 else Color(0.5, 0.5, 0.5, 0.5)
-	healing_container.heading.self_modulate = Color.white if selected_list == 1 else Color(0.5, 0.5, 0.5, 0.5)
+	for index in containers.size():
+		containers[index].visible = selected_list == index
+		containers[index].heading.self_modulate = Color.white if selected_list == index else Color(0.5, 0.5, 0.5, 0.5)
