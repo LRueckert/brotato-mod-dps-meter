@@ -1,79 +1,82 @@
 class_name DmgMeterContainer
-extends VBoxContainer
+extends "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_list_container.gd"
 
-export(PackedScene) var element_scene = null
-var items = []
-var max_items = 0
+# =============================================================================
+# Base Class Overrides
+# List-specific hooks called by MeterListContainer.
+# =============================================================================
+#region Base Class Overrides
 
-func set_elements(elements: Array, player_index: int, player_count: int, replace: bool = true) -> void:
-	max_items = 0 if player_count < 3 else 6
-	if replace:
-		clear_elements()
-
-	for element in elements:
-		add_element(element, player_index)
-
-
-func clear_elements() -> void:
-	items = []
-	for n in get_children():
-		remove_child(n)
-		n.queue_free()
+func discover_sources() -> void:
+	for element in RunData.get_player_weapons(player_index):
+		add_damage_source(element)
+	for element in RunData.get_player_items(player_index):
+		if is_damage_source(element):
+			add_damage_source(element)
 
 
-func add_element(element: ItemParentData, player_index: int) -> void:
+func update_totals() -> void:
+	for source_key in rows:
+		set_source_total(source_key, get_damage_total(source_key))
+
+#endregion
+
+
+func is_damage_source(element: ItemParentData) -> bool:
+	return element.tracking_text in ["DAMAGE_DEALT", "EXPLOSION_DAMAGE_DEALT"] or element.name == "ITEM_BUILDER_TURRET"
+
+
+func add_damage_source(element: ItemParentData) -> void:
+	var source_key = "item:%s" % element.my_id
+	if element.get_category() == Category.WEAPON:
+		source_key = "weapon:%s" % element.get_instance_id()
+	if rows.has(source_key):
+		return
 	if ["WEAPON_WRENCH", "WEAPON_SCREWDRIVER", "ITEM_BOT_O_MINE"].has(element.name):
-		handle_spawner(element, player_index)
-	items.append(element.my_id)
-	var instance = element_scene.instance()
-	add_child(instance)
-	instance.set_element(element, player_index)
+		handle_spawner(element)
+	var wave_start_value = 0
+	if [Category.ITEM, Category.CHARACTER].has(element.get_category()) && not element.name == "ITEM_BUILDER_TURRET":
+		wave_start_value = get_tracked_value(element)
+	var source_data = {"item": element, "wave_start_value": wave_start_value}
+	add_source(source_key, element.icon, source_data, element)
 
 
-func handle_spawner(element: ItemParentData, player_index: int) -> void:
+func handle_spawner(element: ItemParentData) -> void:
+	var item_id = ""
 	match element.name:
-		"WEAPON_SCREWDRIVER":
-			if not items.has("item_landmines"):
-				add_element(ItemService.get_item_from_id(Keys.generate_hash("item_landmines")), player_index)
-		"ITEM_BOT_O_MINE":
-			if not items.has("item_landmines"):
-				add_element(ItemService.get_item_from_id(Keys.generate_hash("item_landmines")), player_index)
+		"WEAPON_SCREWDRIVER", "ITEM_BOT_O_MINE":
+			item_id = "item_landmines"
 		"WEAPON_WRENCH":
 			match element.tier:
 				Tier.COMMON:
-					if not items.has("item_turret"):
-						add_element(ItemService.get_item_from_id(Keys.generate_hash("item_turret")), player_index)
+					item_id = "item_turret"
 				Tier.UNCOMMON:
-					if not items.has("item_turret_flame"):
-						add_element(ItemService.get_item_from_id(Keys.generate_hash("item_turret_flame")), player_index)
+					item_id = "item_turret_flame"
 				Tier.RARE:
-					if not items.has("item_turret_laser"):
-						add_element(ItemService.get_item_from_id(Keys.generate_hash("item_turret_laser")), player_index)
+					item_id = "item_turret_laser"
 				Tier.LEGENDARY:
-					if not items.has("item_turret_rocket"):
-						add_element(ItemService.get_item_from_id(Keys.generate_hash("item_turret_rocket")), player_index)
+					item_id = "item_turret_rocket"
+	if not item_id.empty():
+		add_damage_source(ItemService.get_item_from_id(Keys.generate_hash(item_id)))
 
 
-func trigger_element_updates() -> void:
-	for child in get_children():
-		child.trigger_update()
-	sort_elements()
-	hide_bottom_elements()
-
-func sort_elements() -> void:
-	var sorted = false
-	while not sorted:
-		var swapped = false
-		var children = get_children()
-		for i in children.size() - 1:
-			if children[i].get_dmg_dealt() < children[i + 1].get_dmg_dealt():
-				move_child(children[i], i + 1)
-				children = get_children()
-				swapped = true
-		sorted = !swapped
+func get_damage_total(source_key: String) -> int:
+	var data = rows[source_key].data
+	var element: ItemParentData = data.item
+	if element.get_category() == Category.WEAPON:
+		return element.dmg_dealt_last_wave
+	return get_tracked_value(element) - data.wave_start_value
 
 
-func hide_bottom_elements() -> void:
-	var children = get_children()
-	for i in children.size():
-		children[i].visible = max_items == 0 || i < max_items
+func get_tracked_value(element: ItemParentData) -> int:
+	return sum_tracked_value(RunData.tracked_item_effects[player_index].get(element.my_id_hash, 0))
+
+
+func sum_tracked_value(tracked) -> int:
+	var value = 0
+	if tracked is Array:
+		for total in tracked:
+			value += total
+	else:
+		value = tracked
+	return value

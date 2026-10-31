@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://mods-unpacked/lrueckert-DmgMeter/ui/hud/materials_meter_container.gd" type="Script" id=1]
+[ext_resource path="res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_list_item.tscn" type="PackedScene" id=2]
+[ext_resource path="res://items/materials/material_ui.png" type="Texture" id=3]
+
+[node name="MaterialsMeterContainer" type="VBoxContainer"]
+mouse_filter = 2
+script = ExtResource( 1 )
+element_scene = ExtResource( 2 )
+
+[node name="Heading" type="TextureRect" parent="."]
+rect_min_size = Vector2( 30, 30 )
+mouse_filter = 2
+size_flags_horizontal = 0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 5
+
+[node name="Rows" type="VBoxContainer" parent="."]
+mouse_filter = 2

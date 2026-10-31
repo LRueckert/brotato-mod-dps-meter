@@ -15,15 +15,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [v3.0.0] - 2026-10-31
+
+### Added
+
+- Healing meter covering regeneration, lifesteal, consumables, and direct healing effects.
+- Materials meter covering pickups, pickup bonuses, and weapon/item-generated income.
+- Independent per-player list switching using Q/E, controller shoulder buttons, or triggers.
+- Category icons with highlighting for the active list.
+
+### Changed
+
+- Hide sources with zero totals and preserve their recorded contributions throughout the wave.
+- Use shared container and row implementations for all three meter types.
+
+### Fixed
+
+- Prevent duplicate item and spawned-source rows without merging individual weapons.
+
 ## [v2.2.0] - 2026-02-16
 
 ### Added
 
 - Pet support
-
-### Changed
-
-### Removed
 
 ### Fixed
 
@@ -85,7 +99,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Icons and raw damage numbers
 
-[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v2.1.3...HEAD
+[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v3.0.0...HEAD
+[v3.0.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v3.0.0
+[v2.2.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.2.0
 [v2.1.3]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.1.3
 [v2.1.2]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.1.2
 [v2.1.1]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.1.1

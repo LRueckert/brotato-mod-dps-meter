@@ -4,20 +4,20 @@ extends "res://ui/hud/ui_wave_timer.gd"
 onready var _hud = get_tree().get_current_scene().get_node("UI/HUD")
 var dmg_meter_timer: Timer = null
 var hide_dmg_meter_timer: Timer = null
-onready var dmg_meter_containers: Array = []
+var meter_lists: Array = []
 
 func _ready() -> void:
 	dmgmeter_register_timers()
-	dmg_meter_containers = []
+	meter_lists = []
+	RunData.material_meter_reset()
 	var player_count = RunData.get_player_count()
 	for i in player_count:
 		var player_index = str(i + 1)
-		var dmg_meter_container = _hud.get_node("LifeContainerP%s/DmgMeterContainerP%s" % [player_index, player_index])
-		dmg_meter_containers.append(dmg_meter_container)
-		dmg_meter_containers[i].set_elements(RunData.get_player_weapons(i), i, player_count, true)
-		for el in RunData.get_player_items(i):
-			if not dmg_meter_containers[i].items.has(el.my_id) && el.tracking_text == "DAMAGE_DEALT" || el.tracking_text == "EXPLOSION_DAMAGE_DEALT" || el.name == "ITEM_BUILDER_TURRET":
-				dmg_meter_containers[i].add_element(el, i)
+		var lists = _hud.get_node("LifeContainerP%s/MeterListsP%s" % [player_index, player_index])
+		lists.set_player(i)
+		meter_lists.append(lists)
+		for container in lists.containers:
+			container.set_player(i, player_count)
 	dmgmeter_update()
 
 func dmgmeter_register_timers():
@@ -41,13 +41,18 @@ func dmgmeter_update():
 		var time = ceil(wave_timer.time_left)
 		if time > 0:
 			for i in RunData.get_player_count():
-				dmg_meter_containers[i].visible = true
-				dmg_meter_containers[i].trigger_element_updates()
+				meter_lists[i].visible = true
+				for container in meter_lists[i].containers:
+					container.trigger_element_updates()
 		else:
+			for i in RunData.get_player_count():
+				for container in meter_lists[i].containers:
+					container.trigger_element_updates()
 			hide_dmg_meter_timer.start()
 			dmg_meter_timer.stop()
 		return
 
 func dmgmeter_hide():
 	for i in RunData.get_player_count():
-		dmg_meter_containers[i].visible = false
+		meter_lists[i].visible = false
+	RunData.material_meter_active = false

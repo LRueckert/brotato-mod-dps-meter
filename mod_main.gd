@@ -22,6 +22,9 @@ func install_script_extensions() -> void:
 	extensions_dir_path = mod_dir_path.plus_file("extensions")
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/dmg_meter.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/dmg_meter_positioning.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("entities/units/player/healing_meter.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("singletons/materials_meter.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("materials_meter.gd"))
 
 
 func add_translations() -> void:
@@ -34,7 +37,7 @@ func _ready() -> void:
 	var mainSzene = load("res://main.tscn").instance()
 	for index in 4:
 		var player_index = str(index + 1)
-		var node_name = "DmgMeterContainerP%s" % player_index
+		var node_name = "MeterListsP%s" % player_index
 		var parent_node = "UI/HUD/LifeContainerP%s" % player_index
-		ModLoaderMod.append_node_in_scene(mainSzene, node_name, parent_node, "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/dmg_meter_container.tscn")
+		ModLoaderMod.append_node_in_scene(mainSzene, node_name, parent_node, "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_lists.tscn")
 	ModLoaderMod.save_scene(mainSzene, "res://main.tscn")
