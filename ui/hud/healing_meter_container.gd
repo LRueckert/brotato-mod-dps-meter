@@ -1,31 +1,39 @@
 class_name HealingMeterContainer
-extends VBoxContainer
+extends "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_list_container.gd"
 
 
-export(PackedScene) var element_scene = null
+# =============================================================================
+# Base Class Overrides
+# List-specific hooks called MeterListContainer.
+# =============================================================================
+#region Base Class Overrides
 
-var player_index: int = 0
-var max_items: int = 0
-var rows: Dictionary = {}
-onready var rows_container: VBoxContainer = $Rows
-onready var heading: TextureRect = $Heading
-
-
-func set_player(index: int, player_count: int) -> void:
-	player_index = index
-	max_items = 0 if player_count < 3 else 6
-	heading.size_flags_horizontal = 0 if index == 0 or index == 2 else Control.SIZE_SHRINK_END
+func discover_sources() -> void:
 	for source in ["regeneration", "lifesteal", "consumables"]:
 		set_total(source, 0)
+	for item in RunData.get_player_items(player_index):
+		if item.tracking_text == "HEALTH_RECOVERED" or item.my_id == "item_torture":
+			var source = str(item.my_id_hash)
+			if not rows.has(source):
+				set_total(source, 0)
+
+
+func update_totals() -> void:
+	for player in get_tree().get_nodes_in_group("dmgmeter_healing_players"):
+		if player.player_index == player_index:
+			for source in player.healing_meter_totals:
+				set_total(source, player.healing_meter_totals[source])
+			break
+
+#endregion
 
 
 func set_total(source: String, total: int) -> void:
 	if not rows.has(source):
-		var row = element_scene.instance()
-		rows_container.add_child(row)
+		var row = create_row()
 		set_healing_source(row, source)
 		rows[source] = row
-	rows[source].set_total(total)
+	rows[source].set_total(max(rows[source].get_total(), total))
 
 
 func set_healing_source(row, source: String) -> void:
@@ -54,22 +62,3 @@ func set_healing_source(row, source: String) -> void:
 						break
 	row.set_element(texture, player_index, tooltip)
 	row.update_background_color(item)
-
-
-func trigger_element_updates() -> void:
-	for player in get_tree().get_nodes_in_group("dmgmeter_healing_players"):
-		if player.player_index == player_index:
-			for source in player.healing_meter_totals:
-				set_total(source, player.healing_meter_totals[source])
-			break
-	var sorted_rows = rows.values()
-	sorted_rows.sort_custom(self, "compare_rows")
-	for index in sorted_rows.size():
-		rows_container.move_child(sorted_rows[index], index)
-		sorted_rows[index].visible = max_items == 0 or index < max_items
-
-
-func compare_rows(first, second) -> bool:
-	if first.get_total() == second.get_total():
-		return first.hint_tooltip < second.hint_tooltip
-	return first.get_total() > second.get_total()
