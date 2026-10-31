@@ -21,10 +21,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Pet support
 
-### Changed
-
-### Removed
-
 ### Fixed
 
 - Update 1.1.14.0 breaking the mod

@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://mods-unpacked/lrueckert-DmgMeter/ui/hud/dmg_meter_item.gd" type="Script" id=1]
+[ext_resource path="res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_list_item.gd" type="Script" id=1]
 [ext_resource path="res://ui/menus/shop/icon_panel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://resources/fonts/actual/base/font_26_outline_thick.tres" type="DynamicFont" id=3]
 
-[node name="DmgMeterItem" type="HBoxContainer"]
+[node name="MeterListItem" type="HBoxContainer"]
 visible = false
 rect_min_size = Vector2( 40, 40 )
 alignment = 1
