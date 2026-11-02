@@ -34,10 +34,28 @@ func add_translations() -> void:
 
 func _ready() -> void:
 	ModLoaderLog.info("Ready!", LRUECKERT_DMGMETER_LOG_NAME)
-	var mainSzene = load("res://main.tscn").instance()
-	for index in 4:
-		var player_index = str(index + 1)
-		var node_name = "MeterListsP%s" % player_index
-		var parent_node = "UI/HUD/LifeContainerP%s" % player_index
-		ModLoaderMod.append_node_in_scene(mainSzene, node_name, parent_node, "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_lists.tscn")
-	ModLoaderMod.save_scene(mainSzene, "res://main.tscn")
+	call_deferred("_register_mod_options")
+
+
+func _register_mod_options() -> void:
+	var mod_options = get_node_or_null("/root/ModLoader/Oudstand-ModOptions/ModOptions")
+	if not mod_options:
+		return
+	mod_options.register_mod_options(LRUECKERT_DMGMETER_DIR, {
+		"tab_title": "DmgMeter",
+		"options": [{
+			"type": "slider",
+			"id": "max_entries",
+			"label": "Entries per list",
+			"min": 1.0,
+			"max": 25.0,
+			"step": 1.0,
+			"default": 6.0,
+			"display_as_integer": true
+		}, {
+			"type": "toggle",
+			"id": "show_all_lists_solo",
+			"label": "Show all lists in single player",
+			"default": false
+		}]
+	})

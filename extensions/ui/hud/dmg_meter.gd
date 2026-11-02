@@ -7,6 +7,9 @@ var hide_dmg_meter_timer: Timer = null
 var meter_lists: Array = []
 
 func _ready() -> void:
+	call_deferred("dmgmeter_initialize")
+
+func dmgmeter_initialize() -> void:
 	dmgmeter_register_timers()
 	meter_lists = []
 	RunData.material_meter_reset()
@@ -17,7 +20,8 @@ func _ready() -> void:
 		lists.set_player(i)
 		meter_lists.append(lists)
 		for container in lists.containers:
-			container.set_player(i, player_count)
+			container.set_player(i)
+		lists.apply_layout()
 	dmgmeter_update()
 
 func dmgmeter_register_timers():

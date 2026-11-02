@@ -2,13 +2,23 @@ class_name MeterListContainer
 extends VBoxContainer
 
 
+const MOD_ID := "lrueckert-DmgMeter"
+
+# =============================================================================
+# Configuration
+# Runtime values loaded from Mod Options.
+# =============================================================================
+var MAX_ITEMS: int = 6
+
+
 export(PackedScene) var element_scene = null
 
 var player_index: int = 0
-var max_items: int = 0
+var display_position: int = 0
 var rows: Dictionary = {}
 onready var rows_container: VBoxContainer = $Rows
 onready var heading: TextureRect = $Heading
+onready var mod_options = get_node_or_null("/root/ModLoader/Oudstand-ModOptions/ModOptions")
 
 
 # =============================================================================
@@ -17,10 +27,10 @@ onready var heading: TextureRect = $Heading
 # =============================================================================
 #region HUD Interface
 
-func set_player(index: int, player_count: int) -> void:
+func set_player(index: int) -> void:
 	player_index = index
-	max_items = 0 if player_count < 3 else 6
-	heading.size_flags_horizontal = 0 if index == 0 or index == 2 else Control.SIZE_SHRINK_END
+	load_settings()
+	set_display_position(index)
 	clear_elements()
 	discover_sources()
 
@@ -51,7 +61,7 @@ func add_source(source_key: String, texture: Texture, source_data: Dictionary, i
 	if rows.has(source_key):
 		return rows[source_key].row
 	var row = create_row()
-	row.set_element(texture, player_index)
+	row.set_element(texture, display_position)
 	row.update_background_color(item_data)
 	rows[source_key] = {"row": row, "data": source_data}
 	return row
@@ -77,6 +87,37 @@ func clear_elements() -> void:
 		row.queue_free()
 
 
+func set_display_position(position_index: int) -> void:
+	display_position = position_index
+	var left = position_index == 0 or position_index == 2
+	heading.size_flags_horizontal = 0 if left else Control.SIZE_SHRINK_END
+	alignment = BoxContainer.ALIGN_END if position_index > 1 else BoxContainer.ALIGN_BEGIN
+	for row in rows_container.get_children():
+		row.set_hud_position(position_index)
+
+
+func load_settings() -> void:
+	if not mod_options:
+		return
+	if not mod_options.is_connected("config_changed", self, "_on_mod_options_config_changed"):
+		mod_options.connect("config_changed", self, "_on_mod_options_config_changed")
+		mod_options.connect("mod_registered", self, "_on_mod_options_registered")
+	if MOD_ID in mod_options.get_registered_mods():
+		MAX_ITEMS = int(mod_options.get_value(MOD_ID, "max_entries"))
+		hide_bottom_elements()
+
+
+func _on_mod_options_registered(mod_id: String) -> void:
+	if mod_id == MOD_ID:
+		load_settings()
+
+
+func _on_mod_options_config_changed(mod_id: String, option_id: String, value) -> void:
+	if mod_id == MOD_ID and option_id == "max_entries":
+		MAX_ITEMS = int(value)
+		hide_bottom_elements()
+
+
 func sort_elements() -> void:
 	var sorted_rows = rows_container.get_children()
 	sorted_rows.sort_custom(self, "compare_rows")
@@ -92,6 +133,7 @@ func compare_rows(first, second) -> bool:
 
 
 func hide_bottom_elements() -> void:
+	var limit = 25 if RunData.get_player_count() == 1 else MAX_ITEMS
 	var children = rows_container.get_children()
 	for index in children.size():
-		children[index].visible = children[index].get_total() > 0 and (max_items == 0 or index < max_items)
+		children[index].visible = children[index].get_total() > 0 and (limit == 0 or index < limit)

@@ -1,6 +1,19 @@
 extends "res://main.gd"
 
 
+func _enter_tree() -> void:
+	var meter_scene = load("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_lists.tscn")
+	for index in 4:
+		var player_number = str(index + 1)
+		var parent = get_node("UI/HUD/LifeContainerP%s" % player_number)
+		var node_name = "MeterListsP%s" % player_number
+		if parent.has_node(node_name):
+			continue
+		var lists = meter_scene.instance()
+		lists.name = node_name
+		parent.add_child(lists)
+
+
 func on_gold_picked_up(gold: Node, player_index: int) -> void:
 	if not RunData.material_meter_active or gold.already_picked_up or player_index < 0:
 		.on_gold_picked_up(gold, player_index)
