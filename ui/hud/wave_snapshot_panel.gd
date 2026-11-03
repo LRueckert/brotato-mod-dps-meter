@@ -3,15 +3,10 @@ extends ScrollContainer
 
 const METER_ROW_SCENE = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_list_item.tscn")
 
-var _rows_container: VBoxContainer
+onready var _rows_container: VBoxContainer = $RowsContainer
 
 
 func set_entries(entries: Array) -> void:
-	if _rows_container == null:
-		_rows_container = VBoxContainer.new()
-		_rows_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		_rows_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		add_child(_rows_container)
 	for child in _rows_container.get_children():
 		_rows_container.remove_child(child)
 		child.queue_free()

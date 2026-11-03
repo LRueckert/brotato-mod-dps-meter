@@ -2,7 +2,7 @@ extends "res://ui/menus/shop/stats_container.gd"
 
 
 const MOD_ID := "lrueckert-DmgMeter"
-const PANEL_SCRIPT = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/wave_snapshot_panel.gd")
+const PANEL_SCENE = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/wave_snapshot_panel.tscn")
 const CATEGORY_NAMES = ["DAMAGE", "HEALING", "MATERIALS"]
 const CATEGORY_ICONS = [
 	preload("res://items/stats/percent_damage.png"),
@@ -64,11 +64,9 @@ func _dmgmeter_setup_snapshot_categories() -> void:
 			icon.modulate = Color(1, 0.78, 0.25, 1)
 		_dmgmeter_category_buttons.append(button)
 
-		var panel = PANEL_SCRIPT.new()
+		var panel = PANEL_SCENE.instance()
 		panel.name = "DmgMeter%sSnapshot" % CATEGORY_NAMES[category_index].capitalize()
 		panel.visible = false
-		panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		tabs_parent.add_child(panel)
 		_dmgmeter_snapshot_panels.append(panel)
 

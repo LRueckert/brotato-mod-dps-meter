@@ -29,6 +29,3 @@ Changes are saved automatically and apply immediately to all lists and players.
 ## Development Notes
 
 Follow steam guide: https://steamcommunity.com/sharedfiles/filedetails/?id=2931079751
-
-Todo:
-- add stats panel for shop

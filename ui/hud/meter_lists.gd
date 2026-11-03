@@ -76,9 +76,8 @@ func _update_heading_layout() -> void:
 	var left = hud_position == 0 or hud_position == 2
 	headings.alignment = BoxContainer.ALIGN_BEGIN if left else BoxContainer.ALIGN_END
 	for index in headings.get_child_count():
-		var container_index = index if left else containers.size() - index - 1
-		if containers[container_index].heading.get_parent() == headings:
-			headings.move_child(containers[container_index].heading, index)
+		if containers[index].heading.get_parent() == headings:
+			headings.move_child(containers[index].heading, index)
 
 
 func _move_node(node: Node, parent: Node) -> void:

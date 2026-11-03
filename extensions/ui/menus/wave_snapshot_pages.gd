@@ -8,7 +8,7 @@ const CATEGORY_ICONS = [
 	preload("res://items/stats/max_hp.png"),
 	preload("res://items/materials/material_ui.png")
 ]
-const PANEL_SCRIPT = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/wave_snapshot_panel.gd")
+const PANEL_SCENE = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/wave_snapshot_panel.tscn")
 
 # =============================================================================
 # Configuration
@@ -26,7 +26,6 @@ func _ready() -> void:
 	carousel.connect("visibility_changed", self, "add_pages")
 	load_settings()
 	add_pages()
-
 
 func load_settings() -> void:
 	if not mod_options:
@@ -82,12 +81,10 @@ func add_pages() -> void:
 		heading.add_child(icon)
 
 		var entries = player_snapshot[category_index] if category_index < player_snapshot.size() else []
-		var page = PANEL_SCRIPT.new()
+		var page = PANEL_SCENE.instance()
 		page.set_meta("dmgmeter_snapshot_page", true)
 		page.anchor_right = 1.0
 		page.anchor_bottom = 1.0
-		page.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		page.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		content.add_child(page)
 		page.set_entries(entries)
 
