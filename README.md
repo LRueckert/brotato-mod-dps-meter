@@ -15,13 +15,14 @@ Use **Q/E** or a controller's **shoulder buttons/triggers** to cycle lists indep
 Totals are tracked per player, reset each wave, and sorted highest first.
 Zero totals are hidden; each list shows up to 25 sources by default with one or two players, or six sources with three or four players.
 Material pickups follow the game's co-op sharing.
-Lists hide shortly after the wave ends.
+At the end of each wave, damage, healing, and materials snapshots are available as categories in the level-up and shop screens.
 
 ## Options
 
 With **Oudstand-ModOptions** installed, open **Options > Mods > DmgMeter** to change options, otherwise default values will work fine.
 Changes are saved automatically and apply immediately to all lists and players.
 
+- **Wave snapshots:** Show wave snapshots between rounds in the stats panel, default **enabled**
 - **Entries per list (1-2 players):** **1-25**, default **25**.
 - **Entries per list (3-4 players):** **1-25**, default **6**.
 

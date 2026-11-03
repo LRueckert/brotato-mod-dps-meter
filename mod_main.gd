@@ -22,7 +22,11 @@ func install_script_extensions() -> void:
 	extensions_dir_path = mod_dir_path.plus_file("extensions")
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/dmg_meter.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/dmg_meter_positioning.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/menus/shop/stats_container.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/menus/shop/coop_shop_player_container.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/menus/ingame/coop_upgrades_ui_player_container.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("entities/units/player/healing_meter.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("singletons/run_data.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("singletons/materials_meter.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("materials_meter.gd"))
 
@@ -44,6 +48,11 @@ func _register_mod_options() -> void:
 	mod_options.register_mod_options(LRUECKERT_DMGMETER_DIR, {
 		"tab_title": "DmgMeter",
 		"options": [{
+			"type": "toggle",
+			"id": "wave_snapshots",
+			"label": "Wave snapshots",
+			"default": true
+		}, {
 			"type": "slider",
 			"id": "max_entries_1_2_players",
 			"label": "Entries per list (1-2 players)",

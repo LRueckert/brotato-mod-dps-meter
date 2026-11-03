@@ -13,6 +13,7 @@ func dmgmeter_initialize() -> void:
 	dmgmeter_register_timers()
 	meter_lists = []
 	RunData.material_meter_reset()
+	RunData.dmgmeter_wave_snapshot = []
 	var player_count = RunData.get_player_count()
 	for i in player_count:
 		var player_index = str(i + 1)
@@ -52,9 +53,25 @@ func dmgmeter_update():
 			for i in RunData.get_player_count():
 				for container in meter_lists[i].containers:
 					container.trigger_element_updates()
+			dmgmeter_capture_wave_snapshot()
 			hide_dmg_meter_timer.start()
 			dmg_meter_timer.stop()
 		return
+
+
+func dmgmeter_capture_wave_snapshot() -> void:
+	var snapshot = []
+	for lists in meter_lists:
+		var player_snapshot = []
+		for container in lists.containers:
+			var entries = []
+			for row in container.rows_container.get_children():
+				if row.visible:
+					entries.append({"texture": row.icon.texture, "icon_color": row.icon.modulate, "total": row.get_total()})
+			player_snapshot.append(entries)
+		snapshot.append(player_snapshot)
+	RunData.dmgmeter_wave_snapshot = snapshot
+
 
 func dmgmeter_hide():
 	for i in RunData.get_player_count():

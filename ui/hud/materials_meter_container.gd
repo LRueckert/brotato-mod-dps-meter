@@ -12,7 +12,8 @@ const MATERIAL_ICON = preload("res://items/materials/material_ui.png")
 #region Base Class Overrides
 
 func discover_sources() -> void:
-	add_source("pickups", MATERIAL_ICON, {})
+	var pickup_row = add_source("pickups", MATERIAL_ICON, {})
+	pickup_row.icon.modulate = Utils.GOLD_COLOR
 	add_source("other", ItemService.get_stat(Keys.stat_harvesting_hash).small_icon, {})
 	add_material_source(ItemService.get_item_from_id(Keys.item_metal_detector_hash))
 	for element in RunData.get_player_weapons(player_index):
