@@ -20,9 +20,6 @@ func dmgmeter_initialize() -> void:
 		var lists = _hud.get_node("LifeContainerP%s/MeterListsP%s" % [player_index, player_index])
 		lists.set_player(i)
 		meter_lists.append(lists)
-		for container in lists.containers:
-			container.set_player(i)
-		lists.apply_layout()
 	dmgmeter_update()
 
 func dmgmeter_register_timers():
@@ -64,11 +61,7 @@ func dmgmeter_capture_wave_snapshot() -> void:
 	for lists in meter_lists:
 		var player_snapshot = []
 		for container in lists.containers:
-			var entries = []
-			for row in container.rows_container.get_children():
-				if row.visible:
-					entries.append({"texture": row.icon.texture, "icon_color": row.icon.modulate, "total": row.get_total()})
-			player_snapshot.append(entries)
+			player_snapshot.append(container.get_snapshot_entries())
 		snapshot.append(player_snapshot)
 	RunData.dmgmeter_wave_snapshot = snapshot
 

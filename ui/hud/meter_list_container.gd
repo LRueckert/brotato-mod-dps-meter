@@ -2,24 +2,14 @@ class_name MeterListContainer
 extends VBoxContainer
 
 
-const MOD_ID := "lrueckert-DmgMeter"
-
-# =============================================================================
-# Configuration
-# Runtime values loaded from Mod Options.
-# =============================================================================
-var MAX_ITEMS_1_2_PLAYERS: int = 25
-var MAX_ITEMS_3_4_PLAYERS: int = 6
-
-
 export(PackedScene) var element_scene = null
 
+var entry_limit: int = 0
 var player_index: int = 0
 var display_position: int = 0
 var rows: Dictionary = {}
 onready var rows_container: VBoxContainer = $Rows
 onready var heading: TextureRect = $Heading
-onready var mod_options = get_node_or_null("/root/ModLoader/Oudstand-ModOptions/ModOptions")
 
 
 # =============================================================================
@@ -30,7 +20,6 @@ onready var mod_options = get_node_or_null("/root/ModLoader/Oudstand-ModOptions/
 
 func set_player(index: int) -> void:
 	player_index = index
-	load_settings()
 	set_display_position(index)
 	clear_elements()
 	discover_sources()
@@ -57,6 +46,14 @@ func update_totals() -> void:
 	pass
 
 #endregion
+
+func get_snapshot_entries() -> Array:
+	var entries = []
+	for row in rows_container.get_children():
+		if row.get_total() > 0:
+			entries.append({"texture": row.icon.texture, "icon_color": row.icon.modulate, "total": row.get_total()})
+	return entries
+
 
 func add_source(source_key: String, texture: Texture, source_data: Dictionary, item_data = null):
 	if rows.has(source_key):
@@ -97,32 +94,9 @@ func set_display_position(position_index: int) -> void:
 		row.set_hud_position(position_index)
 
 
-func load_settings() -> void:
-	if not mod_options:
-		return
-	if not mod_options.is_connected("config_changed", self, "_on_mod_options_config_changed"):
-		mod_options.connect("config_changed", self, "_on_mod_options_config_changed")
-		mod_options.connect("mod_registered", self, "_on_mod_options_registered")
-	if MOD_ID in mod_options.get_registered_mods():
-		MAX_ITEMS_1_2_PLAYERS = int(mod_options.get_value(MOD_ID, "max_entries_1_2_players"))
-		MAX_ITEMS_3_4_PLAYERS = int(mod_options.get_value(MOD_ID, "max_entries_3_4_players"))
-		hide_bottom_elements()
-
-
-func _on_mod_options_registered(mod_id: String) -> void:
-	if mod_id == MOD_ID:
-		load_settings()
-
-
-func _on_mod_options_config_changed(mod_id: String, option_id: String, value) -> void:
-	if mod_id != MOD_ID:
-		return
-	if option_id == "max_entries_1_2_players":
-		MAX_ITEMS_1_2_PLAYERS = int(value)
-		hide_bottom_elements()
-	elif option_id == "max_entries_3_4_players":
-		MAX_ITEMS_3_4_PLAYERS = int(value)
-		hide_bottom_elements()
+func set_entry_limit(value: int) -> void:
+	entry_limit = value
+	hide_bottom_elements()
 
 
 func sort_elements() -> void:
@@ -140,7 +114,6 @@ func compare_rows(first, second) -> bool:
 
 
 func hide_bottom_elements() -> void:
-	var limit = MAX_ITEMS_1_2_PLAYERS if RunData.get_player_count() <= 2 else MAX_ITEMS_3_4_PLAYERS
 	var children = rows_container.get_children()
 	for index in children.size():
-		children[index].visible = children[index].get_total() > 0 and (limit == 0 or index < limit)
+		children[index].visible = children[index].get_total() > 0 and (entry_limit == 0 or index < entry_limit)

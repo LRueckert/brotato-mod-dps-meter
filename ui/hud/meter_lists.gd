@@ -1,9 +1,13 @@
 extends VBoxContainer
 
 
+const METER_CONFIG = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_config.gd")
+
+
 var player_index: int = -1
 var selected_list: int = 0
 var hud_position: int = 0
+var _meter_config
 onready var containers: Array = [$DmgMeterContainer, $HealingMeterContainer, $MaterialsMeterContainer]
 onready var headings: HBoxContainer = $Headings
 
@@ -13,12 +17,23 @@ func _ready() -> void:
 		var heading = container.heading
 		container.remove_child(heading)
 		headings.add_child(heading)
+	_meter_config = get_node(METER_CONFIG.NODE_PATH)
+	_meter_config.connect("dmgmeter_config_changed", self, "_apply_settings")
+	_apply_settings()
 
 
 func set_player(index: int) -> void:
 	player_index = index
 	hud_position = index
+	_apply_settings()
+	for container in containers:
+		container.set_player(index)
 	apply_layout()
+
+
+func _apply_settings() -> void:
+	for container in containers:
+		container.set_entry_limit(_meter_config.entry_limit)
 
 
 func _input(event: InputEvent) -> void:

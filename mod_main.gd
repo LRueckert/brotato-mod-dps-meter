@@ -1,6 +1,7 @@
 extends Node
 
 
+const METER_CONFIG = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_config.gd")
 const LRUECKERT_DMGMETER_DIR := "lrueckert-DmgMeter"
 const LRUECKERT_DMGMETER_LOG_NAME := "lrueckert-DmgMeter:Main"
 
@@ -38,6 +39,9 @@ func add_translations() -> void:
 
 func _ready() -> void:
 	ModLoaderLog.info("Ready!", LRUECKERT_DMGMETER_LOG_NAME)
+	var meter_config = METER_CONFIG.new()
+	meter_config.name = "MeterConfig"
+	add_child(meter_config)
 	call_deferred("_register_mod_options")
 
 
@@ -45,30 +49,4 @@ func _register_mod_options() -> void:
 	var mod_options = get_node_or_null("/root/ModLoader/Oudstand-ModOptions/ModOptions")
 	if not mod_options:
 		return
-	mod_options.register_mod_options(LRUECKERT_DMGMETER_DIR, {
-		"tab_title": "DmgMeter",
-		"options": [{
-			"type": "toggle",
-			"id": "wave_snapshots",
-			"label": "Wave snapshots",
-			"default": true
-		}, {
-			"type": "slider",
-			"id": "max_entries_1_2_players",
-			"label": "Entries per list (1-2 players)",
-			"min": 1.0,
-			"max": 25.0,
-			"step": 1.0,
-			"default": 25.0,
-			"display_as_integer": true
-		}, {
-			"type": "slider",
-			"id": "max_entries_3_4_players",
-			"label": "Entries per list (3-4 players)",
-			"min": 1.0,
-			"max": 25.0,
-			"step": 1.0,
-			"default": 6.0,
-			"display_as_integer": true
-		}]
-	})
+	mod_options.register_mod_options(LRUECKERT_DMGMETER_DIR, METER_CONFIG.OPTIONS)

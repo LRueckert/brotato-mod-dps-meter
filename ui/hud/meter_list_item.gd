@@ -5,6 +5,7 @@ var total: int = 0
 onready var amount_label: Label = $Label
 onready var icon_panel: Panel = $IconPanel
 onready var icon: TextureRect = $IconPanel/Icon
+onready var _default_icon_style: StyleBoxFlat = icon_panel.get_stylebox("panel").duplicate()
 
 
 func set_element(texture: Texture, index: int) -> void:
@@ -22,13 +23,11 @@ func set_hud_position(position_index: int) -> void:
 
 
 func update_background_color(item_data: ItemParentData) -> void:
-	remove_stylebox_override("panel")
-	if item_data == null:
-		return
-	var stylebox = icon_panel.get_stylebox("panel").duplicate()
-	ItemService.change_inventory_element_stylebox_from_tier(stylebox, item_data.tier, 0.3)
+	var stylebox = _default_icon_style.duplicate()
+	icon_panel._curse.visible = item_data != null and item_data.is_cursed
+	if item_data != null:
+		ItemService.change_inventory_element_stylebox_from_tier(stylebox, item_data.tier, 0.3)
 	icon_panel.add_stylebox_override("panel", stylebox)
-	icon_panel._curse.visible = item_data.is_cursed
 
 
 func get_total() -> int:

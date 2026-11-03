@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://mods-unpacked/lrueckert-DmgMeter/ui/hud/wave_snapshot_panel.gd" type="Script" id=1]
+[ext_resource path="res://mods-unpacked/lrueckert-DmgMeter/ui/hud/wave_snapshot_container.gd" type="Script" id=1]
 
-[node name="WaveSnapshotPanel" type="ScrollContainer"]
+[node name="WaveSnapshotContainer" type="ScrollContainer"]
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
