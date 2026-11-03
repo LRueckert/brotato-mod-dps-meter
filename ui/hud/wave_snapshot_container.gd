@@ -1,14 +1,13 @@
-extends ScrollContainer
+extends CenterContainer
 
 
 const METER_ROW_SCENE = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_list_item.tscn")
 const METER_CONFIG = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_config.gd")
 
-var _entry_limit: int = 0
 var _percentage_bars_enabled: bool = true
 var _percentage_bar_width: int = METER_CONFIG.DEFAULT_PERCENTAGE_BAR_WIDTH
 var _category_color: Color = Color.white
-onready var _rows_container: VBoxContainer = $RowsContainer
+onready var _rows_container: VBoxContainer = $StatsPanel/MarginContainer/ScrollContainer/RowsContainer
 
 
 func set_entries(entries: Array) -> void:
@@ -30,11 +29,6 @@ func set_entries(entries: Array) -> void:
 		row.set_total(int(entry["total"]))
 		row.set_bar_color(_category_color)
 	_update_row_bars()
-	_update_row_visibility()
-
-
-func set_entry_limit(value: int) -> void:
-	_entry_limit = value
 	_update_row_visibility()
 
 
@@ -67,4 +61,4 @@ func _update_row_bars() -> void:
 func _update_row_visibility() -> void:
 	for index in _rows_container.get_child_count():
 		var row = _rows_container.get_child(index)
-		row.visible = row.get_total() > 0 and (_entry_limit == 0 or index < _entry_limit)
+		row.visible = row.get_total() > 0

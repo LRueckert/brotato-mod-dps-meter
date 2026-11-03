@@ -22,9 +22,11 @@ const OPTION_MAX_ENTRIES_3_4_PLAYERS := "max_entries_3_4_players"
 
 const MIN_PERCENTAGE_BAR_WIDTH := 50
 const MAX_PERCENTAGE_BAR_WIDTH := 280
+# Full width of the stats panel (minus margins and icon)
+const SNAPSHOT_PERCENTAGE_BAR_WIDTH := 320 
 const DEFAULT_WAVE_SNAPSHOTS := true
-const DEFAULT_PERCENTAGE_BARS := true
-const DEFAULT_PERCENTAGE_BAR_WIDTH := 200
+const DEFAULT_PERCENTAGE_BARS := false
+const DEFAULT_PERCENTAGE_BAR_WIDTH := 150
 const DEFAULT_MAX_ENTRIES_1_2_PLAYERS := 25
 const DEFAULT_MAX_ENTRIES_3_4_PLAYERS := 6
 
@@ -43,7 +45,7 @@ const OPTIONS = {
 	}, {
 		"type": "slider",
 		"id": OPTION_PERCENTAGE_BAR_WIDTH,
-		"label": "Percentage bar width (px)",
+		"label": "Bar width during wave",
 		"min": float(MIN_PERCENTAGE_BAR_WIDTH),
 		"max": float(MAX_PERCENTAGE_BAR_WIDTH),
 		"step": 10.0,
@@ -52,7 +54,7 @@ const OPTIONS = {
 	}, {
 		"type": "slider",
 		"id": OPTION_MAX_ENTRIES_1_2_PLAYERS,
-		"label": "Entries per list (1-2 players)",
+		"label": "HUD entries per list (1-2 players)",
 		"min": 1.0,
 		"max": 25.0,
 		"step": 1.0,
@@ -61,7 +63,7 @@ const OPTIONS = {
 	}, {
 		"type": "slider",
 		"id": OPTION_MAX_ENTRIES_3_4_PLAYERS,
-		"label": "Entries per list (3-4 players)",
+		"label": "HUD entries per list (3-4 players)",
 		"min": 1.0,
 		"max": 25.0,
 		"step": 1.0,
