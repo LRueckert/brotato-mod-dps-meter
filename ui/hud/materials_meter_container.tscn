@@ -11,6 +11,7 @@ element_scene = ExtResource( 2 )
 
 [node name="Heading" type="TextureRect" parent="."]
 rect_min_size = Vector2( 30, 30 )
+modulate = Color( 1, 0.78, 0.25, 1 )
 mouse_filter = 2
 size_flags_horizontal = 0
 texture = ExtResource( 3 )

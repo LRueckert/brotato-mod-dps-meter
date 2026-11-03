@@ -1,18 +1,35 @@
 {
 	"name": "DmgMeter",
 	"namespace": "lrueckert",
-	"version_number": "3.0.0",
+	"version_number": "3.1.0",
 	"description": "Display per-wave damage, healing, and material gains in switchable per-player HUD lists.",
 	"website_url": "https://github.com/LRueckert/brotato-mod-dps-meter",
 	"dependencies": [],
 	"extra": {
 		"godot": {
+			"authors": [
+				"lrueckert"
+			],
+			"optional_dependencies": [
+				"Oudstand-ModOptions"
+			],
+			"compatible_game_version": [
+				"1.2.0.0"
+			],
+			"compatible_mod_loader_version": [
+				"6.2.0"
+			],
 			"incompatibilities": [],
-			"authors": ["lrueckert"],
-			"tags": ["damage meter", "healing meter", "materials meter", "hud"],
-			"compatible_mod_loader_version": ["6.2.0"],
-			"compatible_game_version": ["1.1.14.1"],
-			"config_schema": {}
+			"load_before": [],
+			"tags": [
+				"damage meter",
+				"healing meter",
+				"materials meter",
+				"hud"
+			],
+			"config_schema": {},
+			"description_rich": "",
+			"image": null
 		}
 	}
 }

@@ -7,17 +7,19 @@ var hide_dmg_meter_timer: Timer = null
 var meter_lists: Array = []
 
 func _ready() -> void:
+	call_deferred("dmgmeter_initialize")
+
+func dmgmeter_initialize() -> void:
 	dmgmeter_register_timers()
 	meter_lists = []
 	RunData.material_meter_reset()
+	RunData.dmgmeter_wave_snapshot = []
 	var player_count = RunData.get_player_count()
 	for i in player_count:
 		var player_index = str(i + 1)
 		var lists = _hud.get_node("LifeContainerP%s/MeterListsP%s" % [player_index, player_index])
 		lists.set_player(i)
 		meter_lists.append(lists)
-		for container in lists.containers:
-			container.set_player(i, player_count)
 	dmgmeter_update()
 
 func dmgmeter_register_timers():
@@ -48,9 +50,21 @@ func dmgmeter_update():
 			for i in RunData.get_player_count():
 				for container in meter_lists[i].containers:
 					container.trigger_element_updates()
+			dmgmeter_capture_wave_snapshot()
 			hide_dmg_meter_timer.start()
 			dmg_meter_timer.stop()
 		return
+
+
+func dmgmeter_capture_wave_snapshot() -> void:
+	var snapshot = []
+	for lists in meter_lists:
+		var player_snapshot = []
+		for container in lists.containers:
+			player_snapshot.append(container.get_snapshot_entries())
+		snapshot.append(player_snapshot)
+	RunData.dmgmeter_wave_snapshot = snapshot
+
 
 func dmgmeter_hide():
 	for i in RunData.get_player_count():

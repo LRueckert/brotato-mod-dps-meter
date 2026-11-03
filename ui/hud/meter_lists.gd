@@ -1,8 +1,13 @@
 extends VBoxContainer
 
 
+const METER_CONFIG = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_config.gd")
+
+
 var player_index: int = -1
 var selected_list: int = 0
+var hud_position: int = 0
+var _meter_config
 onready var containers: Array = [$DmgMeterContainer, $HealingMeterContainer, $MaterialsMeterContainer]
 onready var headings: HBoxContainer = $Headings
 
@@ -12,11 +17,27 @@ func _ready() -> void:
 		var heading = container.heading
 		container.remove_child(heading)
 		headings.add_child(heading)
+	_meter_config = get_node(METER_CONFIG.NODE_PATH)
+	_meter_config.connect("dmgmeter_config_changed", self, "_apply_settings")
+	_apply_settings()
 
 
 func set_player(index: int) -> void:
 	player_index = index
-	update_list_visibility()
+	hud_position = index
+	_apply_settings()
+	for container in containers:
+		container.set_player(index)
+	apply_layout()
+
+
+func _apply_settings() -> void:
+	for index in containers.size():
+		var container = containers[index]
+		container.set_entry_limit(_meter_config.entry_limit)
+		container.set_percentage_bars_enabled(_meter_config.percentage_bars)
+		container.set_percentage_bar_width(_meter_config.percentage_bar_width)
+		container.set_category_color(METER_CONFIG.CATEGORIES[index]["color"])
 
 
 func _input(event: InputEvent) -> void:
@@ -52,7 +73,40 @@ func _input(event: InputEvent) -> void:
 	update_list_visibility()
 
 
+func set_hud_position(position_index: int) -> void:
+	hud_position = position_index
+	apply_layout()
+
+
+func apply_layout() -> void:
+	_apply_player_layout()
+	_update_heading_layout()
+	update_list_visibility()
+
+
+func _apply_player_layout() -> void:
+	for container in containers:
+		_move_node(container, self)
+		_move_node(container.heading, headings)
+		container.set_display_position(hud_position)
+
+
+func _update_heading_layout() -> void:
+	var left = hud_position == 0 or hud_position == 2
+	headings.alignment = BoxContainer.ALIGN_BEGIN if left else BoxContainer.ALIGN_END
+	for index in headings.get_child_count():
+		if containers[index].heading.get_parent() == headings:
+			headings.move_child(containers[index].heading, index)
+
+
+func _move_node(node: Node, parent: Node) -> void:
+	if node.get_parent() != parent:
+		node.get_parent().remove_child(node)
+		parent.add_child(node)
+
+
 func update_list_visibility() -> void:
 	for index in containers.size():
-		containers[index].visible = selected_list == index
-		containers[index].heading.self_modulate = Color.white if selected_list == index else Color(0.5, 0.5, 0.5, 0.5)
+		var active = selected_list == index
+		containers[index].visible = active
+		containers[index].heading.self_modulate = Color.white if active else Color(0.5, 0.5, 0.5, 0.5)

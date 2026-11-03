@@ -5,6 +5,9 @@ extends "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_list_container.gd"
 const MATERIAL_ICON = preload("res://items/materials/material_ui.png")
 
 
+var _refresh_pending: bool = false
+
+
 # =============================================================================
 # Base Class Overrides
 # List-specific hooks called by MeterListContainer.
@@ -12,7 +15,8 @@ const MATERIAL_ICON = preload("res://items/materials/material_ui.png")
 #region Base Class Overrides
 
 func discover_sources() -> void:
-	add_source("pickups", MATERIAL_ICON, {})
+	var pickup_row = add_source("pickups", MATERIAL_ICON, {})
+	pickup_row.icon.modulate = Utils.GOLD_COLOR
 	add_source("other", ItemService.get_stat(Keys.stat_harvesting_hash).small_icon, {})
 	add_material_source(ItemService.get_item_from_id(Keys.item_metal_detector_hash))
 	for element in RunData.get_player_weapons(player_index):
@@ -72,5 +76,12 @@ func get_material_total(element: ItemParentData) -> int:
 
 
 func on_materials_changed(_new_value: int, index: int) -> void:
-	if index == player_index and RunData.material_meter_active:
-		call_deferred("trigger_element_updates")
+	if index == player_index and RunData.material_meter_active and not _refresh_pending:
+		_refresh_pending = true
+		call_deferred("_refresh_materials")
+
+
+func _refresh_materials() -> void:
+	_refresh_pending = false
+	if RunData.material_meter_active:
+		trigger_element_updates()
