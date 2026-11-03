@@ -32,8 +32,12 @@ func set_player(index: int) -> void:
 
 
 func _apply_settings() -> void:
-	for container in containers:
+	for index in containers.size():
+		var container = containers[index]
 		container.set_entry_limit(_meter_config.entry_limit)
+		container.set_percentage_bars_enabled(_meter_config.percentage_bars)
+		container.set_percentage_bar_width(_meter_config.percentage_bar_width)
+		container.set_category_color(METER_CONFIG.CATEGORIES[index]["color"])
 
 
 func _input(event: InputEvent) -> void:

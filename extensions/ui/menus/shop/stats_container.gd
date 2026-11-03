@@ -69,8 +69,12 @@ func _dmgmeter_setup_snapshot_categories() -> void:
 
 
 func _dmgmeter_apply_settings() -> void:
-	for panel in _dmgmeter_snapshot_panels:
+	for index in _dmgmeter_snapshot_panels.size():
+		var panel = _dmgmeter_snapshot_panels[index]
 		panel.set_entry_limit(_meter_config.entry_limit)
+		panel.set_percentage_bars_enabled(_meter_config.percentage_bars)
+		panel.set_percentage_bar_width(_meter_config.percentage_bar_width)
+		panel.set_category_color(METER_CONFIG.CATEGORIES[index]["color"])
 	_dmgmeter_refresh_snapshot_tabs()
 
 

@@ -23,6 +23,8 @@ With **Oudstand-ModOptions** installed, open **Options > Mods > DmgMeter** to ch
 Changes are saved automatically and apply immediately to all lists and players.
 
 - **Wave snapshots:** Show wave snapshots between rounds in the stats panel, default **enabled**
+- **Percentage Bars:** Show each entry's value relative to the highest value in its category, default **enabled**.
+- **Percentage bar width:** Set the bar width from **50-280 px** (max issize of the HP bar), default **200 px**.
 - **Entries per list (1-2 players):** **1-25**, default **25**.
 - **Entries per list (3-4 players):** **1-25**, default **6**.
 

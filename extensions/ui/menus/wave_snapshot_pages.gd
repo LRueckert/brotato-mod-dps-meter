@@ -34,8 +34,12 @@ func add_pages() -> void:
 		var player_snapshot = RunData.dmgmeter_wave_snapshot[player_index]
 		for category_index in _snapshot_panels.size():
 			var entries = player_snapshot[category_index] if category_index < player_snapshot.size() else []
-			_snapshot_panels[category_index].set_entry_limit(_meter_config.entry_limit)
-			_snapshot_panels[category_index].set_entries(entries)
+			var panel = _snapshot_panels[category_index]
+			panel.set_entry_limit(_meter_config.entry_limit)
+			panel.set_percentage_bars_enabled(_meter_config.percentage_bars)
+			panel.set_percentage_bar_width(_meter_config.percentage_bar_width)
+			panel.set_category_color(METER_CONFIG.CATEGORIES[category_index]["color"])
+			panel.set_entries(entries)
 	var previous_index = carousel.index
 	carousel.index = carousel.index
 	if carousel.index != previous_index:
