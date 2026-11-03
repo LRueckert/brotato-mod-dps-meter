@@ -8,7 +8,8 @@ const MOD_ID := "lrueckert-DmgMeter"
 # Configuration
 # Runtime values loaded from Mod Options.
 # =============================================================================
-var MAX_ITEMS: int = 6
+var MAX_ITEMS_1_2_PLAYERS: int = 25
+var MAX_ITEMS_3_4_PLAYERS: int = 6
 
 
 export(PackedScene) var element_scene = null
@@ -103,7 +104,8 @@ func load_settings() -> void:
 		mod_options.connect("config_changed", self, "_on_mod_options_config_changed")
 		mod_options.connect("mod_registered", self, "_on_mod_options_registered")
 	if MOD_ID in mod_options.get_registered_mods():
-		MAX_ITEMS = int(mod_options.get_value(MOD_ID, "max_entries"))
+		MAX_ITEMS_1_2_PLAYERS = int(mod_options.get_value(MOD_ID, "max_entries_1_2_players"))
+		MAX_ITEMS_3_4_PLAYERS = int(mod_options.get_value(MOD_ID, "max_entries_3_4_players"))
 		hide_bottom_elements()
 
 
@@ -113,8 +115,13 @@ func _on_mod_options_registered(mod_id: String) -> void:
 
 
 func _on_mod_options_config_changed(mod_id: String, option_id: String, value) -> void:
-	if mod_id == MOD_ID and option_id == "max_entries":
-		MAX_ITEMS = int(value)
+	if mod_id != MOD_ID:
+		return
+	if option_id == "max_entries_1_2_players":
+		MAX_ITEMS_1_2_PLAYERS = int(value)
+		hide_bottom_elements()
+	elif option_id == "max_entries_3_4_players":
+		MAX_ITEMS_3_4_PLAYERS = int(value)
 		hide_bottom_elements()
 
 
@@ -133,7 +140,7 @@ func compare_rows(first, second) -> bool:
 
 
 func hide_bottom_elements() -> void:
-	var limit = 25 if RunData.get_player_count() == 1 else MAX_ITEMS
+	var limit = MAX_ITEMS_1_2_PLAYERS if RunData.get_player_count() <= 2 else MAX_ITEMS_3_4_PLAYERS
 	var children = rows_container.get_children()
 	for index in children.size():
 		children[index].visible = children[index].get_total() > 0 and (limit == 0 or index < limit)

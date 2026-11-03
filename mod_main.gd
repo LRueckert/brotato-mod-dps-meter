@@ -45,17 +45,21 @@ func _register_mod_options() -> void:
 		"tab_title": "DmgMeter",
 		"options": [{
 			"type": "slider",
-			"id": "max_entries",
-			"label": "Entries per list",
+			"id": "max_entries_1_2_players",
+			"label": "Entries per list (1-2 players)",
+			"min": 1.0,
+			"max": 25.0,
+			"step": 1.0,
+			"default": 25.0,
+			"display_as_integer": true
+		}, {
+			"type": "slider",
+			"id": "max_entries_3_4_players",
+			"label": "Entries per list (3-4 players)",
 			"min": 1.0,
 			"max": 25.0,
 			"step": 1.0,
 			"default": 6.0,
 			"display_as_integer": true
-		}, {
-			"type": "toggle",
-			"id": "show_all_lists_solo",
-			"label": "Show all lists in single player",
-			"default": false
 		}]
 	})

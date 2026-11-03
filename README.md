@@ -13,7 +13,7 @@ Per-wave damage, healing, and material meters for Brotato.
 Use **Q/E** or a controller's **shoulder buttons/triggers** to cycle lists independently per player.
 
 Totals are tracked per player, reset each wave, and sorted highest first.
-Zero totals are hidden; each list shows up to six sources by default.
+Zero totals are hidden; each list shows up to 25 sources by default with one or two players, or six sources with three or four players.
 Material pickups follow the game's co-op sharing.
 Lists hide shortly after the wave ends.
 
@@ -22,8 +22,8 @@ Lists hide shortly after the wave ends.
 With **Oudstand-ModOptions** installed, open **Options > Mods > DmgMeter** to change options, otherwise default values will work fine.
 Changes are saved automatically and apply immediately to all lists and players.
 
-- **Entries per list:** **1-25**, default **6**.
-- **Show all lists in single player:** Shows all three lists in solo runs; default **off**.
+- **Entries per list (1-2 players):** **1-25**, default **25**.
+- **Entries per list (3-4 players):** **1-25**, default **6**.
 
 ## Development Notes
 
