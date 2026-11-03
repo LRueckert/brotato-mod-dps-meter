@@ -25,8 +25,8 @@ Changes are saved automatically and apply immediately to all lists and players.
 - **Wave snapshots:** Show wave snapshots between rounds in the stats panel, default **enabled**
 - **Percentage Bars:** Show each entry's value relative to the highest value in its category, default **disabled**.
 - **Percentage bar width:** Set the HUD bar width from **50-280 px** (capped on HP bar size), default **150 px**.
-- **HUD entries per list (1-2 players):** **1-25**, default **25**.
-- **HUD entries per list (3-4 players):** **1-25**, default **6**.
+- **Entries per list (1-2 players):** **1-25**, default **25**.
+- **Entries per list (3-4 players):** **1-25**, default **6**.
 
 ## Development Notes
 

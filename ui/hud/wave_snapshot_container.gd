@@ -7,7 +7,7 @@ const METER_CONFIG = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/mete
 var _percentage_bars_enabled: bool = true
 var _percentage_bar_width: int = METER_CONFIG.DEFAULT_PERCENTAGE_BAR_WIDTH
 var _category_color: Color = Color.white
-onready var _rows_container: VBoxContainer = $StatsPanel/MarginContainer/ScrollContainer/RowsContainer
+onready var _rows_container: VBoxContainer = $ScrollContainer/RowsContainer
 
 
 func set_entries(entries: Array) -> void:

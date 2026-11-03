@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Wave-end damage, healing, and materials snapshots in the level-up and shop screens.
 - Configurable percentage bars that compare each entry with the highest value in its category.
-- Oudstand-ModOptions settings for snapshots, percentage bars, bar width, and HUD list entry limits.
+- Oudstand-ModOptions settings for snapshots, percentage bars, bar width, and list entry limits.
 
 ### Fixed
 
