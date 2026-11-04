@@ -17,6 +17,9 @@ func get_state() -> Dictionary:
 					saved_entries.append({
 						"texture_path": texture.resource_path,
 						"icon_color": entry.get("icon_color", Color.white).to_html(),
+						"tier": int(entry.get("tier", -1)),
+							"is_cursed": bool(entry.get("is_cursed", false)),
+							"is_mecha": bool(entry.get("is_mecha", false)),
 						"total": int(entry["total"])
 					})
 			saved_player.append(saved_entries)
@@ -41,6 +44,9 @@ func resume_from_state(state: Dictionary) -> void:
 					entries.append({
 						"texture": texture,
 						"icon_color": Color(entry.get("icon_color", "ffffffff")),
+						"tier": int(entry.get("tier", -1)),
+						"is_cursed": bool(entry.get("is_cursed", false)),
+						"is_mecha": bool(entry.get("is_mecha", false)),
 						"total": int(entry.get("total", 0))
 					})
 			player_snapshot.append(entries)

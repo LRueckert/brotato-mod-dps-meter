@@ -38,4 +38,6 @@ powershell -ExecutionPolicy Bypass -File .\tools\build-release.ps1
 
 This creates `lrueckert-DmgMeter.zip` containing `mods-unpacked/lrueckert-DmgMeter/` with only the `.gd`, `.tscn`, `.tres`, `manifest.json` and `README.md` files.
 
+It then opens Brotato's Steam Workshop folder (`C:\Program Files (x86)\Steam\steamapps\workshop\content\1942280`); pass `-WorkshopPath <folder>` if Steam is installed elsewhere.
+
 Follow steam guide: https://steamcommunity.com/sharedfiles/filedetails/?id=2931079751
