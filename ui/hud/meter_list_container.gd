@@ -58,7 +58,14 @@ func get_snapshot_entries() -> Array:
 	var entries = []
 	for row in rows_container.get_children():
 		if row.get_total() > 0:
-			entries.append({"texture": row.icon.texture, "icon_color": row.icon.modulate, "total": row.get_total()})
+			entries.append({
+				"texture": row.icon.texture,
+				"icon_color": row.icon.modulate,
+				"tier": row.get_background_tier(),
+				"is_cursed": row.is_item_cursed(),
+				"is_mecha": row.is_mechanized(),
+				"total": row.get_total()
+			})
 	return entries
 
 

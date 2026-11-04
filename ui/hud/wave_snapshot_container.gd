@@ -26,6 +26,9 @@ func set_entries(entries: Array) -> void:
 			row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.set_element(entry["texture"], 0)
 		row.icon.modulate = entry.get("icon_color", Color.white)
+		row.set_background_tier(int(entry.get("tier", -1)))
+		row.set_item_cursed(bool(entry.get("is_cursed", false)))
+		row.set_mechanized(bool(entry.get("is_mecha", false)))
 		row.set_total(int(entry["total"]))
 		row.set_bar_color(_category_color)
 	_update_row_bars()
