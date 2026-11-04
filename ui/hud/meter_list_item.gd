@@ -15,6 +15,9 @@ var _bar_color: Color
 var _has_bar_color: bool = false
 var _percentage_bar_ratio: float = 0.0
 var _bar_grows_left: bool = false
+var _background_tier: int = -1
+var _is_mechanized: bool = false
+var _is_cursed: bool = false
 
 
 func set_element(texture: Texture, index: int) -> void:
@@ -66,11 +69,39 @@ func _update_bar_fill() -> void:
 
 
 func update_background_color(item_data: ItemParentData) -> void:
+	set_item_cursed(item_data != null and item_data.is_cursed)
+	set_mechanized(item_data != null and item_data.is_meca)
+	set_background_tier(item_data.tier if item_data != null else -1)
+
+
+func set_item_cursed(value: bool) -> void:
+	_is_cursed = value
+	icon_panel._curse.visible = value
+
+
+func is_item_cursed() -> bool:
+	return _is_cursed
+
+
+func set_mechanized(value: bool) -> void:
+	_is_mechanized = value
+	icon_panel._meca.visible = value
+
+
+func is_mechanized() -> bool:
+	return _is_mechanized
+
+
+func set_background_tier(tier: int) -> void:
+	_background_tier = tier
 	var stylebox = _default_icon_style.duplicate()
-	icon_panel._curse.visible = item_data != null and item_data.is_cursed
-	if item_data != null:
-		ItemService.change_inventory_element_stylebox_from_tier(stylebox, item_data.tier, 0.3)
+	if tier >= 0:
+		ItemService.change_inventory_element_stylebox_from_tier(stylebox, tier, 0.3)
 	icon_panel.add_stylebox_override("panel", stylebox)
+
+
+func get_background_tier() -> int:
+	return _background_tier
 
 
 func get_total() -> int:

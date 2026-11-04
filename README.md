@@ -30,4 +30,12 @@ Changes are saved automatically and apply immediately to all lists and players.
 
 ## Development Notes
 
+Build the Release Package from the repo root:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\tools\build-release.ps1
+```
+
+This creates `lrueckert-DmgMeter.zip` containing `mods-unpacked/lrueckert-DmgMeter/` with only the `.gd`, `.tscn`, `.tres`, `manifest.json` and `README.md` files.
+
 Follow steam guide: https://steamcommunity.com/sharedfiles/filedetails/?id=2931079751

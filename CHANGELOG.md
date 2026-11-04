@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [v3.1.0] - 2026-11-03
 
+### Fixed
+
+- Icon styling in Wave Snapshot panels
+
+## [v3.1.0] - 2026-11-03
+
 ### Added
 
 - Wave-end damage, healing, and materials snapshots in the level-up and shop screens.
@@ -111,8 +117,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Icons and raw damage numbers
 
-[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v3.1.0...HEAD
-[v3.1.0]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v3.0.0...v3.1.0
+[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v3.1.1...HEAD
+[v3.1.1]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v3.1.0...v3.1.0
+[v3.1.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v3.1.0
 [v3.0.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v3.0.0
 [v2.2.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.2.0
 [v2.1.3]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v2.1.3
