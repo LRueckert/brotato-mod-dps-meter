@@ -37,6 +37,7 @@ func _apply_settings() -> void:
 		meter.set_entry_limit(_meter_config.entry_limit)
 		meter.set_percentage_bars_enabled(_meter_config.percentage_bars)
 		meter.set_percentage_bar_width(_meter_config.percentage_bar_width)
+		meter.set_combine_duplicate_weapons(_meter_config.combine_duplicate_weapons)
 		meter.set_meter_color(METER_CONFIG.METERS[index]["color"])
 
 

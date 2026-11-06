@@ -8,6 +8,7 @@ const METER_MODEL = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter
 var _entries: Array = []
 var _percentage_bars_enabled: bool = true
 var _percentage_bar_width: int = METER_CONFIG.DEFAULT_PERCENTAGE_BAR_WIDTH
+var _combine_duplicate_weapons: bool = METER_CONFIG.DEFAULT_COMBINE_DUPLICATE_WEAPONS
 var _meter_color: Color = Color.white
 onready var _source_displays_container: VBoxContainer = $ScrollContainer/Sources
 
@@ -27,6 +28,11 @@ func set_percentage_bar_width(value: int) -> void:
 	_show_rows()
 
 
+func set_combine_duplicate_weapons(value: bool) -> void:
+	_combine_duplicate_weapons = value
+	_show_rows()
+
+
 func set_meter_color(value: Color) -> void:
 	_meter_color = value
 	for source_display in _source_displays_container.get_children():
@@ -34,7 +40,10 @@ func set_meter_color(value: Color) -> void:
 
 
 func _show_rows() -> void:
-	var rows = METER_MODEL.build_rows(_entries, {"percentage_bars": _percentage_bars_enabled})
+	var rows = METER_MODEL.build_rows(_entries, {
+		"percentage_bars": _percentage_bars_enabled,
+		"combine_duplicate_weapons": _combine_duplicate_weapons,
+	})
 	while _source_displays_container.get_child_count() > rows.size():
 		var source_display = _source_displays_container.get_child(_source_displays_container.get_child_count() - 1)
 		_source_displays_container.remove_child(source_display)
@@ -54,5 +63,6 @@ func _show_rows() -> void:
 		source_display.set_item_cursed(row["cursed"])
 		source_display.set_mechanized(row["mechanized"])
 		source_display.set_total(row["total"])
+		source_display.set_count(row["count"])
 		source_display.set_bar_color(_meter_color)
 		source_display.set_percentage_bar_ratio(row["ratio"], _percentage_bars_enabled, _percentage_bar_width)
