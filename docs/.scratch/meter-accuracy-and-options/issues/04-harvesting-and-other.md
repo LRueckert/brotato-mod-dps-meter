@@ -6,11 +6,11 @@
 
 **Status:** ready-for-agent
 
-- [ ] The mod extends the base game's end-of-wave harvesting step so gold added during that step is credited to Harvesting; losses during it are ignored.
-- [ ] A pure materials helper takes total gains, Pickups, Harvesting gains, and tracked item/weapon gains, and returns the Harvesting Total (floored at 0) and the Other Total (never negative).
-- [ ] The Harvesting Source uses the Harvesting stat icon; Other uses a different icon.
+- [x] The mod extends the base game's end-of-wave harvesting step so gold added during that step is credited to Harvesting; losses during it are ignored.
+- [x] A pure materials helper takes total gains, Pickups, Harvesting gains, and tracked item/weapon gains, and returns the Harvesting Total (floored at 0) and the Other Total (never negative).
+- [x] The Harvesting Source uses the Harvesting stat icon; Other uses a different icon.
 - [ ] Harvesting is included in the Wave Snapshot of the wave that just ended.
 - [ ] Pickups, Metal Detector bonus, and item/weapon-tracked materials are unchanged.
-- [ ] Headless tests cover the helper: positive Harvesting, negative Harvesting floored at 0, Other never negative, and no Harvesting.
-- [ ] README Materials description mentions Harvesting and Other.
+- [x] Headless tests cover the helper: positive Harvesting, negative Harvesting floored at 0, Other never negative, and no Harvesting.
+- [x] README Materials description mentions Harvesting and Other.
 - [ ] In-game check: a positive-Harvesting run and a negative-Harvesting run, for 1 player and for 3–4 players.

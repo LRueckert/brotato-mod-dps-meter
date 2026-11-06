@@ -5,8 +5,9 @@ Per-wave Damage, Healing, and Materials Meters for Brotato.
 	Overkill Damage does not count.
 - **Healing:** regeneration, lifesteal, consumables, and direct healing effects.
 	Only actual HP restored counts.
-- **Materials:** ground pickups, pickup bonuses, and weapon/item-generated income.
-	Other income is grouped into the Other Source; spending and discounts are excluded.
+- **Materials:** ground pickups, pickup bonuses, weapon/item-generated income, and the end-of-wave Harvesting payout.
+	Harvesting includes its wave-end bonuses, counts toward the wave that just ended, and shows 0 when the payout is negative.
+	Income no other Source claims (such as per-step or character-ability materials) is grouped into the Other Source; spending and discounts are excluded.
 
 <img src="modicon.png" alt="Mod icon"/>
 
@@ -45,7 +46,7 @@ Follow steam guide: https://steamcommunity.com/sharedfiles/filedetails/?id=29310
 
 ### Headless tests
 
-The Meter Model (`ui/hud/meter_model.gd`) has headless tests in `tools/tests/`. Run them from the repo root (the main checkout or any git worktree) with the Godot 3.6 editor binary against the Brotato export project:
+The Meter Model (`ui/hud/meter_model.gd`) and the materials helper (`ui/hud/materials_totals.gd`) have headless tests in `tools/tests/`. Run them from the repo root (the main checkout or any git worktree) with the Godot 3.6 editor binary against the Brotato export project:
 
 ```powershell
 & "C:\Godot\win64-g36-s161-gs328\godotsteam.36.editor.windows.64.exe" --path C:\Godot\Brotato\brotatoexport --no-window --quit -s "$PWD\tools\tests\run_tests.gd"; "exit code: $LASTEXITCODE"

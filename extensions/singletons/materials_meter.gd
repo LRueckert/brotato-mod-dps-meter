@@ -5,6 +5,8 @@ var materials_meter_gains: Array = []
 var materials_meter_pickups: Array = []
 var materials_meter_pickup_bonuses: Array = []
 var materials_meter_pickup_contexts: Array = []
+var materials_meter_harvesting: Array = []
+var materials_meter_harvesting_active: bool = false
 var materials_meter_active: bool = false
 
 
@@ -13,16 +15,20 @@ func materials_meter_reset() -> void:
 	materials_meter_pickups.clear()
 	materials_meter_pickup_bonuses.clear()
 	materials_meter_pickup_contexts.clear()
+	materials_meter_harvesting.clear()
 	for index in get_player_count():
 		materials_meter_gains.append(0)
 		materials_meter_pickups.append(0)
 		materials_meter_pickup_bonuses.append(0)
+		materials_meter_harvesting.append(0)
 	materials_meter_active = true
 
 
 func add_gold(value: int, player_index: int) -> void:
 	if materials_meter_active and value > 0 and player_index >= 0 and player_index < materials_meter_gains.size():
 		materials_meter_gains[player_index] += value
+		if materials_meter_harvesting_active:
+			materials_meter_harvesting[player_index] += value
 	.add_gold(value, player_index)
 
 
