@@ -15,8 +15,7 @@ var _refresh_pending: bool = false
 #region Base Class Overrides
 
 func discover_sources() -> void:
-	var pickups_display = add_source("pickups", MATERIAL_ICON, {})
-	pickups_display.icon.modulate = Utils.GOLD_COLOR
+	add_source("pickups", MATERIAL_ICON, {}, null, Utils.GOLD_COLOR)
 	add_source("other", ItemService.get_stat(Keys.stat_harvesting_hash).small_icon, {})
 	add_material_source(ItemService.get_item_from_id(Keys.item_metal_detector_hash))
 	for item_data in RunData.get_player_weapons(player_index):
@@ -43,7 +42,7 @@ func update_totals() -> void:
 		if data.item.my_id_hash == Keys.item_metal_detector_hash:
 			total = RunData.materials_meter_pickup_bonuses[player_index]
 		set_source_total(source_key, total)
-		generated += sources[source_key].display.get_total()
+		generated += get_source_total(source_key)
 	set_source_total("other", RunData.materials_meter_gains[player_index] - pickups - generated)
 
 #endregion
