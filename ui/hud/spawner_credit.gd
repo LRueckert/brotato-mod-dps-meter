@@ -38,6 +38,13 @@ static func tag(effect, spawner_key: String) -> void:
 	effect.set_meta(META_SPAWNER_KEY, spawner_key)
 
 
+# A copy of a shared StructureEffect that only this Spawner spawns from.
+static func tagged_copy(effect: Resource, spawner_key: String) -> Resource:
+	var copy = copy_effect(effect)
+	tag(copy, spawner_key)
+	return copy
+
+
 static func is_structure_effect(effect) -> bool:
 	return effect is Resource and "spawn_cooldown" in effect and "tracking_key_hash" in effect
 
@@ -56,6 +63,21 @@ static func copy_effect(effect: Resource) -> Resource:
 		if property["usage"] & PROPERTY_USAGE_SCRIPT_VARIABLE and not property["usage"] & PROPERTY_USAGE_STORAGE:
 			copy.set(property["name"], effect.get(property["name"]))
 	return copy
+
+
+# A mine explodes with effects[0] and tracks its hits under that effect's
+# tracking_key_hash. Returns a new array whose [0] is a copy tracking under the
+# Spawner. tracking_key is set too, because a duplicated exploding effect
+# regenerates tracking_key_hash from it a frame later (and so does boost()).
+static func retrack_explosion(mine_effects: Array, spawner_tracking_name: String, spawner_tracking_hash: int) -> Array:
+	var retracked = mine_effects.duplicate()
+	if retracked.empty():
+		return retracked
+	var explosion = copy_effect(retracked[0])
+	explosion.tracking_key = spawner_tracking_name
+	explosion.tracking_key_hash = spawner_tracking_hash
+	retracked[0] = explosion
+	return retracked
 
 
 # Returns a new effects array in which every StructureEffect, and every
