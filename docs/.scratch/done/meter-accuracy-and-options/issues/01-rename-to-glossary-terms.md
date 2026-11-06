@@ -4,7 +4,7 @@
 
 **Blocked by:** None (can start immediately).
 
-**Status:** needs-playtest
+**Status:** done
 
 - [x] Class names, variables, functions, scene node names, and mod-owned script and scene file names use glossary terms. Files in the extensions folder keep their folder placement.
 - [x] Every hard-coded resource path, `preload`/`load`, `extends "res://…"`, and node lookup (including the injected per-player HUD node names) is updated; a text search for every old name finds nothing.

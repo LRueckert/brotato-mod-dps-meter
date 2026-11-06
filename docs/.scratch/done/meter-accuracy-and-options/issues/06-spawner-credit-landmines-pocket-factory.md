@@ -4,7 +4,7 @@
 
 **Blocked by:** 05 (Spawner crediting for turrets).
 
-**Status:** needs-playtest
+**Status:** done
 
 - [ ] Landmines spawned by a Screwdriver credit that Screwdriver instance.
 - [ ] Landmines laid by Bot-o-Mine credit the Bot-o-Mine item.

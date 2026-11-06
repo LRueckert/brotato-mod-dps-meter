@@ -4,7 +4,7 @@
 
 **Blocked by:** 02 (Meter Model and headless test runner).
 
-**Status:** needs-playtest
+**Status:** done
 
 - [ ] The toggle is registered with ModOptions, off by default, and works with that default when ModOptions isn't installed.
 - [x] The Meter Model combines only weapon Sources, and only when weapon ID, tier, cursed, and mechanized all match; the combined Total is the sum, and the row shows "×N".

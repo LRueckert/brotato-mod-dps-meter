@@ -1,4 +1,4 @@
-Status: needs-playtest
+Status: done
 
 # Accurate Source crediting, Duplicate Weapons, and glossary renames
 

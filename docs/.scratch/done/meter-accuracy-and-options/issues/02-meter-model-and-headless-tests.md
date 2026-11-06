@@ -4,7 +4,7 @@
 
 **Blocked by:** 01 (Rename everything to glossary terms).
 
-**Status:** needs-playtest
+**Status:** done
 
 - [x] The Meter Model has no references to `RunData`, other always-on game globals, nodes, or textures. Display data such as the icon is carried through as opaque values.
 - [x] Source record fields: Source key, Source kind (weapon, item, character, grouped), Total, tier, cursed, mechanized, and opaque display data; weapons also carry weapon ID and instance identity.

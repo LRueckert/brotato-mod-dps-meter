@@ -4,9 +4,9 @@
 
 **Blocked by:** 03 (Combine duplicate weapons option), 04 (Harvesting and Other Sources), 06 (Spawner crediting for landmines and Pocket Factory), 07 (Burn damage credited to Spawners).
 
-**Status:** needs-playtest
+**Status:** done
 
-- [ ] Every item on the parent spec's manual playtest checklist passes, for 1 player and for 3–4 players, including two combined Wrenches whose Total includes their turrets' Spawner credit.
+- [x] Every item on the parent spec's manual playtest checklist passes, for 1 player and for 3–4 players, including two combined Wrenches whose Total includes their turrets' Spawner credit.
 - [x] The headless tests pass.
 - [x] The manifest version is bumped to signal the breaking change (saved options reset once), and the CHANGELOG has an entry describing the user-facing changes.
 - [x] README, AGENTS.md, GLOSSARY, and ADR 0001 match the shipped behaviour.
