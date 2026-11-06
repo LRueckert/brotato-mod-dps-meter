@@ -6,9 +6,10 @@
 
 **Status:** ready-for-agent
 
-- [ ] Burn damage whose `from` is a Structure with a Spawner is credited to that Spawner (per Wrench instance, or the Turret item).
-- [ ] The base game's blanket flame-turret credit for that burn is no longer counted, so nothing is counted twice.
+- [ ] Burn damage started by a Structure that has a Spawner is credited to that Spawner (per Wrench instance, or the Turret item).
+- [x] ~~If the burn's `from` reference turns out to be unreliable, stop and ask the maintainer.~~ Resolved (2026-11-06): `from` is always null for turret burns, and Structures are pooled. The maintainer approved the "tag" approach: tag each turret's own `stats.burning_data.tracking_key_hash` with its Spawner key at spawn and in `reload_data`/`set_current_stats`, and wrap `unit.gd _on_BurningTimer_timeout` to credit the Spawner. Do NOT set `burning_data.from`; that changes gameplay.
+- [ ] The base game's blanket flame-turret (`item_turret_flame`) credit for that burn tick is subtracted, so nothing is counted twice.
 - [ ] Burns from non-Structures are credited exactly as before.
-- [ ] If the burn's `from` reference turns out to be unreliable (for example freed before the burn ticks), **stop and ask the maintainer** with the evidence.
-- [ ] ADR 0001's Consequences lists the burn dependency (already noted; update if the hook point differs).
+- [ ] The burn tag goes in the shared Turret `set_data`/`reload_data` path, so it also covers Crowbar turrets.
+- [ ] ADR 0001's Consequences describes the burn-tag dependency, replacing the current mention of the `from` reference.
 - [ ] In-game check: tier 2 Wrench flame turret alone; Turret item flame turrets plus a tier 2 Wrench; for 1 player and for 3–4 players.

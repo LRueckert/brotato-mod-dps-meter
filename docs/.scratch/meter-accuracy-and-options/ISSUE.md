@@ -138,6 +138,7 @@ As a DmgMeter player, I can't trust some of what the Meters show me:
 
 ## Further Notes
 
+- **Scope addition (2026-11-06, maintainer):** Spawner crediting also covers the newer structure Spawners. Crowbar's bleeding turrets go in ticket 05. Awl and Dart Trap item dart traps, and Carbon Bow landmines, go in ticket 06. Dart Trap item damage is dropped by the base game today because its tracking key is empty. Research notes are in the implementation session's `notes/unhandled-structures.md`.
 - Terms follow the project glossary (`docs/GLOSSARY.md`); the Spawner approach follows ADR 0001 (`docs/adr/`).
 - Oudstand-DamageMeter 1.2.0 shows the key-swap technique works for Bot-o-Mine landmines. It relabels Wrench, Screwdriver and Pocket Factory damage but doesn't separate them; that's the rejected option in ADR 0001.
 - Changing option IDs resets players' settings once, so a version number signalling a breaking change and a CHANGELOG entry should go with this release.
