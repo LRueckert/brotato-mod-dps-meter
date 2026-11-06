@@ -1,10 +1,10 @@
-class_name HealingMeterContainer
-extends "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_list_container.gd"
+class_name HealingMeter
+extends "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter.gd"
 
 
 # =============================================================================
 # Base Class Overrides
-# List-specific hooks called MeterListContainer.
+# Meter-specific hooks called by Meter.
 # =============================================================================
 #region Base Class Overrides
 
@@ -21,7 +21,7 @@ func update_totals() -> void:
 	for player in get_tree().get_nodes_in_group("dmgmeter_healing_players"):
 		if player.player_index == player_index:
 			for source in player.healing_meter_totals:
-				if not rows.has(source):
+				if not sources.has(source):
 					add_healing_source(source)
 				set_source_total(source, player.healing_meter_totals[source])
 			break
@@ -29,12 +29,12 @@ func update_totals() -> void:
 #endregion
 
 
-func is_healing_source(element: ItemParentData) -> bool:
-	return element.tracking_text == "HEALTH_RECOVERED" or element.my_id == "item_torture"
+func is_healing_source(item_data: ItemParentData) -> bool:
+	return item_data.tracking_text == "HEALTH_RECOVERED" or item_data.my_id == "item_torture"
 
 
 func add_healing_source(source: String) -> void:
-	if rows.has(source):
+	if sources.has(source):
 		return
 	var texture: Texture = null
 	var item: ItemParentData = null

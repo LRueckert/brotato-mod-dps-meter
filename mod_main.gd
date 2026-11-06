@@ -21,8 +21,8 @@ func _init() -> void:
 
 func install_script_extensions() -> void:
 	extensions_dir_path = mod_dir_path.plus_file("extensions")
-	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/dmg_meter.gd"))
-	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/dmg_meter_positioning.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/meter_panel_updates.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/meter_panel_positioning.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/menus/shop/stats_container.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/menus/shop/coop_shop_player_container.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/menus/ingame/coop_upgrades_ui_player_container.gd"))

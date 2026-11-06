@@ -5,17 +5,17 @@ const METER_CONFIG = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/mete
 
 
 var player_index: int = -1
-var selected_list: int = 0
+var active_meter: int = 0
 var hud_position: int = 0
 var _meter_config
-onready var containers: Array = [$DmgMeterContainer, $HealingMeterContainer, $MaterialsMeterContainer]
+onready var meters: Array = [$DamageMeter, $HealingMeter, $MaterialsMeter]
 onready var headings: HBoxContainer = $Headings
 
 
 func _ready() -> void:
-	for container in containers:
-		var heading = container.heading
-		container.remove_child(heading)
+	for meter in meters:
+		var heading = meter.heading
+		meter.remove_child(heading)
 		headings.add_child(heading)
 	_meter_config = get_node(METER_CONFIG.NODE_PATH)
 	_meter_config.connect("dmgmeter_config_changed", self, "_apply_settings")
@@ -26,18 +26,18 @@ func set_player(index: int) -> void:
 	player_index = index
 	hud_position = index
 	_apply_settings()
-	for container in containers:
-		container.set_player(index)
+	for meter in meters:
+		meter.set_player(index)
 	apply_layout()
 
 
 func _apply_settings() -> void:
-	for index in containers.size():
-		var container = containers[index]
-		container.set_entry_limit(_meter_config.entry_limit)
-		container.set_percentage_bars_enabled(_meter_config.percentage_bars)
-		container.set_percentage_bar_width(_meter_config.percentage_bar_width)
-		container.set_category_color(METER_CONFIG.CATEGORIES[index]["color"])
+	for index in meters.size():
+		var meter = meters[index]
+		meter.set_entry_limit(_meter_config.entry_limit)
+		meter.set_percentage_bars_enabled(_meter_config.percentage_bars)
+		meter.set_percentage_bar_width(_meter_config.percentage_bar_width)
+		meter.set_meter_color(METER_CONFIG.METERS[index]["color"])
 
 
 func _input(event: InputEvent) -> void:
@@ -69,8 +69,8 @@ func _input(event: InputEvent) -> void:
 		return
 	if RunData.is_coop_run and device != CoopService.get_remapped_player_device(player_index):
 		return
-	selected_list = posmod(selected_list + direction, containers.size())
-	update_list_visibility()
+	active_meter = posmod(active_meter + direction, meters.size())
+	update_meter_visibility()
 
 
 func set_hud_position(position_index: int) -> void:
@@ -81,22 +81,22 @@ func set_hud_position(position_index: int) -> void:
 func apply_layout() -> void:
 	_apply_player_layout()
 	_update_heading_layout()
-	update_list_visibility()
+	update_meter_visibility()
 
 
 func _apply_player_layout() -> void:
-	for container in containers:
-		_move_node(container, self)
-		_move_node(container.heading, headings)
-		container.set_display_position(hud_position)
+	for meter in meters:
+		_move_node(meter, self)
+		_move_node(meter.heading, headings)
+		meter.set_display_position(hud_position)
 
 
 func _update_heading_layout() -> void:
 	var left = hud_position == 0 or hud_position == 2
 	headings.alignment = BoxContainer.ALIGN_BEGIN if left else BoxContainer.ALIGN_END
 	for index in headings.get_child_count():
-		if containers[index].heading.get_parent() == headings:
-			headings.move_child(containers[index].heading, index)
+		if meters[index].heading.get_parent() == headings:
+			headings.move_child(meters[index].heading, index)
 
 
 func _move_node(node: Node, parent: Node) -> void:
@@ -105,8 +105,8 @@ func _move_node(node: Node, parent: Node) -> void:
 		parent.add_child(node)
 
 
-func update_list_visibility() -> void:
-	for index in containers.size():
-		var active = selected_list == index
-		containers[index].visible = active
-		containers[index].heading.self_modulate = Color.white if active else Color(0.5, 0.5, 0.5, 0.5)
+func update_meter_visibility() -> void:
+	for index in meters.size():
+		var active = active_meter == index
+		meters[index].visible = active
+		meters[index].heading.self_modulate = Color.white if active else Color(0.5, 0.5, 0.5, 0.5)
