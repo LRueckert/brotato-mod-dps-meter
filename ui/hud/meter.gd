@@ -13,6 +13,7 @@ var player_index: int = 0
 var display_position: int = 0
 var percentage_bars_enabled: bool = true
 var percentage_bar_width: int = METER_CONFIG.DEFAULT_PERCENTAGE_BAR_WIDTH
+var combine_duplicate_weapons: bool = METER_CONFIG.DEFAULT_COMBINE_DUPLICATE_WEAPONS
 var meter_color: Color = Color.white
 var sources: Dictionary = {}
 var _source_order: Array = []
@@ -55,11 +56,7 @@ func update_totals() -> void:
 #endregion
 
 func get_wave_snapshot_entries() -> Array:
-	var entries = []
-	for record in _get_source_records():
-		if record["total"] > 0:
-			entries.append(record.duplicate(true))
-	return entries
+	return METER_MODEL.wave_snapshot_entries(_get_source_records())
 
 
 func add_source(source_key: String, texture: Texture, source_data: Dictionary, item_data = null, icon_color: Color = Color.white):
@@ -128,6 +125,11 @@ func set_percentage_bar_width(value: int) -> void:
 	_show_rows()
 
 
+func set_combine_duplicate_weapons(value: bool) -> void:
+	combine_duplicate_weapons = value
+	_show_rows()
+
+
 func set_meter_color(value: Color) -> void:
 	meter_color = value
 	for source_display in source_displays_container.get_children():
@@ -155,6 +157,7 @@ func _show_rows() -> void:
 	var rows = METER_MODEL.build_rows(_get_source_records(), {
 		"entry_limit": entry_limit,
 		"percentage_bars": percentage_bars_enabled,
+		"combine_duplicate_weapons": combine_duplicate_weapons,
 	})
 	var ordered_keys = []
 	for index in rows.size():
@@ -163,6 +166,7 @@ func _show_rows() -> void:
 		source_displays_container.move_child(source_display, index)
 		source_display.visible = true
 		source_display.set_total(row["total"])
+		source_display.set_count(row["count"])
 		source_display.set_percentage_bar_ratio(row["ratio"], percentage_bars_enabled, percentage_bar_width)
 		ordered_keys.append(row["key"])
 	for source_key in _source_order:

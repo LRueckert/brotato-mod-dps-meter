@@ -37,6 +37,7 @@ func add_pages() -> void:
 			var wave_snapshot_meter = _wave_snapshot_meters[meter_index]
 			wave_snapshot_meter.set_percentage_bars_enabled(_meter_config.percentage_bars)
 			wave_snapshot_meter.set_percentage_bar_width(METER_CONFIG.SNAPSHOT_PERCENTAGE_BAR_WIDTH)
+			wave_snapshot_meter.set_combine_duplicate_weapons(_meter_config.combine_duplicate_weapons)
 			wave_snapshot_meter.set_meter_color(METER_CONFIG.METERS[meter_index]["color"])
 			wave_snapshot_meter.set_entries(entries)
 	var previous_index = carousel.index

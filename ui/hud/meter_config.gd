@@ -19,6 +19,7 @@ const OPTION_PERCENTAGE_BARS := "percentage_bars"
 const OPTION_PERCENTAGE_BAR_WIDTH := "percentage_bar_width"
 const OPTION_SOURCES_PER_METER_1_2_PLAYERS := "sources_per_meter_1_2_players"
 const OPTION_SOURCES_PER_METER_3_4_PLAYERS := "sources_per_meter_3_4_players"
+const OPTION_COMBINE_DUPLICATE_WEAPONS := "combine_duplicate_weapons"
 
 const MIN_PERCENTAGE_BAR_WIDTH := 50
 const MAX_PERCENTAGE_BAR_WIDTH := 280
@@ -28,6 +29,7 @@ const DEFAULT_PERCENTAGE_BARS := false
 const DEFAULT_PERCENTAGE_BAR_WIDTH := 150
 const DEFAULT_SOURCES_PER_METER_1_2_PLAYERS := 25
 const DEFAULT_SOURCES_PER_METER_3_4_PLAYERS := 6
+const DEFAULT_COMBINE_DUPLICATE_WEAPONS := false
 
 const OPTIONS = {
 	"tab_title": "DmgMeter",
@@ -68,6 +70,11 @@ const OPTIONS = {
 		"step": 1.0,
 		"default": float(DEFAULT_SOURCES_PER_METER_3_4_PLAYERS),
 		"display_as_integer": true
+	}, {
+		"type": "toggle",
+		"id": OPTION_COMBINE_DUPLICATE_WEAPONS,
+		"label": "Combine duplicate weapons",
+		"default": DEFAULT_COMBINE_DUPLICATE_WEAPONS
 	}]
 }
 
@@ -97,6 +104,7 @@ var entry_limit: int setget , get_entry_limit
 var wave_snapshots: bool = DEFAULT_WAVE_SNAPSHOTS
 var percentage_bars: bool = DEFAULT_PERCENTAGE_BARS
 var percentage_bar_width: int = DEFAULT_PERCENTAGE_BAR_WIDTH
+var combine_duplicate_weapons: bool = DEFAULT_COMBINE_DUPLICATE_WEAPONS
 
 var _sources_per_meter_1_2_players: int = DEFAULT_SOURCES_PER_METER_1_2_PLAYERS
 var _sources_per_meter_3_4_players: int = DEFAULT_SOURCES_PER_METER_3_4_PLAYERS
@@ -125,12 +133,14 @@ func load_settings() -> void:
 	wave_snapshots = DEFAULT_WAVE_SNAPSHOTS
 	percentage_bars = DEFAULT_PERCENTAGE_BARS
 	percentage_bar_width = DEFAULT_PERCENTAGE_BAR_WIDTH
+	combine_duplicate_weapons = DEFAULT_COMBINE_DUPLICATE_WEAPONS
 	if _mod_options and MOD_ID in _mod_options.get_registered_mods():
 		_sources_per_meter_1_2_players = int(_mod_options.get_value(MOD_ID, OPTION_SOURCES_PER_METER_1_2_PLAYERS))
 		_sources_per_meter_3_4_players = int(_mod_options.get_value(MOD_ID, OPTION_SOURCES_PER_METER_3_4_PLAYERS))
 		wave_snapshots = bool(_mod_options.get_value(MOD_ID, OPTION_WAVE_SNAPSHOTS))
 		percentage_bars = bool(_mod_options.get_value(MOD_ID, OPTION_PERCENTAGE_BARS))
 		percentage_bar_width = int(clamp(int(_mod_options.get_value(MOD_ID, OPTION_PERCENTAGE_BAR_WIDTH)), MIN_PERCENTAGE_BAR_WIDTH, MAX_PERCENTAGE_BAR_WIDTH))
+		combine_duplicate_weapons = bool(_mod_options.get_value(MOD_ID, OPTION_COMBINE_DUPLICATE_WEAPONS))
 	emit_signal("dmgmeter_config_changed")
 
 
@@ -140,5 +150,5 @@ func _on_mod_options_registered(mod_id: String) -> void:
 
 
 func _on_mod_options_config_changed(mod_id: String, option_id: String, _value) -> void:
-	if mod_id == MOD_ID and option_id in [OPTION_WAVE_SNAPSHOTS, OPTION_PERCENTAGE_BARS, OPTION_PERCENTAGE_BAR_WIDTH, OPTION_SOURCES_PER_METER_1_2_PLAYERS, OPTION_SOURCES_PER_METER_3_4_PLAYERS]:
+	if mod_id == MOD_ID and option_id in [OPTION_WAVE_SNAPSHOTS, OPTION_PERCENTAGE_BARS, OPTION_PERCENTAGE_BAR_WIDTH, OPTION_SOURCES_PER_METER_1_2_PLAYERS, OPTION_SOURCES_PER_METER_3_4_PLAYERS, OPTION_COMBINE_DUPLICATE_WEAPONS]:
 		load_settings()
