@@ -4,7 +4,7 @@
 
 **Blocked by:** 01 (Rename everything to glossary terms), 02 (Meter Model and headless test runner).
 
-**Status:** in-review (code done, headless tests pass; in-game checks pending)
+**Status:** needs-playtest
 
 - [x] **First, investigate:** confirm in the base game that each Wrench instance's turret StructureEffect can be told apart (separate objects, or another per-instance handle). If per-instance attribution isn't possible without significantly more work, **stop and ask the maintainer**; don't fall back to splitting by weapon type.
   - Resolved (2026-11-06): the effects are shared between instances. The maintainer approved a post-hook on `RunData.add_weapon` that gives each weapon its own duplicate of its StructureEffect, swaps it into the player's structures list, and tags it again after `resume_from_state`.

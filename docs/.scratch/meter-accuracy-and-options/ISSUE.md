@@ -1,4 +1,4 @@
-Status: ready-for-agent
+Status: needs-playtest
 
 # Accurate Source crediting, Duplicate Weapons, and glossary renames
 

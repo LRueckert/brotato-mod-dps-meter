@@ -4,7 +4,7 @@
 
 **Blocked by:** 02 (Meter Model and headless test runner).
 
-**Status:** ready-for-agent
+**Status:** needs-playtest
 
 - [x] The mod extends the base game's end-of-wave harvesting step so gold added during that step is credited to Harvesting; losses during it are ignored.
 - [x] A pure materials helper takes total gains, Pickups, Harvesting gains, and tracked item/weapon gains, and returns the Harvesting Total (floored at 0) and the Other Total (never negative).
