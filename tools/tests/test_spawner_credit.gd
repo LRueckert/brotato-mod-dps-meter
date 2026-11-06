@@ -21,6 +21,17 @@ class FakeStatEffect extends Resource:
 	export(int) var value = 0
 
 
+# Like ItemExplodingEffect: a duplicate regenerates tracking_key_hash from
+# tracking_key one frame later.
+class FakeExplodingEffect extends Resource:
+	export(float) var scale = 1.0
+	export(String) var tracking_key = ""
+	var tracking_key_hash: int = 0
+
+	func _generate_hashes() -> void:
+		tracking_key_hash = tracking_key.hash()
+
+
 func _structure(tracking_key: String = "item_turret") -> Resource:
 	var effect = FakeStructureEffect.new()
 	effect.spawn_cooldown = 10
@@ -141,3 +152,48 @@ func test_kept_weapon_adopts_the_copy_left_by_an_identical_removed_weapon() -> v
 	assert_eq(b_effects[0] == structures[0], true, "B now owns the copy that still spawns")
 	assert_eq(SpawnerCredit.spawner_key_of(structures[0]), "weapon:B", "and its turrets credit B")
 	assert_eq(a_effects[0] == structures[0], true, "a later unapply of A still erases it")
+
+
+func test_landmine_explosion_is_a_copy_tracked_under_the_spawner_name() -> void:
+	# Screwdriver, Carbon Bow and Bot-o-Mine mines share one explosion effect with the Landmines item.
+	var shared = FakeExplodingEffect.new()
+	shared.scale = 1.75
+	shared.tracking_key = "item_landmines"
+	shared.tracking_key_hash = 2002
+	var extra = FakeStatEffect.new()
+	var mine_effects = [shared, extra]
+	var name = SpawnerCredit.tracking_name("weapon:4", 2002)
+	var retracked = SpawnerCredit.retrack_explosion(mine_effects, name, name.hash())
+	var copy = retracked[0]
+	assert_eq(copy == shared, false, "explosion is copied")
+	assert_eq(copy.scale, 1.75, "explosion fields kept")
+	assert_eq(copy.tracking_key_hash, name.hash(), "copy tracks under the Spawner")
+	copy._generate_hashes()
+	assert_eq(copy.tracking_key_hash, name.hash(), "still after its hashes are regenerated")
+	assert_eq(retracked[1] == extra, true, "other effects are kept")
+	assert_eq(mine_effects[0] == shared and shared.tracking_key_hash == 2002 and shared.tracking_key == "item_landmines", true, "shared array and effect left alone")
+
+
+func test_mine_without_effects_is_left_alone() -> void:
+	assert_eq(SpawnerCredit.retrack_explosion([], "x", 1), [])
+
+
+func test_tagged_copy_leaves_the_shared_effect_to_its_other_spawners() -> void:
+	# Pocket Factory spawns from the Turret item's own turret effect.
+	var shared = _structure()
+	var copy = SpawnerCredit.tagged_copy(shared, "item:item_pocket_factory")
+	assert_eq(copy == shared, false, "copy is a new object")
+	assert_eq(SpawnerCredit.spawner_key_of(copy), "item:item_pocket_factory", "copy is tagged")
+	assert_eq(SpawnerCredit.spawner_key_of(shared), "", "Turret item's effect stays untagged")
+	assert_eq(copy.tracking_key_hash, TURRET_HASH, "copy keeps the base tracking key")
+
+
+func test_wrapper_without_a_structure_effect_is_not_copied() -> void:
+	# Carbon Bow's non-Engineering stat effects hold no structure_effect.
+	var plain = FakeWrapperEffect.new()
+	var engineering = FakeWrapperEffect.new()
+	engineering.structure_effect = _structure("item_landmines")
+	var owned = SpawnerCredit.own_effects([plain, engineering], "weapon:5", [])
+	assert_eq(owned[0] == plain, true, "plain wrapper kept")
+	assert_eq(SpawnerCredit.spawner_key_of(owned[1].structure_effect), "weapon:5", "engineering mines tagged")
+	assert_eq(SpawnerCredit.spawner_key_of(engineering.structure_effect), "", "Landmines item's effect stays untagged")
