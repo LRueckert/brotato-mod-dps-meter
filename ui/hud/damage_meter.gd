@@ -2,6 +2,7 @@ class_name DamageMeter
 extends "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter.gd"
 
 const SPAWNER_CREDIT = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/spawner_credit.gd")
+const TRACKED_VALUES = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/tracked_values.gd")
 # Items whose base-game tracking text isn't damage but whose Structures deal it.
 const SPAWNER_ITEMS = ["ITEM_BUILDER_TURRET", "ITEM_POCKET_FACTORY"]
 
@@ -55,14 +56,4 @@ func get_damage_total(source_key: String) -> int:
 
 
 func get_tracked_value(item_data: ItemParentData) -> int:
-	return sum_tracked_value(RunData.tracked_item_effects[player_index].get(item_data.my_id_hash, 0))
-
-
-func sum_tracked_value(tracked) -> int:
-	var value = 0
-	if tracked is Array:
-		for total in tracked:
-			value += total
-	else:
-		value = tracked
-	return value
+	return TRACKED_VALUES.damage_total(item_data.my_id, RunData.tracked_item_effects[player_index].get(item_data.my_id_hash, 0))
