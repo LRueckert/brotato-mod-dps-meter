@@ -3,6 +3,8 @@ extends "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter.gd"
 
 
 const MATERIALS_TOTALS = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/materials_totals.gd")
+const SPAWNER_CREDIT = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/spawner_credit.gd")
+const TRACKED_VALUES = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/tracked_values.gd")
 const MATERIAL_ICON = preload("res://items/materials/material_ui.png")
 const OTHER_ICON = preload("res://items/materials/material_bag_icon.png")
 
@@ -58,9 +60,9 @@ func is_material_source(item_data: ItemParentData) -> bool:
 
 
 func add_material_source(item_data: ItemParentData) -> void:
-	var source_key = "item:%s" % item_data.my_id
+	var source_key = SPAWNER_CREDIT.item_key(item_data.my_id)
 	if item_data.get_category() == Category.WEAPON:
-		source_key = "weapon:%s" % item_data.get_instance_id()
+		source_key = SPAWNER_CREDIT.weapon_key(item_data.get_instance_id())
 	if sources.has(source_key):
 		return
 	var source_data = {"item": item_data, "wave_start_value": get_material_total(item_data)}
@@ -70,13 +72,7 @@ func add_material_source(item_data: ItemParentData) -> void:
 func get_material_total(item_data: ItemParentData) -> int:
 	if item_data.get_category() == Category.WEAPON:
 		return item_data.tracked_value
-	var tracked = RunData.tracked_item_effects[player_index].get(item_data.my_id_hash, 0)
-	if tracked is Array:
-		var total = 0
-		for value in tracked:
-			total += value
-		return total
-	return tracked
+	return TRACKED_VALUES.total(RunData.tracked_item_effects[player_index].get(item_data.my_id_hash, 0))
 
 
 func on_materials_changed(_new_value: int, index: int) -> void:

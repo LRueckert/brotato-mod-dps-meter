@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Turret damage counts toward the weapon or item that spawned it. Each Wrench and Crowbar shows its own turrets' damage in its row, and the Turret and Blood Turret items show only their own turrets; Wrenches no longer add a separate Turret Source. Burns started by a Wrench's flame turrets count toward that Wrench instead of the Flame Turret item.
+- Turret damage counts toward the weapon or item that spawned it. Each Wrench and Crowbar shows its own turrets' damage in its row, and the Turret and Blood Turret items show only their own turrets; Wrenches no longer add a separate Turret Source. Burns started by a Wrench's flame turrets count toward that Wrench instead of the Flame Turret item, until another source (such as another player's weapon) takes the burn over.
 - Landmine and trap damage counts toward its Spawner too. Each Screwdriver, Carbon Bow (Engineering arrows) and Awl shows its own Structures' damage, Bot-o-Mine shows the mines it lays, and Pocket Factory shows its tree turrets as its own Source. Screwdriver and Bot-o-Mine no longer add a separate Landmines Source, and the Landmines item no longer includes their mines or Carbon Bow's.
 - Code, option IDs, option labels, and README use the glossary terms (Meter, Meter Panel, Active Meter, Source, Total, Percentage Bar, Wave Snapshot). Saved options reset to their defaults once, and a Wave Snapshot saved by an older version is dropped.
 
@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Dart traps from the Dart Trap item now count toward it; the base game never tracked their damage.
+- Bot-o-Mine's damage Total no longer adds the number of landmines it dropped, and Hungry Hungry Dinosaur's no longer adds the fruits it ate.
 
 ## [v3.1.0] - 2026-11-03
 

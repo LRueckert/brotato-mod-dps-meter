@@ -6,6 +6,27 @@ const SpawnerCredit = preload("../../ui/hud/spawner_credit.gd")
 const EMPTY_HASH = 5381
 const FLAME_HASH = 3003
 const OWN_KEY_HASH = 4004
+# A Wrench flame turret's burn tracking key.
+const BURN_KEY_HASH = 6006
+
+
+# Like BurningData: every new or duplicated one regenerates tracking_key_hash
+# from tracking_key one frame later (_late_init).
+class FakeBurningData extends Resource:
+	export(String) var tracking_key = ""
+	var tracking_key_hash: int = 0
+
+	func _late_init() -> void:
+		tracking_key_hash = tracking_key.hash()
+
+
+func test_tagged_burn_keeps_its_burn_tracking_key_after_its_hash_is_regenerated() -> void:
+	var burning_data = FakeBurningData.new()
+	var name = BurnCredit.tracking_name("weapon:1", FLAME_HASH, 0)
+	BurnCredit.tag(burning_data, name, name.hash())
+	assert_eq(burning_data.tracking_key_hash, name.hash(), "tagged")
+	burning_data._late_init()
+	assert_eq(burning_data.tracking_key_hash, name.hash(), "still after a duplicate's late init")
 
 
 func test_burn_tracking_name_differs_per_owner_and_from_hit_tracking() -> void:
@@ -45,6 +66,22 @@ func test_burn_tick_credits_the_owner_and_offsets_the_burning_player() -> void:
 	assert_eq(owner_ledger["forwarded"].has(FLAME_HASH), false, "owner's flame row untouched")
 	assert_eq(burn_ledger["forwarded"].get(FLAME_HASH), 12, "burning player's flame row offset")
 	assert_eq(burn_ledger["credit"].has("weapon:1"), false)
+
+
+func test_turret_burn_ticks_under_its_burn_tracking_key_whichever_player_has_it() -> void:
+	# Turret burns carry no `from`, so the base game may give them to a random
+	# player; the burn tracking key still names the Structure's player.
+	assert_eq(BurnCredit.tick_key(BURN_KEY_HASH, EMPTY_HASH, false), BURN_KEY_HASH)
+
+
+func test_burn_taken_over_by_another_players_weapon_ticks_under_the_base_games_own_key() -> void:
+	# Player 1's weapon re-applied a stronger burn on an enemy burning from player
+	# 0's Wrench turret. The base game moves the burn to player 1 and sets its
+	# `from`, but keeps the turret's tracking key: player 0's Wrench must not be
+	# credited, and player 1 keeps the base game's normal credit. (The same holds
+	# for player 0's own weapon, which its `from` hit already credits.)
+	assert_eq(BurnCredit.tick_key(BURN_KEY_HASH, EMPTY_HASH, true), EMPTY_HASH, "Wrench flame turret burn")
+	assert_eq(BurnCredit.tick_key(BURN_KEY_HASH, OWN_KEY_HASH, true), OWN_KEY_HASH, "burn with its own key")
 
 
 func test_burn_tick_for_the_owner_itself_lands_in_one_ledger() -> void:
