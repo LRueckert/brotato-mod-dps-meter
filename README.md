@@ -4,7 +4,7 @@ Per-wave Damage, Healing, and Materials Meters for Brotato.
 - **Damage:** weapons, items, characters, and spawned Sources.
 	Overkill Damage does not count.
 	Turrets count toward the weapon or item that spawned them: each Wrench or Crowbar shows its own turrets' damage, and the Turret and Blood Turret items show only theirs. Burns from a Wrench's flame turrets count toward that Wrench, not the Flame Turret item.
-	The same goes for landmines and traps: each Screwdriver, Carbon Bow (Engineering arrows), or Awl shows its own Structures' damage, Bot-o-Mine shows the mines it lays, Pocket Factory shows its tree turrets, and the Landmines and Dart Trap items show only theirs.
+	The same goes for landmines and traps: each Screwdriver, Carbon Bow (Engineering arrows), or Awl shows its own Structures' damage, Bot-o-Mine shows the mines it lays (damage only, not how many it dropped), Pocket Factory shows its tree turrets, and the Landmines and Dart Trap items show only theirs.
 - **Healing:** regeneration, lifesteal, consumables, and direct healing effects.
 	Only actual HP restored counts.
 - **Materials:** ground pickups, pickup bonuses, weapon/item-generated income, and the end-of-wave Harvesting payout.
@@ -46,9 +46,13 @@ It then opens Brotato's Steam Workshop folder (`C:\Program Files (x86)\Steam\ste
 
 Follow steam guide: https://steamcommunity.com/sharedfiles/filedetails/?id=2931079751
 
+### Playtest checklist
+
+Spawner crediting depends on base-game internals (see ADR 0001). After every Brotato update, re-run the in-game [playtest checklist](docs/playtest-checklist.md) for 1 player and for 3–4 players.
+
 ### Headless tests
 
-The Meter Model (`ui/hud/meter_model.gd`), the materials helper (`ui/hud/materials_totals.gd`), the Spawner crediting helper (`ui/hud/spawner_credit.gd`), and the burn crediting helper (`ui/hud/burn_credit.gd`) have headless tests in `tools/tests/`. Run them from the repo root (the main checkout or any git worktree) with the Godot 3.6 editor binary against the Brotato export project:
+The Meter Model (`ui/hud/meter_model.gd`), the materials helper (`ui/hud/materials_totals.gd`), the tracked-value helper (`ui/hud/tracked_values.gd`), the Spawner crediting helper (`ui/hud/spawner_credit.gd`), and the burn crediting helper (`ui/hud/burn_credit.gd`) have headless tests in `tools/tests/`. Run them from the repo root (the main checkout or any git worktree) with the Godot 3.6 editor binary against the Brotato export project:
 
 ```powershell
 & "C:\Godot\win64-g36-s161-gs328\godotsteam.36.editor.windows.64.exe" --path C:\Godot\Brotato\brotatoexport --no-window --quit -s "$PWD\tools\tests\run_tests.gd"; "exit code: $LASTEXITCODE"
