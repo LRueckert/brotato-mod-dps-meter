@@ -2,20 +2,27 @@ extends "res://main.gd"
 
 
 func _enter_tree() -> void:
-	var meter_scene = load("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_lists.tscn")
+	var meter_panel_scene = load("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter_panel.tscn")
 	for index in 4:
 		var player_number = str(index + 1)
 		var parent = get_node("UI/HUD/LifeContainerP%s" % player_number)
-		var node_name = "MeterListsP%s" % player_number
+		var node_name = "MeterPanelP%s" % player_number
 		if parent.has_node(node_name):
 			continue
-		var lists = meter_scene.instance()
-		lists.name = node_name
-		parent.add_child(lists)
+		var meter_panel = meter_panel_scene.instance()
+		meter_panel.name = node_name
+		parent.add_child(meter_panel)
+
+
+# Gold added during the end-of-wave payout (Harvesting plus its wave-end bonuses) is credited to Harvesting.
+func manage_harvesting() -> void:
+	RunData.materials_meter_harvesting_active = true
+	.manage_harvesting()
+	RunData.materials_meter_harvesting_active = false
 
 
 func on_gold_picked_up(gold: Node, player_index: int) -> void:
-	if not RunData.material_meter_active or gold.already_picked_up or player_index < 0:
+	if not RunData.materials_meter_active or gold.already_picked_up or player_index < 0:
 		.on_gold_picked_up(gold, player_index)
 		return
 	var value = gold.value
@@ -23,7 +30,7 @@ func on_gold_picked_up(gold: Node, player_index: int) -> void:
 	value += value * (increase / 100.0)
 	var first_player = _next_gold_player
 	var context = {"boost": 1}
-	RunData.material_meter_pickup_contexts.append(context)
+	RunData.materials_meter_pickup_contexts.append(context)
 	.on_gold_picked_up(gold, player_index)
-	RunData.material_meter_pickup_contexts.pop_back()
-	RunData.material_meter_record_pickup(value, context.boost, first_player)
+	RunData.materials_meter_pickup_contexts.pop_back()
+	RunData.materials_meter_record_pickup(value, context.boost, first_player)

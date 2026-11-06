@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://mods-unpacked/lrueckert-DmgMeter/ui/hud/wave_snapshot_meter.gd" type="Script" id=1]
+
+[node name="WaveSnapshotMeter" type="CenterContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 1 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+rect_min_size = Vector2( 340, 700 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Sources" type="VBoxContainer" parent="ScrollContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3

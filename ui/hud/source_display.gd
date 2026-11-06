@@ -1,0 +1,121 @@
+class_name SourceDisplay
+extends HBoxContainer
+
+var total: int = 0
+onready var icon_panel: Panel = $IconPanel
+onready var icon: TextureRect = $IconPanel/Icon
+onready var total_container: Control = $TotalContainer
+onready var total_label: Label = $TotalContainer/TotalLabel
+onready var percentage_bar: Control = $TotalContainer/PercentageBar
+onready var percentage_bar_track: Panel = $TotalContainer/PercentageBar/Track
+onready var percentage_bar_fill: Panel = $TotalContainer/PercentageBar/Fill
+onready var _fill_style: StyleBoxFlat = percentage_bar_fill.get_stylebox("panel").duplicate()
+onready var _default_icon_style: StyleBoxFlat = icon_panel.get_stylebox("panel").duplicate()
+var _bar_color: Color
+var _has_bar_color: bool = false
+var _percentage_bar_ratio: float = 0.0
+var _bar_grows_left: bool = false
+var _background_tier: int = -1
+var _is_mechanized: bool = false
+var _is_cursed: bool = false
+
+
+func set_source(texture: Texture, index: int) -> void:
+	icon.texture = texture
+	set_hud_position(index)
+	icon_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	total_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	percentage_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	total_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+
+func set_hud_position(position_index: int) -> void:
+	var left = position_index == 0 or position_index == 2
+	_bar_grows_left = not left
+	alignment = BoxContainer.ALIGN_BEGIN if left else BoxContainer.ALIGN_END
+	if left:
+		move_child(icon_panel, 0)
+		move_child(total_container, 1)
+		total_label.align = Label.ALIGN_LEFT
+	else:
+		move_child(total_container, 0)
+		move_child(icon_panel, 1)
+		total_label.align = Label.ALIGN_RIGHT
+	_update_bar_fill()
+
+
+func set_bar_color(color: Color) -> void:
+	if _has_bar_color and _bar_color == color:
+		return
+	_bar_color = color
+	_has_bar_color = true
+	_fill_style.bg_color = Color(color.r, color.g, color.b, 0.5)
+	percentage_bar_fill.add_stylebox_override("panel", _fill_style)
+
+
+func set_percentage_bar_ratio(ratio: float, show_percentage_bar: bool, bar_width: int) -> void:
+	_percentage_bar_ratio = clamp(ratio, 0.0, 1.0)
+	percentage_bar.visible = show_percentage_bar
+	total_container.rect_min_size.x = float(bar_width) if show_percentage_bar else total_label.get_minimum_size().x + 8.0
+	_update_bar_fill()
+
+
+func _update_bar_fill() -> void:
+	percentage_bar_fill.anchor_left = 1.0 - _percentage_bar_ratio if _bar_grows_left else 0.0
+	percentage_bar_fill.anchor_right = 1.0 if _bar_grows_left else _percentage_bar_ratio
+	percentage_bar_fill.margin_left = 0.0
+	percentage_bar_fill.margin_right = 0.0
+
+
+func update_background_color(item_data: ItemParentData) -> void:
+	set_item_cursed(item_data != null and item_data.is_cursed)
+	set_mechanized(item_data != null and item_data.is_meca)
+	set_background_tier(item_data.tier if item_data != null else -1)
+
+
+func set_item_cursed(value: bool) -> void:
+	_is_cursed = value
+	icon_panel._curse.visible = value
+
+
+func is_item_cursed() -> bool:
+	return _is_cursed
+
+
+func set_mechanized(value: bool) -> void:
+	_is_mechanized = value
+	icon_panel._meca.visible = value
+
+
+func is_mechanized() -> bool:
+	return _is_mechanized
+
+
+func set_background_tier(tier: int) -> void:
+	_background_tier = tier
+	var stylebox = _default_icon_style.duplicate()
+	if tier >= 0:
+		ItemService.change_inventory_element_stylebox_from_tier(stylebox, tier, 0.3)
+	icon_panel.add_stylebox_override("panel", stylebox)
+
+
+func get_background_tier() -> int:
+	return _background_tier
+
+
+func get_total() -> int:
+	return total
+
+
+func set_count(value: int) -> void:
+	# The Icon Panel's small co-op count label fits the 40px icon; its large one doesn't.
+	icon_panel._count.visible = false
+	icon_panel._coop_count.visible = value > 1
+	icon_panel._coop_count.margin_right = -2.0
+	icon_panel._coop_count.text = "×%d" % value if value > 1 else ""
+
+
+func set_total(value: int) -> void:
+	total = value
+	total_label.text = Text.get_formatted_number(total)

@@ -21,8 +21,8 @@ func _init() -> void:
 
 func install_script_extensions() -> void:
 	extensions_dir_path = mod_dir_path.plus_file("extensions")
-	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/dmg_meter.gd"))
-	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/dmg_meter_positioning.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/meter_panel_updates.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/hud/meter_panel_positioning.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/menus/shop/stats_container.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/menus/shop/coop_shop_player_container.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("ui/menus/ingame/coop_upgrades_ui_player_container.gd"))
@@ -30,6 +30,15 @@ func install_script_extensions() -> void:
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("singletons/run_data.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("singletons/materials_meter.gd"))
 	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("materials_meter.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("singletons/spawner_credit.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("entities/structures/turret/turret_spawner_credit.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("entities/structures/landmine/landmine_spawner_credit.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("entities/structures/dart_trap/dart_trap_spawner_credit.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("entities/units/pet/bot_o_mine/bot_o_mine_spawner_credit.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("main_spawner_credit.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("singletons/burn_credit.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("entities/structures/turret/turret_burn_credit.gd"))
+	ModLoaderMod.install_script_extension(extensions_dir_path.plus_file("entities/units/unit/unit_burn_credit.gd"))
 
 
 func add_translations() -> void:
