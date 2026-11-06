@@ -7,7 +7,7 @@
 **Status:** ready-for-agent
 
 - [ ] Every item on the parent spec's manual playtest checklist passes, for 1 player and for 3–4 players, including two combined Wrenches whose Total includes their turrets' Spawner credit.
-- [ ] The headless tests pass.
-- [ ] The manifest version is bumped to signal the breaking change (saved options reset once), and the CHANGELOG has an entry describing the user-facing changes.
-- [ ] README, AGENTS.md, GLOSSARY, and ADR 0001 match the shipped behaviour.
-- [ ] The release script builds the Release Package; its contents include no test files.
+- [x] The headless tests pass.
+- [x] The manifest version is bumped to signal the breaking change (saved options reset once), and the CHANGELOG has an entry describing the user-facing changes.
+- [x] README, AGENTS.md, GLOSSARY, and ADR 0001 match the shipped behaviour.
+- [x] The release script builds the Release Package; its contents include no test files.

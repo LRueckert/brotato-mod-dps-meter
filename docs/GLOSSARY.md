@@ -1,6 +1,6 @@
 # DmgMeter
 
-A Brotato mod that shows per-wave damage, healing, and material gains in per-player HUD lists.
+A Brotato mod that shows per-wave damage, healing, and material gains in per-player Meter Panels.
 
 ## Language
 
