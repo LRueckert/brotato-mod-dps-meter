@@ -29,6 +29,7 @@ Changes are saved automatically and apply immediately to all Meter Panels and pl
 - **Percentage Bar width during wave:** Set the HUD Percentage Bar width from **50-280 px** (capped on HP bar size), default **150 px**.
 - **Sources per Meter (1-2 players):** **1-25**, default **25**.
 - **Sources per Meter (3-4 players):** **1-25**, default **6**.
+- **Combine duplicate weapons:** Show copies of the same weapon with the same tier, cursed state, and mechanized state as one Source with a "×N" count and their summed Total, in every Meter and in Wave Snapshots. Items, characters, and grouped Sources are never combined, and each player's weapons are combined separately. Default **disabled**.
 
 ## Development Notes
 

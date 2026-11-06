@@ -108,6 +108,14 @@ func get_total() -> int:
 	return total
 
 
+func set_count(value: int) -> void:
+	# The Icon Panel's small co-op count label fits the 40px icon; its large one doesn't.
+	icon_panel._count.visible = false
+	icon_panel._coop_count.visible = value > 1
+	icon_panel._coop_count.margin_right = -2.0
+	icon_panel._coop_count.text = "×%d" % value if value > 1 else ""
+
+
 func set_total(value: int) -> void:
 	total = value
 	total_label.text = Text.get_formatted_number(total)
