@@ -12,6 +12,7 @@ DmgMeter is a Brotato mod (Godot 3.x, GDScript, Godot Mod Loader 6.2). Each play
 - **Options**: `Oudstand-ModOptions` is optional. Options are defined in `ui/hud/meter_config.gd`, and the defaults must work when ModOptions isn't installed.
 - **Meter Model**: `ui/hud/meter_model.gd` turns Source records into the rows the live Meters and Wave Snapshots show (sorting, hiding zero Totals, entry limit, Percentage Bar ratios). Keep it pure (no game globals, nodes, or textures) so its headless tests in `tools/tests/` can run; see README "Headless tests" for the command.
 - **Spawner crediting**: `ui/hud/spawner_credit.gd` is the pure helper for ADR 0001 (Spawner keys, per-weapon effect copies and tags, the per-wave credit ledger), tested headless like the Meter Model. Its game hooks are `extensions/singletons/spawner_credit.gd` (extends `run_data.gd`) and `extensions/entities/structures/turret/turret_spawner_credit.gd` (extends `turret.gd`). New Structure hooks should read the tag with `spawner_key_of(data)` and swap their key via `RunData.dmgmeter_spawner_tracking_hash`.
+- **Burn crediting**: `ui/hud/burn_credit.gd` is the pure helper for crediting Structure burns to Spawners (ADR 0001), tested headless. Its game hooks are `extensions/singletons/burn_credit.gd` (extends `run_data.gd`), `extensions/entities/structures/turret/turret_burn_credit.gd` (tags `stats.burning_data`), and `extensions/entities/units/unit/unit_burn_credit.gd` (refunds the blanket `item_turret_flame` credit per tick). Never set `burning_data.from`.
 
 ## Release
 

@@ -3,7 +3,7 @@ Per-wave Damage, Healing, and Materials Meters for Brotato.
 
 - **Damage:** weapons, items, characters, and spawned Sources.
 	Overkill Damage does not count.
-	Turrets count toward the weapon or item that spawned them: each Wrench or Crowbar shows its own turrets' damage, and the Turret and Blood Turret items show only theirs.
+	Turrets count toward the weapon or item that spawned them: each Wrench or Crowbar shows its own turrets' damage, and the Turret and Blood Turret items show only theirs. Burns from a Wrench's flame turrets count toward that Wrench, not the Flame Turret item.
 - **Healing:** regeneration, lifesteal, consumables, and direct healing effects.
 	Only actual HP restored counts.
 - **Materials:** ground pickups, pickup bonuses, weapon/item-generated income, and the end-of-wave Harvesting payout.
@@ -47,10 +47,10 @@ Follow steam guide: https://steamcommunity.com/sharedfiles/filedetails/?id=29310
 
 ### Headless tests
 
-The Meter Model (`ui/hud/meter_model.gd`), the materials helper (`ui/hud/materials_totals.gd`), and the Spawner crediting helper (`ui/hud/spawner_credit.gd`) have headless tests in `tools/tests/`. Run them from the repo root (the main checkout or any git worktree) with the Godot 3.6 editor binary against the Brotato export project:
+The Meter Model (`ui/hud/meter_model.gd`), the materials helper (`ui/hud/materials_totals.gd`), the Spawner crediting helper (`ui/hud/spawner_credit.gd`), and the burn crediting helper (`ui/hud/burn_credit.gd`) have headless tests in `tools/tests/`. Run them from the repo root (the main checkout or any git worktree) with the Godot 3.6 editor binary against the Brotato export project:
 
 ```powershell
 & "C:\Godot\win64-g36-s161-gs328\godotsteam.36.editor.windows.64.exe" --path C:\Godot\Brotato\brotatoexport --no-window --quit -s "$PWD\tools\tests\run_tests.gd"; "exit code: $LASTEXITCODE"
 ```
 
-Adjust the two paths to your Godot binary and Brotato export project. The runner runs every `test_*.gd` next to it, prints a `PASS`/`FAIL` line per test and a summary, and exits non-zero if any test fails. The game's own startup log and errors are printed around the results and can be ignored. Tests load the scripts they test by paths relative to their own file, so they test the checkout they live in. `tools/` is left out of the Release Package.
+Adjust the two paths to your Godot binary and Brotato export project. The runner runs every `test_*.gd` next to it, prints a `PASS`/`FAIL` line per test and a summary, and exits non-zero if any test fails. The game's own startup log and errors are printed around the results and can be ignored. Tests load the scripts they test by paths relative to their own file, so they test the checkout they live in. `test_hooks_load.gd` checks that every extension `mod_main.gd` installs exists, extends an existing base script, and compiles against the base game's scripts. `tools/` is left out of the Release Package.
