@@ -1,27 +1,27 @@
 [h1]DmgMeter[/h1]
-Per-wave damage, healing, and material meters for Brotato.
+Per-wave Damage, Healing, and Materials Meters for Brotato.
 
 [list]
-[*][b]Damage:[/b] weapons, items, characters, and spawned sources. Overkill Damage does not count.
+[*][b]Damage:[/b] weapons, items, characters, and spawned Sources. Overkill Damage does not count.
 [*][b]Healing:[/b] regeneration, lifesteal, consumables, and direct healing effects. Only actual HP restored counts.
-[*][b]Materials:[/b] ground pickups, pickup bonuses, and weapon/item-generated income. Other income is grouped separately; spending and discounts are excluded.
+[*][b]Materials:[/b] ground pickups, pickup bonuses, and weapon/item-generated income. Other income is grouped into the Other Source; spending and discounts are excluded.
 [/list]
 
-Use [b]Q/E[/b] or a controller's [b]shoulder buttons/triggers[/b] to cycle lists independently per player.
+Use [b]Q/E[/b] or a controller's [b]shoulder buttons/triggers[/b] to switch the Active Meter in each player's Meter Panel independently.
 
 Totals are tracked per player, reset each wave, and sorted highest first.
-Zero totals are hidden; each list shows up to 25 sources by default with one or two players, or six sources with three or four players.
+Zero Totals are hidden; each Meter shows up to 25 Sources by default with one or two players, or six Sources with three or four players.
 Material pickups follow the game's co-op sharing.
-At the end of each wave, damage, healing, and materials snapshots are available as categories in the level-up and shop screens.
+At the end of each wave, a Wave Snapshot of every Meter is available in the level-up and shop screens.
 
 [h1]Options[/h1]
 With [b]Oudstand-ModOptions[/b] installed, open [b]Options > Mods > DmgMeter[/b] to change options, otherwise default values will work fine.
-Changes are saved automatically and apply immediately to all lists and players.
+Changes are saved automatically and apply immediately to all Meter Panels and players.
 
 [list]
-[*][b]Wave snapshots:[/b] Show wave snapshots between rounds in the stats panel, default [b]enabled[/b].
-[*][b]Percentage Bars:[/b] Show each entry's value relative to the highest value in its category, default [b]disabled[/b].
-[*][b]Percentage bar width:[/b] Set the HUD bar width from [b]50-280 px[/b] (capped on HP bar size), default [b]150 px[/b].
-[*][b]Entries per list (1-2 players):[/b] [b]1-25[/b], default [b]25[/b].
-[*][b]Entries per list (3-4 players):[/b] [b]1-25[/b], default [b]6[/b].
+[*][b]Wave Snapshots:[/b] Show Wave Snapshots between rounds in the stats panel, default [b]enabled[/b].
+[*][b]Percentage Bars:[/b] Show each Source's Total relative to the highest Total in its Meter, default [b]disabled[/b].
+[*][b]Percentage Bar width during wave:[/b] Set the HUD Percentage Bar width from [b]50-280 px[/b] (capped on HP bar size), default [b]150 px[/b].
+[*][b]Sources per Meter (1-2 players):[/b] [b]1-25[/b], default [b]25[/b].
+[*][b]Sources per Meter (3-4 players):[/b] [b]1-25[/b], default [b]6[/b].
 [/list]

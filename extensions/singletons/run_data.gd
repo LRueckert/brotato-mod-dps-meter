@@ -24,14 +24,14 @@ func get_state() -> Dictionary:
 					})
 			saved_player.append(saved_entries)
 		saved_snapshot.append(saved_player)
-	state["dmgmeter_wave_snapshot"] = saved_snapshot
+	state["lrueckert_dmgmeter_wave_snapshot"] = saved_snapshot
 	return state
 
 
 func resume_from_state(state: Dictionary) -> void:
 	.resume_from_state(state)
 	dmgmeter_wave_snapshot = []
-	for saved_player in state.get("dmgmeter_wave_snapshot", []):
+	for saved_player in state.get("lrueckert_dmgmeter_wave_snapshot", []):
 		var player_snapshot = []
 		for saved_entries in saved_player:
 			var entries = []
