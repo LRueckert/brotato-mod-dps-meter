@@ -10,6 +10,7 @@ DmgMeter is a Brotato mod (Godot 3.x, GDScript, Godot Mod Loader 6.2). Each play
 - **Hooking**: changes to the base game go through `ModLoaderMod.install_script_extension` in `mod_main.gd`. Files in `extensions/` sit in the folder of the base script they extend, but their names differ, so check each file's `extends` line for the actual target.
 - **Co-op**: everything is tracked per player, for 1–4 players. Test every change against both single-player and 3–4-player layouts.
 - **Options**: `Oudstand-ModOptions` is optional. Options are defined in `ui/hud/meter_config.gd`, and the defaults must work when ModOptions isn't installed.
+- **Meter Model**: `ui/hud/meter_model.gd` turns Source records into the rows the live Meters and Wave Snapshots show (sorting, hiding zero Totals, entry limit, Percentage Bar ratios). Keep it pure (no game globals, nodes, or textures) so its headless tests in `tools/tests/` can run; see README "Headless tests" for the command.
 
 ## Release
 
