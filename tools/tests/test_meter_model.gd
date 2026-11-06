@@ -3,8 +3,8 @@ extends "base_test.gd"
 const MeterModel = preload("../../ui/hud/meter_model.gd")
 
 
-func _item(key: String, total: int) -> Dictionary:
-	return MeterModel.source_record(key, MeterModel.KIND_ITEM, total)
+func _item(key: String, total: int, count: int = 1) -> Dictionary:
+	return MeterModel.source_record(key, MeterModel.KIND_ITEM, total, {}, -1, false, false, count)
 
 
 func _keys(rows: Array) -> Array:
@@ -150,6 +150,15 @@ func test_combined_row_uses_the_first_weapons_key_and_display_data() -> void:
 	var row = _combined([first, second])[0]
 	assert_eq(row["key"], "w1")
 	assert_eq(row["display"]["icon"], "first")
+
+
+func test_item_rows_show_their_inventory_stack_count() -> void:
+	var stacked = _item("stacked", 10, 4)
+	assert_eq(stacked["count"], 4, "record count")
+	for options in [{}, {"combine_duplicate_weapons": true}]:
+		var rows = MeterModel.build_rows([stacked, _item("single", 5)], options)
+		assert_eq(rows[0]["count"], 4, "stacked item count")
+		assert_eq(rows[1]["count"], 1, "single item count")
 
 
 func test_combined_row_counts_duplicates_whose_own_total_is_zero() -> void:

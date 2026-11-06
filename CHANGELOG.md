@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
 ## [v4.0.0] - 2026-11-06
 
 Saved options reset to their defaults once, because the option IDs changed. A Wave Snapshot saved by an older version is dropped.
@@ -22,6 +34,7 @@ Saved options reset to their defaults once, because the option IDs changed. A Wa
 - Landmine and trap damage counts toward its Spawner too. Each Screwdriver, Carbon Bow (Engineering arrows) and Awl shows its own Structures' damage, Bot-o-Mine shows the mines it lays, and Pocket Factory shows its tree turrets as its own Source. Screwdriver and Bot-o-Mine no longer add a separate Landmines Source, and the Landmines item no longer includes their mines or Carbon Bow's.
 - The Materials Meter's Other Source holds only income no other Source claims, such as per-step and character-ability materials, and has its own icon instead of the Harvesting icon.
 - Option labels and the README use consistent terms: Meter, Meter Panel, Active Meter, Source, Total, Percentage Bar, and Wave Snapshot.
+- Item Sources always show a "×N" count when the player owns more than one copy of the item, in the Meters and in Wave Snapshots.
 
 ### Fixed
 

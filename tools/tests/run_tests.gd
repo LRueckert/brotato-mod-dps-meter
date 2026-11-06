@@ -7,6 +7,10 @@ extends SceneTree
 func _init() -> void:
 	# Counts as a failure if this function aborts before quit() below (run with --quit).
 	OS.exit_code = 1
+	call_deferred("_run_tests")
+
+
+func _run_tests() -> void:
 	var tests_dir = get_script().resource_path.get_base_dir()
 	var passed = 0
 	var failed = 0

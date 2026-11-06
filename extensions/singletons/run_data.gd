@@ -26,6 +26,7 @@ func get_state() -> Dictionary:
 						"tier": int(record["tier"]),
 						"cursed": bool(record["cursed"]),
 						"mechanized": bool(record["mechanized"]),
+						"count": int(record.get("count", 1)),
 						"total": int(record["total"])
 					})
 			saved_player.append(saved_records)
@@ -65,7 +66,7 @@ func _dmgmeter_resume_record(saved: Dictionary) -> Dictionary:
 	var mechanized = bool(saved.get("mechanized", false))
 	if kind == METER_MODEL.KIND_WEAPON:
 		return METER_MODEL.weapon_record(key, str(saved.get("weapon_id", "")), -1, total, display, tier, cursed, mechanized)
-	return METER_MODEL.source_record(key, kind, total, display, tier, cursed, mechanized)
+	return METER_MODEL.source_record(key, kind, total, display, tier, cursed, mechanized, int(saved.get("count", 1)))
 
 func reset(restart: bool = false) -> void:
 	dmgmeter_wave_snapshot = []

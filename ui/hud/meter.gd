@@ -143,7 +143,8 @@ func _create_source_record(source_key: String, item_data, display: Dictionary) -
 	if category == Category.WEAPON:
 		return METER_MODEL.weapon_record(source_key, item_data.weapon_id, item_data.get_instance_id(), 0, display, item_data.tier, item_data.is_cursed, item_data.is_meca)
 	var kind = METER_MODEL.KIND_CHARACTER if category == Category.CHARACTER else METER_MODEL.KIND_ITEM
-	return METER_MODEL.source_record(source_key, kind, 0, display, item_data.tier, item_data.is_cursed, item_data.is_meca)
+	var count = RunData.get_nb_item(item_data.my_id_hash, player_index) if kind == METER_MODEL.KIND_ITEM else 1
+	return METER_MODEL.source_record(source_key, kind, 0, display, item_data.tier, item_data.is_cursed, item_data.is_meca, count)
 
 
 func _get_source_records() -> Array:

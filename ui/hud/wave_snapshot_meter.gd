@@ -57,6 +57,7 @@ func _show_rows() -> void:
 			source_display = SOURCE_DISPLAY_SCENE.instance()
 			_source_displays_container.add_child(source_display)
 			source_display.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		source_display.show()
 		source_display.set_source(row["display"].get("icon"), 0)
 		source_display.icon.modulate = row["display"].get("icon_color", Color.white)
 		source_display.set_background_tier(row["tier"])
