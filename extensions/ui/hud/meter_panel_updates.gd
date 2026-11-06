@@ -13,6 +13,7 @@ func dmgmeter_initialize() -> void:
 	dmgmeter_register_timers()
 	meter_panels = []
 	RunData.materials_meter_reset()
+	RunData.dmgmeter_spawner_credit_reset()
 	RunData.dmgmeter_wave_snapshot = []
 	var player_count = RunData.get_player_count()
 	for i in player_count:

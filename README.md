@@ -3,6 +3,7 @@ Per-wave Damage, Healing, and Materials Meters for Brotato.
 
 - **Damage:** weapons, items, characters, and spawned Sources.
 	Overkill Damage does not count.
+	Turrets count toward the weapon or item that spawned them: each Wrench or Crowbar shows its own turrets' damage, and the Turret and Blood Turret items show only theirs.
 - **Healing:** regeneration, lifesteal, consumables, and direct healing effects.
 	Only actual HP restored counts.
 - **Materials:** ground pickups, pickup bonuses, weapon/item-generated income, and the end-of-wave Harvesting payout.
@@ -45,7 +46,7 @@ Follow steam guide: https://steamcommunity.com/sharedfiles/filedetails/?id=29310
 
 ### Headless tests
 
-The Meter Model (`ui/hud/meter_model.gd`) and the materials helper (`ui/hud/materials_totals.gd`) have headless tests in `tools/tests/`. Run them from the repo root (the main checkout or any git worktree) with the Godot 3.6 editor binary against the Brotato export project:
+The Meter Model (`ui/hud/meter_model.gd`), the materials helper (`ui/hud/materials_totals.gd`), and the Spawner crediting helper (`ui/hud/spawner_credit.gd`) have headless tests in `tools/tests/`. Run them from the repo root (the main checkout or any git worktree) with the Godot 3.6 editor binary against the Brotato export project:
 
 ```powershell
 & "C:\Godot\win64-g36-s161-gs328\godotsteam.36.editor.windows.64.exe" --path C:\Godot\Brotato\brotatoexport --no-window --quit -s "$PWD\tools\tests\run_tests.gd"; "exit code: $LASTEXITCODE"
