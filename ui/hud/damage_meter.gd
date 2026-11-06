@@ -2,6 +2,8 @@ class_name DamageMeter
 extends "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter.gd"
 
 const SPAWNER_CREDIT = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/spawner_credit.gd")
+# Items whose base-game tracking text isn't damage but whose Structures deal it.
+const SPAWNER_ITEMS = ["ITEM_BUILDER_TURRET", "ITEM_POCKET_FACTORY"]
 
 # =============================================================================
 # Base Class Overrides
@@ -25,7 +27,7 @@ func update_totals() -> void:
 
 
 func is_damage_source(item_data: ItemParentData) -> bool:
-	return item_data.tracking_text in ["DAMAGE_DEALT", "EXPLOSION_DAMAGE_DEALT"] or item_data.name == "ITEM_BUILDER_TURRET"
+	return item_data.tracking_text in ["DAMAGE_DEALT", "EXPLOSION_DAMAGE_DEALT"] or item_data.name in SPAWNER_ITEMS
 
 
 func add_damage_source(item_data: ItemParentData) -> void:
@@ -34,22 +36,11 @@ func add_damage_source(item_data: ItemParentData) -> void:
 		source_key = SPAWNER_CREDIT.weapon_key(item_data.get_instance_id())
 	if sources.has(source_key):
 		return
-	if ["WEAPON_SCREWDRIVER", "ITEM_BOT_O_MINE"].has(item_data.name):
-		handle_spawner(item_data)
 	var wave_start_value = 0
 	if [Category.ITEM, Category.CHARACTER].has(item_data.get_category()) && not item_data.name == "ITEM_BUILDER_TURRET":
 		wave_start_value = get_tracked_value(item_data)
 	var source_data = {"item": item_data, "wave_start_value": wave_start_value}
 	add_source(source_key, item_data.icon, source_data, item_data)
-
-
-func handle_spawner(item_data: ItemParentData) -> void:
-	var item_id = ""
-	match item_data.name:
-		"WEAPON_SCREWDRIVER", "ITEM_BOT_O_MINE":
-			item_id = "item_landmines"
-	if not item_id.empty():
-		add_damage_source(ItemService.get_item_from_id(Keys.generate_hash(item_id)))
 
 
 # Spawner credit (ADR 0001) is added to the Spawner's own Total, and taken out of

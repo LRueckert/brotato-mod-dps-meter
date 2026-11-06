@@ -4,6 +4,7 @@ Per-wave Damage, Healing, and Materials Meters for Brotato.
 - **Damage:** weapons, items, characters, and spawned Sources.
 	Overkill Damage does not count.
 	Turrets count toward the weapon or item that spawned them: each Wrench or Crowbar shows its own turrets' damage, and the Turret and Blood Turret items show only theirs.
+	The same goes for landmines and traps: each Screwdriver, Carbon Bow (Engineering arrows), or Awl shows its own Structures' damage, Bot-o-Mine shows the mines it lays, Pocket Factory shows its tree turrets, and the Landmines and Dart Trap items show only theirs.
 - **Healing:** regeneration, lifesteal, consumables, and direct healing effects.
 	Only actual HP restored counts.
 - **Materials:** ground pickups, pickup bonuses, weapon/item-generated income, and the end-of-wave Harvesting payout.
