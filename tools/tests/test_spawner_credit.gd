@@ -40,6 +40,23 @@ func _structure(tracking_key: String = "item_turret") -> Resource:
 	return effect
 
 
+# Stands in for RunData's dmgmeter_spawner_tracking_hash.
+class FakeSpawnerRegistry extends Reference:
+	func dmgmeter_spawner_tracking_hash(spawner_key: String, base_key_hash: int) -> int:
+		return SpawnerCredit.tracking_name(spawner_key, base_key_hash).hash()
+
+
+func test_structure_spawned_from_tagged_data_tracks_under_its_spawner() -> void:
+	var data = _structure()
+	SpawnerCredit.tag(data, "weapon:9")
+	var tracking_hash = SpawnerCredit.structure_tracking_hash(data, TURRET_HASH, FakeSpawnerRegistry.new())
+	assert_eq(tracking_hash, SpawnerCredit.tracking_name("weapon:9", TURRET_HASH).hash())
+
+
+func test_structure_spawned_from_untagged_data_keeps_its_base_key() -> void:
+	assert_eq(SpawnerCredit.structure_tracking_hash(_structure(), TURRET_HASH, FakeSpawnerRegistry.new()), TURRET_HASH)
+
+
 func test_weapon_spawner_key_matches_its_damage_meter_source_key() -> void:
 	assert_eq(SpawnerCredit.weapon_key(42), "weapon:42")
 	assert_eq(SpawnerCredit.item_key("item_turret"), "item:item_turret")

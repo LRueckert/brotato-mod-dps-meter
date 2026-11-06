@@ -11,8 +11,6 @@ const DART_TRAP_FALLBACK_KEY = "item_dart_trap"
 
 func set_data(data: Resource) -> void:
 	.set_data(data)
-	var spawner_key = SPAWNER_CREDIT.spawner_key_of(data)
-	if not spawner_key.empty():
-		_damage_tracking_key_hash = RunData.dmgmeter_spawner_tracking_hash(spawner_key, _damage_tracking_key_hash)
-	elif _damage_tracking_key_hash == Keys.empty_hash:
+	_damage_tracking_key_hash = SPAWNER_CREDIT.structure_tracking_hash(data, _damage_tracking_key_hash, RunData)
+	if _damage_tracking_key_hash == Keys.empty_hash:
 		_damage_tracking_key_hash = Keys.generate_hash(DART_TRAP_FALLBACK_KEY)

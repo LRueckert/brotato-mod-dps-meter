@@ -34,6 +34,16 @@ static func spawner_key_of(effect) -> String:
 	return str(effect.get_meta(META_SPAWNER_KEY))
 
 
+# The tracking key hash a Structure spawned from data uses for its hits:
+# its Spawner's tracking key if data is tagged, otherwise base_key_hash.
+# registry is RunData (dmgmeter_spawner_tracking_hash).
+static func structure_tracking_hash(data, base_key_hash: int, registry) -> int:
+	var spawner_key = spawner_key_of(data)
+	if spawner_key.empty():
+		return base_key_hash
+	return registry.dmgmeter_spawner_tracking_hash(spawner_key, base_key_hash)
+
+
 static func tag(effect, spawner_key: String) -> void:
 	effect.set_meta(META_SPAWNER_KEY, spawner_key)
 
