@@ -35,6 +35,7 @@ Saved options reset to their defaults once, because the option IDs changed. A Wa
 - The Materials Meter's Other Source holds only income no other Source claims, such as per-step and character-ability materials, and has its own icon instead of the Harvesting icon.
 - Option labels and the README use consistent terms: Meter, Meter Panel, Active Meter, Source, Total, Percentage Bar, and Wave Snapshot.
 - Item Sources always show a "×N" count when the player owns more than one copy of the item, in the Meters and in Wave Snapshots.
+- Sources per Meter now goes up to 20 (was 25), and the 1-2 player default is 20, so a full Meter fits on screen. Saved values above 20 are lowered to 20.
 
 ### Fixed
 

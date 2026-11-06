@@ -27,7 +27,8 @@ const SNAPSHOT_PERCENTAGE_BAR_WIDTH := 300
 const DEFAULT_WAVE_SNAPSHOTS := true
 const DEFAULT_PERCENTAGE_BARS := false
 const DEFAULT_PERCENTAGE_BAR_WIDTH := 150
-const DEFAULT_SOURCES_PER_METER_1_2_PLAYERS := 25
+const MAX_SOURCES_PER_METER := 20
+const DEFAULT_SOURCES_PER_METER_1_2_PLAYERS := 20
 const DEFAULT_SOURCES_PER_METER_3_4_PLAYERS := 6
 const DEFAULT_COMBINE_DUPLICATE_WEAPONS := false
 
@@ -57,7 +58,7 @@ const OPTIONS = {
 		"id": OPTION_SOURCES_PER_METER_1_2_PLAYERS,
 		"label": "Sources per Meter (1-2 players)",
 		"min": 1.0,
-		"max": 25.0,
+		"max": float(MAX_SOURCES_PER_METER),
 		"step": 1.0,
 		"default": float(DEFAULT_SOURCES_PER_METER_1_2_PLAYERS),
 		"display_as_integer": true
@@ -66,7 +67,7 @@ const OPTIONS = {
 		"id": OPTION_SOURCES_PER_METER_3_4_PLAYERS,
 		"label": "Sources per Meter (3-4 players)",
 		"min": 1.0,
-		"max": 25.0,
+		"max": float(MAX_SOURCES_PER_METER),
 		"step": 1.0,
 		"default": float(DEFAULT_SOURCES_PER_METER_3_4_PLAYERS),
 		"display_as_integer": true
@@ -135,8 +136,8 @@ func load_settings() -> void:
 	percentage_bar_width = DEFAULT_PERCENTAGE_BAR_WIDTH
 	combine_duplicate_weapons = DEFAULT_COMBINE_DUPLICATE_WEAPONS
 	if _mod_options and MOD_ID in _mod_options.get_registered_mods():
-		_sources_per_meter_1_2_players = int(_mod_options.get_value(MOD_ID, OPTION_SOURCES_PER_METER_1_2_PLAYERS))
-		_sources_per_meter_3_4_players = int(_mod_options.get_value(MOD_ID, OPTION_SOURCES_PER_METER_3_4_PLAYERS))
+		_sources_per_meter_1_2_players = int(clamp(int(_mod_options.get_value(MOD_ID, OPTION_SOURCES_PER_METER_1_2_PLAYERS)), 1, MAX_SOURCES_PER_METER))
+		_sources_per_meter_3_4_players = int(clamp(int(_mod_options.get_value(MOD_ID, OPTION_SOURCES_PER_METER_3_4_PLAYERS)), 1, MAX_SOURCES_PER_METER))
 		wave_snapshots = bool(_mod_options.get_value(MOD_ID, OPTION_WAVE_SNAPSHOTS))
 		percentage_bars = bool(_mod_options.get_value(MOD_ID, OPTION_PERCENTAGE_BARS))
 		percentage_bar_width = int(clamp(int(_mod_options.get_value(MOD_ID, OPTION_PERCENTAGE_BAR_WIDTH)), MIN_PERCENTAGE_BAR_WIDTH, MAX_PERCENTAGE_BAR_WIDTH))

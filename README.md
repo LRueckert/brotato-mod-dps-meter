@@ -16,7 +16,7 @@ Per-wave Damage, Healing, and Materials Meters for Brotato.
 Use **Q/E** or a controller's **shoulder buttons/triggers** to switch the Active Meter in each player's Meter Panel independently.
 
 Totals are tracked per player, reset each wave, and sorted highest first.
-Zero Totals are hidden; each Meter shows up to 25 Sources by default with one or two players, or six Sources with three or four players.
+Zero Totals are hidden; each Meter shows up to 20 Sources by default with one or two players, or six Sources with three or four players.
 Material pickups follow the game's co-op sharing.
 At the end of each wave, a Wave Snapshot of every Meter is available in the level-up and shop screens.
 
@@ -29,8 +29,8 @@ Updating from 3.x resets saved options to their defaults once.
 - **Wave Snapshots:** Show Wave Snapshots between rounds in the stats panel, default **enabled**
 - **Percentage Bars:** Show each Source's Total relative to the highest Total in its Meter, default **disabled**.
 - **Percentage Bar width during wave:** Set the HUD Percentage Bar width from **50-280 px** (capped on HP bar size), default **150 px**.
-- **Sources per Meter (1-2 players):** **1-25**, default **25**.
-- **Sources per Meter (3-4 players):** **1-25**, default **6**.
+- **Sources per Meter (1-2 players):** **1-20**, default **20**.
+- **Sources per Meter (3-4 players):** **1-20**, default **6**.
 - **Combine duplicate weapons:** Show copies of the same weapon with the same tier, cursed state, and mechanized state as one Source with a "×N" count and their summed Total. Default **disabled**.
 
 ## Development Notes

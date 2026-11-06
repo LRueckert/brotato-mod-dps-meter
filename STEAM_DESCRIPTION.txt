@@ -11,7 +11,7 @@ Turrets, landmines, and traps count toward the weapon or item that spawned them:
 Use [b]Q/E[/b] or a controller's [b]shoulder buttons/triggers[/b] to switch the Active Meter in each player's Meter Panel independently.
 
 Totals are tracked per player, reset each wave, and sorted highest first.
-Zero Totals are hidden; each Meter shows up to 25 Sources by default with one or two players, or six Sources with three or four players.
+Zero Totals are hidden; each Meter shows up to 20 Sources by default with one or two players, or six Sources with three or four players.
 Material pickups follow the game's co-op sharing.
 At the end of each wave, a Wave Snapshot of every Meter is available in the level-up and shop screens.
 
@@ -23,8 +23,8 @@ Changes are saved automatically and apply immediately to all Meter Panels and pl
 [*][b]Wave Snapshots:[/b] Show Wave Snapshots between rounds in the stats panel, default [b]enabled[/b].
 [*][b]Percentage Bars:[/b] Show each Source's Total relative to the highest Total in its Meter, default [b]disabled[/b].
 [*][b]Percentage Bar width during wave:[/b] Set the HUD Percentage Bar width from [b]50-280 px[/b] (capped on HP bar size), default [b]150 px[/b].
-[*][b]Sources per Meter (1-2 players):[/b] [b]1-25[/b], default [b]25[/b].
-[*][b]Sources per Meter (3-4 players):[/b] [b]1-25[/b], default [b]6[/b].
+[*][b]Sources per Meter (1-2 players):[/b] [b]1-20[/b], default [b]20[/b].
+[*][b]Sources per Meter (3-4 players):[/b] [b]1-20[/b], default [b]6[/b].
 [*][b]Combine duplicate weapons:[/b] Show copies of the same weapon with the same tier, cursed state, and mechanized state as one Source with a "×N" count and their summed Total, in every Meter and in Wave Snapshots. Items, characters, and grouped Sources are never combined, and each player's weapons are combined separately. Default [b]disabled[/b].
 [/list]
 
