@@ -24,6 +24,7 @@ At the end of each wave, a Wave Snapshot of every Meter is available in the leve
 
 With **Oudstand-ModOptions** installed, open **Options > Mods > DmgMeter** to change options, otherwise default values will work fine.
 Changes are saved automatically and apply immediately to all Meter Panels and players.
+Updating from 3.x resets saved options to their defaults once.
 
 - **Wave Snapshots:** Show Wave Snapshots between rounds in the stats panel, default **enabled**
 - **Percentage Bars:** Show each Source's Total relative to the highest Total in its Meter, default **disabled**.
