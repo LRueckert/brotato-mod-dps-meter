@@ -2,7 +2,9 @@ class_name MaterialsMeter
 extends "res://mods-unpacked/lrueckert-DmgMeter/ui/hud/meter.gd"
 
 
+const MATERIALS_TOTALS = preload("res://mods-unpacked/lrueckert-DmgMeter/ui/hud/materials_totals.gd")
 const MATERIAL_ICON = preload("res://items/materials/material_ui.png")
+const OTHER_ICON = preload("res://items/materials/material_bag_icon.png")
 
 
 var _refresh_pending: bool = false
@@ -16,7 +18,8 @@ var _refresh_pending: bool = false
 
 func discover_sources() -> void:
 	add_source("pickups", MATERIAL_ICON, {}, null, Utils.GOLD_COLOR)
-	add_source("other", ItemService.get_stat(Keys.stat_harvesting_hash).small_icon, {})
+	add_source("harvesting", ItemService.get_stat(Keys.stat_harvesting_hash).small_icon, {})
+	add_source("other", OTHER_ICON, {})
 	add_material_source(ItemService.get_item_from_id(Keys.item_metal_detector_hash))
 	for item_data in RunData.get_player_weapons(player_index):
 		if is_material_source(item_data):
@@ -43,7 +46,9 @@ func update_totals() -> void:
 			total = RunData.materials_meter_pickup_bonuses[player_index]
 		set_source_total(source_key, total)
 		generated += get_source_total(source_key)
-	set_source_total("other", RunData.materials_meter_gains[player_index] - pickups - generated)
+	var totals = MATERIALS_TOTALS.split(RunData.materials_meter_gains[player_index], pickups, RunData.materials_meter_harvesting[player_index], generated)
+	set_source_total("harvesting", totals["harvesting"])
+	set_source_total("other", totals["other"])
 
 #endregion
 

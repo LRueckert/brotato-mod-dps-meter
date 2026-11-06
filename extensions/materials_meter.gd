@@ -14,6 +14,13 @@ func _enter_tree() -> void:
 		parent.add_child(meter_panel)
 
 
+# Gold added during the end-of-wave payout (Harvesting plus its wave-end bonuses) is credited to Harvesting.
+func manage_harvesting() -> void:
+	RunData.materials_meter_harvesting_active = true
+	.manage_harvesting()
+	RunData.materials_meter_harvesting_active = false
+
+
 func on_gold_picked_up(gold: Node, player_index: int) -> void:
 	if not RunData.materials_meter_active or gold.already_picked_up or player_index < 0:
 		.on_gold_picked_up(gold, player_index)
