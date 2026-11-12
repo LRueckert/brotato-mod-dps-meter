@@ -20,6 +20,8 @@ const OPTION_PERCENTAGE_BAR_WIDTH := "percentage_bar_width"
 const OPTION_SOURCES_PER_METER_1_2_PLAYERS := "sources_per_meter_1_2_players"
 const OPTION_SOURCES_PER_METER_3_4_PLAYERS := "sources_per_meter_3_4_players"
 const OPTION_COMBINE_DUPLICATE_WEAPONS := "combine_duplicate_weapons"
+const OPTION_PREVIOUS_METER_KEY := "previous_meter_key"
+const OPTION_NEXT_METER_KEY := "next_meter_key"
 
 const MIN_PERCENTAGE_BAR_WIDTH := 50
 const MAX_PERCENTAGE_BAR_WIDTH := 280
@@ -31,6 +33,17 @@ const MAX_SOURCES_PER_METER := 20
 const DEFAULT_SOURCES_PER_METER_1_2_PLAYERS := 20
 const DEFAULT_SOURCES_PER_METER_3_4_PLAYERS := 6
 const DEFAULT_COMBINE_DUPLICATE_WEAPONS := false
+const DEFAULT_PREVIOUS_METER_KEY := "Q"
+const DEFAULT_NEXT_METER_KEY := "E"
+const METER_KEY_NONE := "None"
+# Apart from METER_KEY_NONE, names must be accepted by OS.find_scancode_from_string.
+const METER_KEY_CHOICES := [
+	METER_KEY_NONE,
+	"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+	"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+	"1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+	"Tab", "Shift", "Control", "Alt", "PageUp", "PageDown"
+]
 
 const OPTIONS = {
 	"tab_title": "DmgMeter",
@@ -76,6 +89,18 @@ const OPTIONS = {
 		"id": OPTION_COMBINE_DUPLICATE_WEAPONS,
 		"label": "Combine duplicate weapons",
 		"default": DEFAULT_COMBINE_DUPLICATE_WEAPONS
+	}, {
+		"type": "dropdown",
+		"id": OPTION_PREVIOUS_METER_KEY,
+		"label": "Previous Meter keybind",
+		"choices": METER_KEY_CHOICES,
+		"default": DEFAULT_PREVIOUS_METER_KEY
+	}, {
+		"type": "dropdown",
+		"id": OPTION_NEXT_METER_KEY,
+		"label": "Next Meter keybind",
+		"choices": METER_KEY_CHOICES,
+		"default": DEFAULT_NEXT_METER_KEY
 	}]
 }
 
@@ -106,6 +131,8 @@ var wave_snapshots: bool = DEFAULT_WAVE_SNAPSHOTS
 var percentage_bars: bool = DEFAULT_PERCENTAGE_BARS
 var percentage_bar_width: int = DEFAULT_PERCENTAGE_BAR_WIDTH
 var combine_duplicate_weapons: bool = DEFAULT_COMBINE_DUPLICATE_WEAPONS
+var previous_meter_scancode: int = KEY_Q
+var next_meter_scancode: int = KEY_E
 
 var _sources_per_meter_1_2_players: int = DEFAULT_SOURCES_PER_METER_1_2_PLAYERS
 var _sources_per_meter_3_4_players: int = DEFAULT_SOURCES_PER_METER_3_4_PLAYERS
@@ -113,6 +140,26 @@ var _sources_per_meter_3_4_players: int = DEFAULT_SOURCES_PER_METER_3_4_PLAYERS
 
 func get_entry_limit() -> int:
 	return _sources_per_meter_1_2_players if RunData.get_player_count() <= 2 else _sources_per_meter_3_4_players
+
+
+# Returns -1 for the Previous Meter keybind, 1 for the Next Meter keybind, otherwise 0.
+func get_meter_key_direction(event: InputEventKey) -> int:
+	if event.scancode == 0:
+		return 0
+	if event.scancode == previous_meter_scancode:
+		return -1
+	if event.scancode == next_meter_scancode:
+		return 1
+	return 0
+
+
+# Returns 0 for METER_KEY_NONE, which disables that key.
+static func _meter_key_scancode(key_name, default_key_name: String) -> int:
+	if not key_name is String or not key_name in METER_KEY_CHOICES:
+		key_name = default_key_name
+	if key_name == METER_KEY_NONE:
+		return 0
+	return OS.find_scancode_from_string(key_name)
 
 
 # =============================================================================
@@ -135,6 +182,8 @@ func load_settings() -> void:
 	percentage_bars = DEFAULT_PERCENTAGE_BARS
 	percentage_bar_width = DEFAULT_PERCENTAGE_BAR_WIDTH
 	combine_duplicate_weapons = DEFAULT_COMBINE_DUPLICATE_WEAPONS
+	previous_meter_scancode = _meter_key_scancode(DEFAULT_PREVIOUS_METER_KEY, DEFAULT_PREVIOUS_METER_KEY)
+	next_meter_scancode = _meter_key_scancode(DEFAULT_NEXT_METER_KEY, DEFAULT_NEXT_METER_KEY)
 	if _mod_options and MOD_ID in _mod_options.get_registered_mods():
 		_sources_per_meter_1_2_players = int(clamp(int(_mod_options.get_value(MOD_ID, OPTION_SOURCES_PER_METER_1_2_PLAYERS)), 1, MAX_SOURCES_PER_METER))
 		_sources_per_meter_3_4_players = int(clamp(int(_mod_options.get_value(MOD_ID, OPTION_SOURCES_PER_METER_3_4_PLAYERS)), 1, MAX_SOURCES_PER_METER))
@@ -142,6 +191,8 @@ func load_settings() -> void:
 		percentage_bars = bool(_mod_options.get_value(MOD_ID, OPTION_PERCENTAGE_BARS))
 		percentage_bar_width = int(clamp(int(_mod_options.get_value(MOD_ID, OPTION_PERCENTAGE_BAR_WIDTH)), MIN_PERCENTAGE_BAR_WIDTH, MAX_PERCENTAGE_BAR_WIDTH))
 		combine_duplicate_weapons = bool(_mod_options.get_value(MOD_ID, OPTION_COMBINE_DUPLICATE_WEAPONS))
+		previous_meter_scancode = _meter_key_scancode(_mod_options.get_value(MOD_ID, OPTION_PREVIOUS_METER_KEY), DEFAULT_PREVIOUS_METER_KEY)
+		next_meter_scancode = _meter_key_scancode(_mod_options.get_value(MOD_ID, OPTION_NEXT_METER_KEY), DEFAULT_NEXT_METER_KEY)
 	emit_signal("dmgmeter_config_changed")
 
 
@@ -151,5 +202,5 @@ func _on_mod_options_registered(mod_id: String) -> void:
 
 
 func _on_mod_options_config_changed(mod_id: String, option_id: String, _value) -> void:
-	if mod_id == MOD_ID and option_id in [OPTION_WAVE_SNAPSHOTS, OPTION_PERCENTAGE_BARS, OPTION_PERCENTAGE_BAR_WIDTH, OPTION_SOURCES_PER_METER_1_2_PLAYERS, OPTION_SOURCES_PER_METER_3_4_PLAYERS, OPTION_COMBINE_DUPLICATE_WEAPONS]:
+	if mod_id == MOD_ID and option_id in [OPTION_WAVE_SNAPSHOTS, OPTION_PERCENTAGE_BARS, OPTION_PERCENTAGE_BAR_WIDTH, OPTION_SOURCES_PER_METER_1_2_PLAYERS, OPTION_SOURCES_PER_METER_3_4_PLAYERS, OPTION_COMBINE_DUPLICATE_WEAPONS, OPTION_PREVIOUS_METER_KEY, OPTION_NEXT_METER_KEY]:
 		load_settings()

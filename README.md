@@ -13,7 +13,7 @@ Per-wave Damage, Healing, and Materials Meters for Brotato.
 
 <img src="modicon.png" alt="Mod icon"/>
 
-Use **Q/E** or a controller's **shoulder buttons/triggers** to switch the Active Meter in each player's Meter Panel independently.
+Use **Q/E** (configurable in Options) or a controller's **shoulder buttons/triggers** to switch the Active Meter in each player's Meter Panel independently.
 
 Totals are tracked per player, reset each wave, and sorted highest first.
 Zero Totals are hidden; each Meter shows up to 20 Sources by default with one or two players, or six Sources with three or four players.
@@ -32,6 +32,7 @@ Updating from 3.x resets saved options to their defaults once.
 - **Sources per Meter (1-2 players):** **1-20**, default **20**.
 - **Sources per Meter (3-4 players):** **1-20**, default **6**.
 - **Combine duplicate weapons:** Show copies of the same weapon with the same tier, cursed state, and mechanized state as one Source with a "×N" count and their summed Total. Default **disabled**.
+- **Previous Meter keybind / Next Meter keybind:** Switch the Active Meter, default **Q** / **E**. Picked from a dropdown, because ModOptions doesn't offer a keybind option type.
 
 ## Development Notes
 

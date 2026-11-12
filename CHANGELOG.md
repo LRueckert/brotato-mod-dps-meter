@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
+## [v4.0.1] - 2026-11-12
+
+### Added
+
+- Options to rebind the Q/E keybinds that switch Meters
+
 ## [v4.0.0] - 2026-11-06
 
 Saved options reset to their defaults once, because the option IDs changed. A Wave Snapshot saved by an older version is dropped.
@@ -144,7 +150,8 @@ Saved options reset to their defaults once, because the option IDs changed. A Wa
 
 - Icons and raw damage numbers
 
-[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v4.0.0...HEAD
+[unreleased]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v4.0.1...HEAD
+[v4.0.1]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v4.0.0...v4.0.1
 [v4.0.0]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v3.1.1...v4.0.0
 [v3.1.1]: https://github.com/LRueckert/brotato-mod-dps-meter/compare/v3.1.0...v3.1.1
 [v3.1.0]: https://github.com/LRueckert/brotato-mod-dps-meter/releases/tag/v3.1.0

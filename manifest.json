@@ -1,7 +1,7 @@
 {
 	"name": "DmgMeter",
 	"namespace": "lrueckert",
-	"version_number": "4.0.0",
+	"version_number": "4.0.1",
 	"description": "Display per-wave damage, healing, and material gains in per-player Meter Panels with switchable Meters.",
 	"website_url": "https://github.com/LRueckert/brotato-mod-dps-meter",
 	"dependencies": [],

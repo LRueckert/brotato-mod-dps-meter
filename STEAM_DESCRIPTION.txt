@@ -8,7 +8,7 @@ Turrets, landmines, and traps count toward the weapon or item that spawned them:
 [*][b]Materials:[/b] ground pickups, pickup bonuses, weapon/item-generated income, and the end-of-wave Harvesting payout. Harvesting includes its wave-end bonuses, counts toward the wave that just ended, and shows 0 when the payout is negative. Income no other Source claims (such as per-step or character-ability materials) is grouped into the Other Source; spending and discounts are excluded.
 [/list]
 
-Use [b]Q/E[/b] or a controller's [b]shoulder buttons/triggers[/b] to switch the Active Meter in each player's Meter Panel independently.
+Use [b]Q/E[/b] (configurable in Options) or a controller's [b]shoulder buttons/triggers[/b] to switch the Active Meter in each player's Meter Panel independently.
 
 Totals are tracked per player, reset each wave, and sorted highest first.
 Zero Totals are hidden; each Meter shows up to 20 Sources by default with one or two players, or six Sources with three or four players.
@@ -26,6 +26,5 @@ Changes are saved automatically and apply immediately to all Meter Panels and pl
 [*][b]Sources per Meter (1-2 players):[/b] [b]1-20[/b], default [b]20[/b].
 [*][b]Sources per Meter (3-4 players):[/b] [b]1-20[/b], default [b]6[/b].
 [*][b]Combine duplicate weapons:[/b] Show copies of the same weapon with the same tier, cursed state, and mechanized state as one Source with a "×N" count and their summed Total, in every Meter and in Wave Snapshots. Items, characters, and grouped Sources are never combined, and each player's weapons are combined separately. Default [b]disabled[/b].
+[*][b]Previous Meter keybind / Next Meter keybind:[/b] Switch the Active Meter, default [b]Q[/b] / [b]E[/b]. Picked from a dropdown, because ModOptions doesn't offer a keybind option type.
 [/list]
-
-Updating from 3.x resets saved options to their defaults once.

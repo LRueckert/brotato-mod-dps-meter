@@ -99,10 +99,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if not event.pressed or event.echo:
 			return
-		if event.scancode == KEY_Q:
-			direction = -1
-		elif event.scancode == KEY_E:
-			direction = 1
+		direction = _meter_config.get_meter_key_direction(event)
 	elif event is InputEventJoypadButton:
 		if event.is_action_pressed("ltrigger"):
 			direction = -1
